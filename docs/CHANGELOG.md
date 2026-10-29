@@ -1,5 +1,16 @@
 # Changelog
 
+## [Prima prerelease GitHub: v0.1.18-beta.1] - 2026-10-29
+
+- Pubblicato il repository pubblico https://github.com/issu-lab/nodus con storia
+  autonoma e soli sorgenti selezionati, senza cache/build, chiavi o storia del workspace.
+- Pubblicata la prerelease v0.1.18-beta.1 con ZIP (APK 0.1.18, istruzioni e
+  licenze) e SHA256SUMS.txt. README e guida beta includono i link reali.
+- Riscaricati gli asset da GitHub: ZIP identico al locale, checksum dello ZIP e
+  dell’APK estratto validi; verificati anche README e badge pubblicati.
+- Confermati repository pubblico, branch main e prerelease sperimentale.
+  App e firma non modificate per la pubblicazione; collaudo sul telefono aperto.
+
 ## [0.1.18 — chiusura del cassetto con trascinamento, build locale] - 2026-10-29
 
 - Il trascinamento verso il basso oltre l’inizio della lista passa al pannello,

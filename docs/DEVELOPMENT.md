@@ -150,9 +150,10 @@ source copies: build validation uses the versioned source set and intentional
 new files, not every file found in the working directory. No existing artifacts are deleted
 or untracked by this presentation update.
 
-Before publication, complete the open items in the [roadmap](ROADMAP.md),
-including device screenshots, distribution notices and GitHub desktop/mobile
-render checks. Local preview checks are not proof of published GitHub rendering.
+The first prerelease is `v0.1.18-beta.1`. Its downloaded ZIP and extracted APK
+were checked against the local files and SHA-256 manifest. README and badge bytes
+were also verified through GitHub. Device screenshots, phone validation and visual
+GitHub desktop/mobile render checks remain in the [roadmap](ROADMAP.md).
 
 ## Prepare the GitHub candidate without changing the app
 
