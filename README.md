@@ -81,8 +81,13 @@ Implementation details are in the [development guide](docs/DEVELOPMENT.md).
 
 ## Screenshots
 
-Public screenshots will be added after device validation. The repository artwork
-is branding, not a screenshot of the Android interface.
+Real phone screenshots supplied during testing, captured on version **0.1.16**.
+The current beta is 0.1.18; these images illustrate the appearance, rather than
+confirming the latest gesture fixes. Tap an image to view it at full size.
+
+| Home | All apps | About |
+|:---:|:---:|:---:|
+| <a href="assets/screenshots/home-0.1.16.jpg"><img src="assets/screenshots/home-0.1.16.jpg" width="250" alt="Real noduS home with clock, weather, music controls and favorite apps"></a> | <a href="assets/screenshots/app-drawer-0.1.16.jpg"><img src="assets/screenshots/app-drawer-0.1.16.jpg" width="250" alt="Real noduS alphabetical app drawer with colored dots"></a> | <a href="assets/screenshots/about-0.1.16.jpg"><img src="assets/screenshots/about-0.1.16.jpg" width="250" alt="Real noduS About screen with the magenta logo and usage guide"></a> |
 
 ## Beta testing and downloads
 

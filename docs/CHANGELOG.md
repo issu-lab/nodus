@@ -1,5 +1,13 @@
 # Changelog
 
+## [Screenshot reali nel README] - 2026-10-29
+
+- Aggiunte tre schermate originali fornite dall’utente: home, cassetto app e
+  informazioni, con miniature affiancate e link alle immagini complete.
+- Indicata la versione effettiva delle catture (0.1.16), distinta dalla beta
+  corrente. Esclusa la schermata hub con contenuti delle notifiche.
+- Nessuna modifica all’app o al pacchetto beta.
+
 ## [Prima prerelease GitHub: v0.1.18-beta.1] - 2026-10-29
 
 - Pubblicato il repository pubblico https://github.com/issu-lab/nodus con storia

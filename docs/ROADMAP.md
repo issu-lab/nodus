@@ -11,7 +11,7 @@ richieste di rifinitura. Restano il collaudo completo e le nuove prove della 0.1
 - [ ] Raccogliere i primi beta tester tramite la guida e il modulo feedback,
   includendo dispositivi Android meno recenti. Nessun invito automatico.
 
-- [ ] Completare il collaudo sul telefono e aggiungere screenshot reali.
+- [ ] Completare il collaudo sul telefono e aggiornare gli screenshot alla beta corrente.
 - [ ] Includere e verificare le licenze dei font e le altre attribuzioni nel
   pacchetto Android prima di distribuire un APK.
 - [ ] Verificare la resa README desktop/mobile su GitHub e impostare la social
