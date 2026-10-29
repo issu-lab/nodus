@@ -1,0 +1,10 @@
+{
+  "name": "nodus-artwork-tools",
+  "private": true,
+  "scripts": {
+    "render": "python3 build_graphics.py && node render-assets.cjs"
+  },
+  "devDependencies": {
+    "sharp": "0.35.5"
+  }
+}

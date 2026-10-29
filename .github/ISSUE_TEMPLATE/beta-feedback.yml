@@ -1,0 +1,58 @@
+name: Beta feedback
+description: Report a reproducible problem or a device test result.
+title: "[Beta] "
+body:
+  - type: markdown
+    attributes:
+      value: "Please remove private notification, calendar and location data from attachments."
+  - type: input
+    id: version
+    attributes:
+      label: noduS version
+      placeholder: "0.1.17"
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Phone model and Android version
+    validations:
+      required: true
+  - type: dropdown
+    id: navigation
+    attributes:
+      label: Android navigation
+      options:
+        - Gestures
+        - Three buttons
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: settings
+    attributes:
+      label: Relevant settings and permissions
+      description: Font, spacing, icons/dots, widget destinations and granted permissions.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Screenshots or short recording
+      description: Redact private data first. Please do not upload full system logs.
