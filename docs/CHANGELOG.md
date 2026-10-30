@@ -1,5 +1,16 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.21-beta.1] - 2026-10-30
+
+- Pubblicati sorgenti e documentazione 0.1.21 su issu-lab/nodus, con note sulle
+  dimensioni separate, disposizione super compatta e localizzazione parziale.
+- Pubblicati ZIP beta e SHA256SUMS.txt. APK invariato rispetto alla build locale,
+  con stessa firma per aggiornare le versioni di prova senza disinstallazione.
+- Riscaricato il pacchetto da GitHub: ZIP e APK estratto identici ai locali,
+  entrambi i checksum validi, archivio integro; README remoto identico al locale.
+- Conservati release precedenti e screenshot 0.1.16 con la versione indicata.
+  Le verifiche sul telefono restano aperte nella roadmap.
+
 ## [0.1.21 — impostazioni in italiano e inglese, build locale] - 2026-10-30
 
 - Estratti i testi delle impostazioni in risorse Android: inglese predefinito e

@@ -194,3 +194,7 @@ are not translated. `tests/check_localization.py` validates locale parity,
 format placeholders and source resource references without an Android runtime.
 Settings and their shared welcome/header/music components are localized; other
 home/hub command labels remain Italian in this version.
+
+The current published beta is `v0.1.21-beta.1`. Its ZIP and extracted APK were
+redownloaded from GitHub and matched the local bytes and published SHA-256 sums;
+the remote README was also checked against the source copy.
