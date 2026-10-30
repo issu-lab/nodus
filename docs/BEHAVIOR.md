@@ -10,13 +10,14 @@ non una certificazione di funzionamento sul dispositivo.
 
 ![Logo noduS launcher](../assets/branding/nodus-logo-dark.png)
 
-- Simbolo: **N morbida originale della proposta 03**, con raccordi arrotondati,
-  senza i successivi tagli obliqui o punte sporgenti.
+- Simbolo: **n minuscola con raccordi rifiniti**, approvata il 30 ottobre 2026,
+  morbida e senza tagli.
 - Accento specifico di noduS: **magenta `#F800FF`**, piatto, senza bagliori.
   Non sostituisce il violetto ufficiale iSSU `#D94DFF` negli asset condivisi.
-- Scritta: **noduS**, con S storica iSSU magenta ravvicinata alla u bianca.
+- Scritta: **noduS**, con **nodu magenta** e **S storica iSSU bianca su fondo scuro,
+  nera su fondo chiaro**, mantenendo la distanza approvata tra u e S.
   `launcher` è su una riga separata; sotto compare **iSSU Open Homelab**.
-- L'icona dell'app usa solo la N. Benvenuto e informazioni usano la composizione
+- L'icona dell'app usa solo la n minuscola. Benvenuto e informazioni usano la composizione
   completa; il carattere del marchio resta fisso quando cambia il font della UI.
 - Fondo dell'interfaccia nero pieno; la barra di stato può essere nascosta con
   uno switch nelle impostazioni Home, inizialmente disattivato. IBM Plex Mono

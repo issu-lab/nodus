@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build outlined SVG artwork from the frozen iSSU template and approved noduS mark.
+"""Build outlined SVG artwork from the frozen iSSU template and approved lowercase noduS mark.
 
 Only this project's sources/assets are written. Shared branding masters are not modified.
 """
@@ -46,9 +46,9 @@ def outlined(parent, text, x, y, size, role='title', fill=GRAPHITE):
 
 def project_title(parent, x, y, size, gap):
     # Match the approved tightened u/S spacing, scaled from the 85px logo proof.
-    outlined(parent, 'nodu', x, y, size)
+    outlined(parent, 'nodu', x, y, size, fill=MAGENTA)
     sx = x + size * (203 / 85)
-    element(parent, 'path', d=S_PATH, fill=MAGENTA,
+    element(parent, 'path', d=S_PATH, fill='#000000',
             transform=f'translate({sx} {y-size*.7}) scale({size/1000}) translate(-334 -40)',
             id='nodus-title-s')
     launcher_x = sx + 736 * size / 1000 + gap

@@ -1,6 +1,6 @@
 ![noduS launcher — minimal Android launcher with a notification hub](assets/nodus-banner.png)
 
-![Version 0.1.21](https://img.shields.io/badge/version-0.1.21-151923)
+![Version 0.1.22](https://img.shields.io/badge/version-0.1.22-151923)
 ![Android 8 or newer](https://img.shields.io/badge/Android-8%2B-3DDC84)
 ![Experimental](https://img.shields.io/badge/status-experimental-F800FF)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -16,11 +16,11 @@ inspired by simple launchers and the BlackBerry communications hub.
 | Field | Current state |
 |---|---|
 | Maturity | Experimental |
-| Used on a phone | Initial trials; 0.1.21 device checks pending |
+| Used on a phone | Initial trials; 0.1.22 device checks pending |
 | Recommended for everyday use | Not yet |
 | Setup difficulty | APK installation and manual permissions |
 | Documentation | In progress |
-| Current source version | 0.1.21 — experimental GitHub beta |
+| Current source version | 0.1.22 — experimental GitHub beta |
 | Local checks | 77 Kotlin checks; debug build and Android Lint pass |
 
 > [!WARNING]
@@ -51,7 +51,7 @@ an item in a separate noduS inbox.
 - Swipe music or calendar widgets sideways to hide them temporarily.
 - A setting to show or hide the system status bar throughout noduS.
 - Settings, dialogs and welcome/About follow the Android language: Italian and
-  English, with English as the fallback (0.1.21). Other home/hub commands
+  English, with English as the fallback (since 0.1.21). Other home/hub commands
   still use Italian labels; full interface localization is not complete.
 - Separate sizes for clock, date, weather, battery and signal/Wi-Fi icons, with
   a super compact header preset (clock above; date, weather, signal/Wi-Fi and
@@ -59,7 +59,8 @@ an item in a separate noduS inbox.
 - Separate music and today's calendar widgets, with independent display choices.
 - Dots or original app icons, adjustable text sizes, built-in/system fonts or
   an imported TTF/OTF font, and vertical positioning of the whole home block.
-- A shared welcome and About screen with the approved noduS identity.
+- A shared welcome and About screen with the approved lowercase n identity,
+  magenta nodu and a white/black historic S matching the background.
 
 ### Hub controls
 
@@ -88,8 +89,8 @@ Implementation details are in the [development guide](docs/DEVELOPMENT.md).
 ## Screenshots
 
 Real phone screenshots supplied during testing, captured on version **0.1.16**.
-The current beta is 0.1.21; these images illustrate the appearance, rather than
-confirming the latest gesture fixes. Tap an image to view it at full size.
+The current beta is 0.1.22; these images illustrate the appearance, rather than
+confirming the latest gesture fixes or the current lowercase n branding. Tap an image to view it at full size.
 
 | Home | All apps | About |
 |:---:|:---:|:---:|
@@ -97,7 +98,7 @@ confirming the latest gesture fixes. Tap an image to view it at full size.
 
 ## Beta testing and downloads
 
-[Download noduS 0.1.21 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.21-beta.1/nodus-0.1.21-beta.zip)
+[Download noduS 0.1.22 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.22-beta.1/nodus-0.1.22-beta.zip)
 
 Extract the ZIP and open the included APK on your phone. The package includes
 installation notes and full font license copies. It updates existing test
@@ -183,7 +184,7 @@ Imported fonts are copied into private app storage; the original file is unchang
 ## Limitations
 
 - Initial phone trials provided appearance and interaction feedback.
-  The 0.1.21 changes and full gesture/permission/app integration checks remain
+  The 0.1.22 changes and full gesture/permission/app integration checks remain
   to be tested on the phone.
 - Reply and conversation opening depend on actions supplied by the originating app.
 - The hub filters group summaries and ongoing notifications outside configured

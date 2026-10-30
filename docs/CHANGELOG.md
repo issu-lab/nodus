@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.22 — nuovo marchio approvato, build locale] - 2026-10-30
+
+- Adottata la n minuscola rifinita approvata dall’utente. Scritta nodu #F800FF,
+  S storica bianca su fondo scuro e nera su fondo chiaro, con tracciato e distanza
+  u/S originali preservati. Firma iSSU e geometria condivisa del banner invariate.
+- Aggiornati master SVG, PNG, icona Android adattiva/monocromatica, composizioni
+  Benvenuto/Informazioni, banner e file social preview. Composizione scelta in
+  base allo sfondo Material; il tema dell’app resta scuro.
+- Archiviati localmente gli asset precedenti con N maiuscola, fuori dall’export
+  pubblico; mantenuti gli screenshot storici 0.1.16 con versione indicata.
+- Verificati dimensioni/integrità dei PNG, geometria S, controlli di localizzazione,
+  build debug e Lint (0 errori, 4 avvisi preesistenti). APK 0.1.22 con SHA-256 e
+  firma identica alle versioni precedenti. Verifica visiva sul telefono aperta.
+- Impostazione social preview nei metadati GitHub ancora aperta: browser non
+  autenticato; il nuovo file è pronto per l’upload dalle impostazioni repository.
+
 ## [Prerelease GitHub v0.1.21-beta.1] - 2026-10-30
 
 - Pubblicati sorgenti e documentazione 0.1.21 su issu-lab/nodus, con note sulle

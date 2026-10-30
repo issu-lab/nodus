@@ -9,7 +9,7 @@ in a Play test.
 
 Open [GitHub Releases](https://github.com/issu-lab/nodus/releases) and choose
 the newest beta package. The current beta is
-[0.1.21 beta 1](https://github.com/issu-lab/nodus/releases/tag/v0.1.21-beta.1). Download `nodus-<version>-beta.zip`, extract it and open
+[0.1.22 beta 1](https://github.com/issu-lab/nodus/releases/tag/v0.1.22-beta.1). Download `nodus-<version>-beta.zip`, extract it and open
 the included APK on your phone. The ZIP includes the app, installation notes and
 license notices. A SHA-256 file accompanies the download for integrity checks.
 
@@ -17,7 +17,7 @@ Allow installation from the browser or file manager you use, if Android asks.
 Select **noduS launcher** in Android's default Home app settings. Keep your
 previous launcher installed so you can switch back from those settings.
 
-The current package uses the debug-signed 0.1.21 APK. It can
+The current package uses the debug-signed 0.1.22 APK. It can
 update the existing 0.1.17 test installation because the signing certificate is
 the same. Future packages must preserve the signing identity to update in place;
 a signing change requires a separate migration plan. Do not uninstall an existing

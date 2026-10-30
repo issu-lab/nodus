@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +34,7 @@ fun AppIdentityContent(welcome: Boolean) {
     val context = LocalContext.current; val scope = rememberCoroutineScope()
     val version = remember { try { context.packageManager.getPackageInfo(context.packageName, 0).versionName.orEmpty() } catch (_: Exception) { "—" } }
     Column(Modifier.fillMaxWidth()) {
-        Image(painterResource(R.drawable.nodus_logo), contentDescription = "noduS launcher — iSSU Open Homelab",
+        Image(painterResource(if (MaterialTheme.colorScheme.background.luminance() < .5f) R.drawable.nodus_logo else R.drawable.nodus_logo_light), contentDescription = "noduS launcher — iSSU Open Homelab",
             modifier = Modifier.align(Alignment.CenterHorizontally).width(150.dp).padding(vertical = 12.dp))
         if (!welcome) AppText(context.getString(R.string.ui_version_1_s, version), size = 12, color = Color.Gray, modifier = Modifier.align(Alignment.CenterHorizontally))
         AppText(if (welcome) context.getString(R.string.ui_welcome_to_nodus) else context.getString(R.string.ui_a_place_for_your_communications), size = 14, medium = true, modifier = Modifier.padding(top = 24.dp, bottom = 8.dp))

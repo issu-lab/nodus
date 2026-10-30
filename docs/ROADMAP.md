@@ -154,3 +154,10 @@ supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti
   spaziatura approvata, nome noduS launcher, versione 0.1.18 e benvenuto riapribile.
 - [ ] Verificare navigazione Indietro tra sottopagine delle impostazioni e
   ritorno alla home, scroll e leggibilità sulle dimensioni reali del telefono.
+
+
+## Verifica nuovo marchio 0.1.22
+
+- [ ] Verificare su telefono icona adattiva e monocromatica, benvenuto e
+  Informazioni con la n minuscola. Controllare cache delle icone dopo aggiornamento.
+- [ ] Aggiornare gli screenshot quando l’utente fornisce nuove catture del marchio.
