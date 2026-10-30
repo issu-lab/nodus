@@ -2,13 +2,14 @@
 
 ## Android build
 
-The current source version is **0.1.18**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.21**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
 ```sh
 ./gradlew :app:assembleDebug :app:lintDebug
 python3 tests/run_notification_tests.py
+python3 tests/check_localization.py
 ```
 
 The Python runner uses the already cached Kotlin 1.9.0 compiler; first build the
@@ -29,7 +30,7 @@ zones. They do not test PendingIntent, RemoteInput, permissions or touch gesture
 on Android.
 
 The last implementation check passed debug assembly and Lint (zero errors,
-11 warnings (four existing resource/icon warnings and seven dependency update notices)) in an isolated build copy. The local debug APK in `dist/` has a
+4 existing resource/icon warnings (offline check)) in an isolated build copy. The local debug APK in `dist/` has a
 SHA-256 companion file and is excluded from source commits. The home refinements
 produce a separate 0.1.18 debug APK; the previous APK remains available.
 
@@ -38,6 +39,7 @@ produce a separate 0.1.18 debug APK; the previous APK remains available.
 | Area | Responsibility |
 |---|---|
 | `ui/home/` | Home screen, app refresh and suggestions |
+| `ui/home/HomeHeader.kt` | Shared real/sample header, independent sizes and classic/super compact arrangements and proportional single-line fitting |
 | `home/HomePolicy.kt` | Pure rules for app selection, limits, usage events, calendar and placement |
 | `home/HomeInteractionPolicy.kt` | Swipe geometry and music metadata cleanup |
 | `home/AppDrawerPolicy.kt` | Continuous progress and density-independent distance/velocity decisions |
@@ -180,3 +182,15 @@ Preserve the APK signing identity for updates. Do not generate a new CI debug
 key for each release; a later production signing transition needs an explicit
 migration plan. The current app, minimum Android version and signing keys are
 unchanged by this preparation.
+
+## Settings localization
+
+English defaults live in `values/ui_strings.xml`; Italian overrides are in
+`values-it/ui_strings.xml`. Android resolves the locale when activities are
+created. No manual language preference or forced process locale is used.
+Dynamic settings callbacks use their current activity context; plural messages
+use Android quantity resources. Brand names and stored preference/route keys
+are not translated. `tests/check_localization.py` validates locale parity,
+format placeholders and source resource references without an Android runtime.
+Settings and their shared welcome/header/music components are localized; other
+home/hub command labels remain Italian in this version.

@@ -34,28 +34,28 @@ fun AppIdentityContent(welcome: Boolean) {
     Column(Modifier.fillMaxWidth()) {
         Image(painterResource(R.drawable.nodus_logo), contentDescription = "noduS launcher — iSSU Open Homelab",
             modifier = Modifier.align(Alignment.CenterHorizontally).width(150.dp).padding(vertical = 12.dp))
-        if (!welcome) AppText("Versione $version", size = 12, color = Color.Gray, modifier = Modifier.align(Alignment.CenterHorizontally))
-        AppText(if (welcome) "Benvenuto in noduS" else "Un posto per le comunicazioni", size = 14, medium = true, modifier = Modifier.padding(top = 24.dp, bottom = 8.dp))
-        AppText("Una home essenziale e un hub per le notifiche attive. Le app a portata di mano, le comunicazioni in un unico elenco.", size = 12, color = Color.LightGray)
+        if (!welcome) AppText(context.getString(R.string.ui_version_1_s, version), size = 12, color = Color.Gray, modifier = Modifier.align(Alignment.CenterHorizontally))
+        AppText(if (welcome) context.getString(R.string.ui_welcome_to_nodus) else context.getString(R.string.ui_a_place_for_your_communications), size = 14, medium = true, modifier = Modifier.padding(top = 24.dp, bottom = 8.dp))
+        AppText(context.getString(R.string.ui_a_minimal_home_and_a_hub_for), size = 12, color = Color.LightGray)
         listOf(
-            "Tocca una notifica" to "Apri il contenuto nell’app.",
-            "Tieni premuto" to "Rispondi dall’hub, se supportato.",
-            "Scorri a destra o sinistra" to "Elimina la notifica anche da Android.",
-            "Indietro o swipe destro nel vuoto" to "Torna alla home."
+            context.getString(R.string.ui_tap_a_notification) to context.getString(R.string.ui_open_its_content_in_the_app),
+            context.getString(R.string.ui_touch_and_hold) to context.getString(R.string.ui_reply_from_the_hub_when_supported),
+            context.getString(R.string.ui_swipe_left_or_right) to context.getString(R.string.ui_dismiss_the_notification_in_android_too),
+            context.getString(R.string.ui_back_or_swipe_right_on_empty_space) to context.getString(R.string.ui_return_home)
         ).forEach { (title, detail) ->
             AppText(title, modifier = Modifier.padding(top = 16.dp))
             AppText(detail, size = 12, color = Color.Gray, modifier = Modifier.padding(top = 2.dp))
         }
         if (!welcome) {
-            AppText("La tua home", size = 14, medium = true, modifier = Modifier.padding(top = 24.dp, bottom = 8.dp))
-            AppText("Preferiti nel tuo ordine, poi le app più usate. Musica, eventi di oggi e meteo opzionali. Font, dimensioni, icone e posizione verticale regolabili.", size = 12, color = Color.LightGray)
-            TextButton(onClick = { runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://open-meteo.com/"))) } }) { AppText("Meteo: Open-Meteo · CC BY 4.0", size = 11, color = Accent) }
+            AppText(context.getString(R.string.ui_your_home), size = 14, medium = true, modifier = Modifier.padding(top = 24.dp, bottom = 8.dp))
+            AppText(context.getString(R.string.ui_favorites_in_your_order_followed_by_your), size = 12, color = Color.LightGray)
+            TextButton(onClick = { runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://open-meteo.com/"))) } }) { AppText(context.getString(R.string.ui_weather_open_meteo_cc_by_4_0), size = 11, color = Accent) }
         }
-        AppText("Scorri verso l’alto nella home per tutte le app, partendo lontano dai bordi di Android.", size = 12, color = Color.LightGray, modifier = Modifier.padding(top = 20.dp))
-        AppText("Tieni premuto sull’ora o su un’area vuota della home per le impostazioni.", size = 12, color = Color.LightGray, modifier = Modifier.padding(top = 20.dp))
+        AppText(context.getString(R.string.ui_swipe_up_inside_home_to_see_all), size = 12, color = Color.LightGray, modifier = Modifier.padding(top = 20.dp))
+        AppText(context.getString(R.string.ui_hold_the_clock_or_an_empty_area), size = 12, color = Color.LightGray, modifier = Modifier.padding(top = 20.dp))
         TextButton(onClick = {
             if (welcome) scope.launch { Prefs(context).setFirstRun(false); (context as? Activity)?.finish() }
             else context.startActivity(Intent(context, WelcomeActivity::class.java))
-        }, modifier = Modifier.padding(top = 16.dp)) { AppText(if (welcome) "Inizia" else "Rivedi il benvenuto", color = Accent) }
+        }, modifier = Modifier.padding(top = 16.dp)) { AppText(if (welcome) context.getString(R.string.ui_get_started) else context.getString(R.string.ui_show_welcome_again), color = Accent) }
     }
 }

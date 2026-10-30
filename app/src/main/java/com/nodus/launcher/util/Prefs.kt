@@ -17,7 +17,9 @@ data class UiSettings(
     val music: String = "home", val calendar: String = "hub", val calendarIds: String = "*",
     val dots: Boolean = true, val dotSize: Int = 8, val dotUniform: Boolean = false,
     val dotColor: Int = 0xFFF800FF.toInt(), val font: String = "default", val fontFile: String = "",
-    val homeText: Int = 16, val hubText: Int = 13
+    val homeText: Int = 16, val hubText: Int = 13,
+    val compactHeader: Boolean = false, val clockSize: Int = 42, val dateSize: Int = 14,
+    val weatherSize: Int = 14, val batterySize: Int = 16, val signalSize: Int = 18
 ) {
     companion object {
         fun onHome(destination: String) = destination == "home" || destination == "both"
@@ -32,6 +34,12 @@ class Prefs(context: Context) {
         count = (p[intPreferencesKey("visible_apps_count")] ?: 8).coerceAtLeast(1),
         padding = (p[intPreferencesKey("home_top_padding")] ?: 0).coerceIn(0, 400),
         homeSpacing = (p[intPreferencesKey("home_spacing")] ?: 20).coerceIn(0, 32),
+        compactHeader = p[booleanPreferencesKey("compact_header")] ?: false,
+        clockSize = (p[intPreferencesKey("clock_size")] ?: 42).coerceIn(18, 64),
+        dateSize = (p[intPreferencesKey("date_size")] ?: 14).coerceIn(10, 28),
+        weatherSize = (p[intPreferencesKey("weather_size")] ?: 14).coerceIn(10, 28),
+        batterySize = (p[intPreferencesKey("battery_size")] ?: 16).coerceIn(10, 28),
+        signalSize = (p[intPreferencesKey("signal_size")] ?: 18).coerceIn(12, 32),
         clock = p[booleanPreferencesKey("show_clock")] ?: true,
         date = p[booleanPreferencesKey("show_date")] ?: true,
         battery = p[booleanPreferencesKey("show_battery")] ?: true,
@@ -98,6 +106,14 @@ class Prefs(context: Context) {
             } else retained
             p[stringPreferencesKey("favorite_order")] = next.joinToString("\n")
             p[stringSetPreferencesKey("favorites")] = next.toSet()
+        }
+    }
+    suspend fun headerPreset(compact: Boolean) {
+        store.edit { p ->
+            p[booleanPreferencesKey("compact_header")] = compact
+            val values = if (compact) listOf(24, 12, 12, 12, 14) else listOf(42, 14, 14, 16, 18)
+            listOf("clock_size", "date_size", "weather_size", "battery_size", "signal_size")
+                .zip(values).forEach { (key, value) -> p[intPreferencesKey(key)] = value }
         }
     }
     suspend fun resetAppearance() {

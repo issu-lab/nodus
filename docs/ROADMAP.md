@@ -4,7 +4,7 @@ Sole attività approvate e ancora aperte. Le specifiche e il logo approvato sono
 nel [riferimento di comportamento](BEHAVIOR.md); presentazione e stato sono
 nel [README](../README.md). Le funzionalità approvate sono implementate localmente.
 Il primo collaudo della 0.1.11 sul telefono ha fornito riscontri visivi e
-richieste di rifinitura. Restano il collaudo completo e le nuove prove della 0.1.18.
+richieste di rifinitura. Restano il collaudo completo e le nuove prove della 0.1.21.
 
 ## Preparazione della futura pubblicazione
 
@@ -22,7 +22,7 @@ sono distribuite come prerelease; nessuna pubblicazione sul Play Store.
 
 ## Priorità: collaudo dell'hub sul telefono
 
-Il prototipo 0.1.18 è compilato localmente; 77 test Kotlin e Android Lint
+Il prototipo 0.1.21 è compilato localmente; 77 test Kotlin e Android Lint
 supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti:
 
 - [ ] Provare accesso concesso/negato/revocato, disconnessione, riconnessione,
@@ -43,6 +43,20 @@ supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti
   arrivi senza salti nella lettura e «Nuove notifiche», anche con tante righe.
 
 ## Collaudo home e impostazioni
+
+- [ ] Collaudare impostazioni 0.1.21 con italiano, inglese e una lingua non
+  tradotta (ripiego inglese): cambio lingua Android e rientro, dialoghi,
+  messaggi, singolare/plurale, anteprime e Informazioni/Benvenuto, con font
+  pixel/grandi e su telefoni meno recenti. Verificare preferenze invariate.
+
+
+- [ ] Collaudare la 0.1.20: dimensioni indipendenti, layout originale/super compatto,
+  anteprima durante i cursori, persistenza e ripristino senza perdere le altre
+  impostazioni. Provare font pixel, scala caratteri Android, schermi stretti,
+  rotazione e tutti i controlli disattivati; nessuna sovrapposizione o scroll home.
+  Verificare ordine/allineamento e riduzione proporzionale della singola riga
+  con meteo assente/obsoleto e lettore di schermo.
+
 
 - [ ] Verificare chiusura del cassetto trascinando verso il basso oltre le prime
   app: elenco lungo/corto, arrivo in cima durante lo stesso gesto, gesto breve

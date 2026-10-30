@@ -1,5 +1,7 @@
 package com.nodus.launcher.ui.home
 
+import androidx.compose.ui.platform.LocalContext
+import com.nodus.launcher.R
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,8 +26,9 @@ import com.nodus.launcher.widgets.MusicEntry
 @Composable
 fun MusicWidget(entry: MusicEntry, modifier: Modifier = Modifier, open: () -> Unit, control: (String) -> Unit) {
     val spacing = LocalAppStyle.current.settings.homeSpacing
+    val context = LocalContext.current
     Column(modifier.fillMaxWidth().padding(top = HomePolicy.spacing(spacing, 12f).dp, bottom = HomePolicy.spacing(spacing, 4f).dp)) {
-        Column(Modifier.fillMaxWidth().clickable(onClickLabel = "Apri lettore musicale", onClick = open)) {
+        Column(Modifier.fillMaxWidth().clickable(onClickLabel = context.getString(R.string.ui_open_music_player), onClick = open)) {
             Text(entry.title, fontFamily = LocalAppStyle.current.family,
                 fontSize = LocalAppStyle.current.settings.homeText.sp, color = Color.White,
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -34,12 +37,12 @@ fun MusicWidget(entry: MusicEntry, modifier: Modifier = Modifier, open: () -> Un
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            AppText(if (entry.paused) "In pausa" else "In riproduzione", size = 11,
+            AppText(if (entry.paused) context.getString(R.string.ui_paused) else context.getString(R.string.ui_playing), size = 11,
                 color = Color.Gray, modifier = Modifier.weight(1f))
-            MusicButton("previous", "Brano precedente", entry.previous) { control("previous") }
+            MusicButton("previous", context.getString(R.string.ui_previous_track), entry.previous) { control("previous") }
             MusicButton(if (entry.paused) "play" else "pause",
-                if (entry.paused) "Riprendi riproduzione" else "Pausa", entry.toggle) { control("toggle") }
-            MusicButton("next", "Brano successivo", entry.next) { control("next") }
+                if (entry.paused) context.getString(R.string.ui_resume_playback) else context.getString(R.string.ui_pause), entry.toggle) { control("toggle") }
+            MusicButton("next", context.getString(R.string.ui_next_track), entry.next) { control("next") }
         }
     }
 }

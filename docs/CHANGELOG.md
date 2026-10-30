@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.1.21 — impostazioni in italiano e inglese, build locale] - 2026-10-30
+
+- Estratti i testi delle impostazioni in risorse Android: inglese predefinito e
+  italiano in values-it, selezionati dalla lingua Android senza preferenze nuove.
+- Tradotti sottopagine, dialoghi, permessi, errori font, anteprime, destinazioni,
+  riordino accessibile e Informazioni/Benvenuto. Localizzati anche i controlli
+  musica e le descrizioni meteo nei componenti condivisi con le anteprime.
+- Gestita la quantità dei preferiti con plurali Android; nomi app, calendari,
+  font importati e chiavi delle preferenze restano invariati.
+- Verificati copertura dei cataloghi, parametri e riferimenti dalle sorgenti;
+  controllate risorse italiane/inglesi nell’APK con aapt dump --values resources.
+- Superati 77 test Kotlin, build debug e Lint (0 errori, 4 avvisi preesistenti).
+  APK 0.1.21 locale con SHA-256 e stessa firma delle versioni precedenti.
+- Cambio lingua e resa sul telefono ancora da provare. Altri comandi home/hub
+  restano italiani; nessun push o release. Conservati gli artefatti preesistenti.
+
+## [0.1.20 — disposizione super compatta, build locale] - 2026-10-30
+
+- Sostituita la precedente disposizione compatta: ora sopra; data, meteo,
+  segnale/Wi-Fi e batteria sotto, su una sola riga allineata a sinistra.
+- Il meteo super compatto mostra icona e temperatura; disponibilità e stato
+  obsoleto sono descritti anche per l’accessibilità. Il layout attuale è invariato.
+- La riga si adatta proporzionalmente allo spazio senza andare a capo; restano
+  dimensioni indipendenti, anteprima, visibilità dei singoli elementi e ripristino.
+- Verificati 77 test Kotlin, build debug e Lint (0 errori, 4 avvisi preesistenti).
+  APK locale 0.1.20 con SHA-256 e stessa firma delle versioni di prova precedenti.
+  Leggibilità e interazione sul telefono restano da collaudare nella roadmap.
+- Nessun push o release; conservati APK e artefatti preesistenti.
+
+## [0.1.19 — dimensioni separate e area superiore compatta, build locale] - 2026-10-30
+
+- Aggiunti controlli persistenti separati per ora, data, meteo, batteria e icone
+  segnale/Wi-Fi in Impostazioni → Home, con anteprima immediata a dati di esempio.
+- Aggiunto preset compatto (ora/indicatori sopra, data/meteo sotto) e ripristino
+  dedicato delle dimensioni/disposizione, senza modificare le altre impostazioni.
+  Layout e dimensioni precedenti rimangono predefiniti per le installazioni esistenti.
+- Estratto il componente superiore condiviso tra home e anteprima; adattamento
+  delle righe allo spazio disponibile. Nessun accesso rete/posizione dall’anteprima.
+- Verificati 77 test Kotlin, build debug e Lint (0 errori, 4 avvisi preesistenti).
+  APK locale 0.1.19 con SHA-256; verifica visiva/tattile sul telefono aperta.
+- Conservati APK precedenti e artefatti preesistenti; nessuna pubblicazione remota
+  della 0.1.19 durante questa implementazione.
+
 ## [Screenshot reali nel README] - 2026-10-29
 
 - Aggiunte tre schermate originali fornite dall’utente: home, cassetto app e

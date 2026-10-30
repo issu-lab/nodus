@@ -262,3 +262,40 @@ Se un dato non è accessibile, non viene inventato: il segnale sconosciuto è
 rappresentato come non disponibile; i widget senza contenuti scompaiono. Il meteo
 conserva l'ultima risposta in cache, indicando errore o età eccessiva (oltre
 90 minuti); tentativi distanziati e timeout evitano richieste continue.
+
+### Dimensioni e disposizione dell’area superiore
+
+In Impostazioni → Home, ora, data, meteo, batteria e icone segnale/Wi-Fi hanno
+regolazioni indipendenti. Il meteo adatta anche icona e testi secondari; segnale
+e Wi-Fi condividono la stessa dimensione. Le dimensioni del testo sono in sp,
+quelle delle icone di connessione in dp.
+
+Il layout attuale resta predefinito (42/14/14/16 sp e icone 18 dp). La disposizione
+super compatta mette l’ora sopra e data, meteo (icona e temperatura), segnale/Wi-Fi
+e batteria sotto, in quest’ordine, su una sola riga allineata a sinistra. Il cambio disposizione applica le dimensioni iniziali
+24/12/12/12 sp e icone 14 dp, oppure i valori attuali tornando al layout originale.
+Le successive regolazioni restano indipendenti e persistono al riavvio.
+
+L’anteprima con dati di esempio segue i cursori e gli elementi abilitati,
+senza attivare accessi a posizione o rete. Ripristina area superiore riporta
+layout e dimensioni originali preservando font, visibilità, preferiti, widget e
+posizione verticale della home. La home resta fissa e l’intero blocco continua
+ad adattarsi allo spazio. Nel layout attuale le righe possono andare a capo. In super compatta la riga
+inferiore si riduce proporzionalmente se necessario, senza andare a capo; i valori
+configurati restano memorizzati. Il meteo testuale si applica al layout attuale,
+mentre la super compatta usa sempre icona e temperatura, con stato di aggiornamento
+disponibile alla lettura accessibile.
+Sono disponibili due disposizioni: attuale e super compatta.
+
+### Lingua delle impostazioni
+
+Impostazioni, sottopagine, dialoghi e messaggi seguono la lingua risolta da
+Android. Le risorse predefinite sono inglesi (`values`), con traduzioni italiane
+in `values-it`; non si modifica né si memorizza la lingua nelle preferenze.
+Un aggiornamento conserva le impostazioni esistenti. Nomi di app, calendari,
+contenuti delle notifiche e font importati restano i dati originali.
+
+Sono localizzati anche Informazioni/Benvenuto, controlli musica e testi meteo
+nell’area superiore/anteprime. Questa modifica riguarda le impostazioni e i
+componenti condivisi citati; gli altri comandi della home e dell’hub conservano
+per ora i testi italiani. Le date continuano a usare i formati di sistema.
