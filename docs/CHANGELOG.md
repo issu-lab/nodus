@@ -1,5 +1,16 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.22-beta.1] - 2026-10-30
+
+- Pubblicati nuovo marchio, banner, asset chiari/scuri, sorgenti e documentazione.
+- Pubblicata beta 0.1.22 con ZIP, APK e SHA256SUMS.txt; riscaricati da GitHub:
+  ZIP e APK identici ai locali e checksum validi. Banner e file social remoto
+  verificati byte per byte contro gli asset approvati.
+- Superati anche i 77 test Kotlin di regressione e il controllo localizzazione.
+- Verificata la presenza del README e del link 0.1.22 nella pagina pubblica.
+  Impostazione social preview nei metadati ancora aperta per login browser
+  mancante; nessuna modifica ad altre impostazioni dell’account.
+
 ## [0.1.22 — nuovo marchio approvato, build locale] - 2026-10-30
 
 - Adottata la n minuscola rifinita approvata dall’utente. Scritta nodu #F800FF,

@@ -143,7 +143,7 @@ only if it exceeds the available height. All apps and the hub remain scrollable.
 System Back or the Home button inside the app list returns to home. Android
 navigation gestures remain enabled.
 Settings are grouped into Home, Notification hub, Appearance and About.
-The current interface is in Italian.
+Settings and welcome/About follow Italian or English according to Android; other home/hub commands still use Italian.
 
 | Setting or access | Purpose |
 |---|---|

@@ -208,3 +208,8 @@ creates theme-specific lockups and Android PNG resources. The app chooses the
 lockup from its Material background luminance (the current app theme remains dark).
 Historic uppercase assets are archived only in the original working copy's
 `design-studies/uppercase-n-approved-2026-10-29`, outside the publication export.
+
+The current beta `v0.1.22-beta.1` includes the approved lowercase n. Its downloaded
+ZIP/APK and remote banner/social asset bytes match the local files and checksums.
+The social preview PNG is published as an asset; selecting it in repository
+Settings remains pending because the browser session is not authenticated.
