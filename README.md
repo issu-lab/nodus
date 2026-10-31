@@ -88,13 +88,18 @@ Implementation details are in the [development guide](docs/DEVELOPMENT.md).
 
 ## Screenshots
 
-Real phone screenshots supplied during testing, captured on version **0.1.16**.
-The current beta is 0.1.22; these images illustrate the appearance, rather than
-confirming the latest gesture fixes or the current lowercase n branding. Tap an image to view it at full size.
+Real phone screenshots supplied during testing, captured on **0.1.22** with a
+user-imported pixel font (not bundled with noduS). They show the current lowercase
+n branding and both home layouts. The 0.1.23 fixes are not represented in these
+captures. Tap an image to view it at full size.
 
-| Home | All apps | About |
+| Super compact home | Standard home | All apps |
 |:---:|:---:|:---:|
-| <a href="assets/screenshots/home-0.1.16.jpg"><img src="assets/screenshots/home-0.1.16.jpg" width="250" alt="Real noduS home with clock, weather, music controls and favorite apps"></a> | <a href="assets/screenshots/app-drawer-0.1.16.jpg"><img src="assets/screenshots/app-drawer-0.1.16.jpg" width="250" alt="Real noduS alphabetical app drawer with colored dots"></a> | <a href="assets/screenshots/about-0.1.16.jpg"><img src="assets/screenshots/about-0.1.16.jpg" width="250" alt="Real noduS About screen with the magenta logo and usage guide"></a> |
+| <a href="assets/screenshots/home-super-compact-0.1.22.jpg"><img src="assets/screenshots/home-super-compact-0.1.22.jpg" width="250" alt="Real noduS 0.1.22 super compact home with an imported pixel font"></a> | <a href="assets/screenshots/home-standard-0.1.22.jpg"><img src="assets/screenshots/home-standard-0.1.22.jpg" width="250" alt="Real noduS 0.1.22 standard home with an imported pixel font"></a> | <a href="assets/screenshots/app-drawer-0.1.22.jpg"><img src="assets/screenshots/app-drawer-0.1.22.jpg" width="250" alt="Real noduS 0.1.22 all apps with an imported pixel font"></a> |
+
+| Header settings | Appearance | About |
+|:---:|:---:|:---:|
+| <a href="assets/screenshots/header-settings-0.1.22.jpg"><img src="assets/screenshots/header-settings-0.1.22.jpg" width="250" alt="Real noduS 0.1.22 header settings with an imported pixel font"></a> | <a href="assets/screenshots/appearance-0.1.22.jpg"><img src="assets/screenshots/appearance-0.1.22.jpg" width="250" alt="Real noduS 0.1.22 appearance with an imported pixel font"></a> | <a href="assets/screenshots/about-0.1.22.jpg"><img src="assets/screenshots/about-0.1.22.jpg" width="250" alt="Real noduS 0.1.22 about with an imported pixel font"></a> |
 
 ## Beta testing and downloads
 

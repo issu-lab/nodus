@@ -1,5 +1,13 @@
 # Changelog
 
+## [Screenshot reali 0.1.22 con font pixel] - 2026-10-31
+
+- Aggiornata la galleria con sei catture originali fornite dall’utente: home
+  standard/super compatta, cassetto, impostazioni superiori, aspetto e informazioni.
+- Indicati versione 0.1.22 e font importato non incluso nell’app; le foto non
+  attestano le successive correzioni 0.1.23. Esclusa la foto hub con notifiche.
+- Immagini originali conservate byte per byte; i vecchi file restano recuperabili.
+
 ## [Prerelease GitHub v0.1.22-beta.1] - 2026-10-30
 
 - Pubblicati nuovo marchio, banner, asset chiari/scuri, sorgenti e documentazione.
