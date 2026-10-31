@@ -8,6 +8,25 @@
   attestano le successive correzioni 0.1.23. Esclusa la foto hub con notifiche.
 - Immagini originali conservate byte per byte; i vecchi file restano recuperabili.
 
+## [0.1.23 — menu, lingue, indicatori e profili dimensioni, build locale] - 2026-10-31
+
+- Aggiunto spazio iniziale non interrompibile ai testi dei menu impostazioni,
+  limitato a questa superficie per preservare l’allineamento della home.
+- Localizzati comandi, conteggi e stati di home e hub, risposta diretta, conferme,
+  accessibilità e messaggi dei widget. Contenuti e nomi delle app restano originali.
+- Lo stato Wi-Fi verifica radio abilitata e rete connessa, con broadcast sistema,
+  callback e riallineamento periodico. Modalità aereo invalida il segnale cellulare;
+  il Wi-Fi riattivato in aereo resta ammesso se effettivamente connesso.
+- Aggiunta icona batteria con riempimento del livello e fulmine nello stato
+  CHARGING; percentuale conservata. Stato letto anche dal broadcast sticky.
+- Dimensioni indipendenti e persistenti per layout standard e super compatto,
+  con migrazione delle preferenze precedenti; reset dedicato di entrambi i profili.
+- Superati 82 test Kotlin (5 nuovi sui profili), controllo locale dei cataloghi,
+  build debug e Lint (0 errori, 4 avvisi preesistenti). APK 0.1.23 locale con
+  checksum e stessa firma delle versioni precedenti; artefatti estranei conservati.
+- Menu pixel, cambio radio/carica e migrazione reale sul telefono restano da
+  collaudare. Nessuna pubblicazione remota dell’app durante questa correzione.
+
 ## [Prerelease GitHub v0.1.22-beta.1] - 2026-10-30
 
 - Pubblicati nuovo marchio, banner, asset chiari/scuri, sorgenti e documentazione.

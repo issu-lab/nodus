@@ -33,7 +33,7 @@
     <string name="ui_hide_status_bar">Nascondi barra di stato</string>
     <string name="ui_clock">Ora</string>
     <string name="ui_date">Data</string>
-    <string name="ui_battery_percentage">Batteria · percentuale</string>
+    <string name="ui_battery_percentage">Batteria · icona e percentuale</string>
     <string name="ui_signal_and_wi_fi_icons_only">Segnale e Wi-Fi · solo icone</string>
     <string name="ui_weather">Meteo accanto all’ora</string>
     <string name="ui_text_only_weather_standard_layout">Meteo solo testuale</string>
@@ -41,7 +41,7 @@
     <string name="ui_allow_location_access">Autorizza posizione</string>
     <string name="ui_header_sizes_and_layout">Dimensioni e disposizione superiori</string>
     <string name="ui_super_compact_layout">Disposizione super compatta</string>
-    <string name="ui_super_compact_clock_above_date_weather_signal">Super compatta: ora sopra; data, meteo, segnale/Wi-Fi e batteria sotto su una sola riga, allineati a sinistra. Il meteo mostra icona e temperatura. La riga si riduce proporzionalmente se lo spazio non basta. Cambiare disposizione applica le dimensioni iniziali, poi regolabili separatamente.</string>
+    <string name="ui_super_compact_clock_above_date_weather_signal">Super compatta: ora sopra; data, meteo, segnale/Wi-Fi e batteria sotto su una sola riga, allineati a sinistra. Il meteo mostra icona e temperatura. La riga si riduce proporzionalmente se lo spazio non basta. Ogni disposizione conserva le proprie dimensioni quando passi da una all’altra.</string>
     <string name="ui_clock_size">Dimensione ora</string>
     <string name="ui_date_size">Dimensione data</string>
     <string name="ui_weather_size">Dimensione meteo</string>

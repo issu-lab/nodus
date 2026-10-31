@@ -1,5 +1,7 @@
 package com.nodus.launcher.ui.home
 
+import androidx.compose.ui.platform.LocalContext
+import com.nodus.launcher.R
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +20,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun DismissibleHomeWidget(identity: String, name: String, onDismiss: () -> Unit, content: @Composable () -> Unit) {
+    val context = LocalContext.current
     var offset by remember(identity) { mutableFloatStateOf(0f) }
     val dismiss by rememberUpdatedState(onDismiss)
     val threshold = with(LocalDensity.current) { 72.dp.toPx() }
@@ -34,6 +37,6 @@ fun DismissibleHomeWidget(identity: String, name: String, onDismiss: () -> Unit,
                 onDragCancel = { offset = 0f }
             )
         }.semantics {
-            customActions = listOf(CustomAccessibilityAction("Nascondi widget $name") { dismiss(); true })
+            customActions = listOf(CustomAccessibilityAction(context.getString(R.string.ui_hide_widget, name)) { dismiss(); true })
         }) { content() }
 }

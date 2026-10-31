@@ -2,6 +2,7 @@ package com.nodus.launcher.util
 
 import android.content.Context
 import com.nodus.launcher.home.HomePolicy
+import com.nodus.launcher.home.HeaderSizes
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.catch
@@ -35,11 +36,11 @@ class Prefs(context: Context) {
         padding = (p[intPreferencesKey("home_top_padding")] ?: 0).coerceIn(0, 400),
         homeSpacing = (p[intPreferencesKey("home_spacing")] ?: 20).coerceIn(0, 32),
         compactHeader = p[booleanPreferencesKey("compact_header")] ?: false,
-        clockSize = (p[intPreferencesKey("clock_size")] ?: 42).coerceIn(18, 64),
-        dateSize = (p[intPreferencesKey("date_size")] ?: 14).coerceIn(10, 28),
-        weatherSize = (p[intPreferencesKey("weather_size")] ?: 14).coerceIn(10, 28),
-        batterySize = (p[intPreferencesKey("battery_size")] ?: 16).coerceIn(10, 28),
-        signalSize = (p[intPreferencesKey("signal_size")] ?: 18).coerceIn(12, 32),
+        clockSize = HeaderSizes.read(p[booleanPreferencesKey("compact_header")] ?: false, "clock_size") { p[intPreferencesKey(it)] },
+        dateSize = HeaderSizes.read(p[booleanPreferencesKey("compact_header")] ?: false, "date_size") { p[intPreferencesKey(it)] },
+        weatherSize = HeaderSizes.read(p[booleanPreferencesKey("compact_header")] ?: false, "weather_size") { p[intPreferencesKey(it)] },
+        batterySize = HeaderSizes.read(p[booleanPreferencesKey("compact_header")] ?: false, "battery_size") { p[intPreferencesKey(it)] },
+        signalSize = HeaderSizes.read(p[booleanPreferencesKey("compact_header")] ?: false, "signal_size") { p[intPreferencesKey(it)] },
         clock = p[booleanPreferencesKey("show_clock")] ?: true,
         date = p[booleanPreferencesKey("show_date")] ?: true,
         battery = p[booleanPreferencesKey("show_battery")] ?: true,
@@ -65,7 +66,12 @@ class Prefs(context: Context) {
     val favoriteOrder = data.map(::ordered)
     val firstRun = data.map { it[booleanPreferencesKey("first_run")] ?: true }
     suspend fun bool(key: String, value: Boolean) { store.edit { it[booleanPreferencesKey(key)] = value } }
-    suspend fun number(key: String, value: Int) { store.edit { it[intPreferencesKey(key)] = value } }
+    suspend fun number(key: String, value: Int) {
+        store.edit { p ->
+            val stored = if (key in HeaderSizes.keys) HeaderSizes.key(p[booleanPreferencesKey("compact_header")] ?: false, key) else key
+            p[intPreferencesKey(stored)] = value
+        }
+    }
     suspend fun text(key: String, value: String) { store.edit { it[stringPreferencesKey(key)] = value } }
     suspend fun setFirstRun(value: Boolean) = bool("first_run", value)
     suspend fun setVisibleAppsCount(count: Int): Boolean {
@@ -110,10 +116,23 @@ class Prefs(context: Context) {
     }
     suspend fun headerPreset(compact: Boolean) {
         store.edit { p ->
-            p[booleanPreferencesKey("compact_header")] = compact
-            val values = if (compact) listOf(24, 12, 12, 12, 14) else listOf(42, 14, 14, 16, 18)
-            listOf("clock_size", "date_size", "weather_size", "battery_size", "signal_size")
-                .zip(values).forEach { (key, value) -> p[intPreferencesKey(key)] = value }
+            val previous = p[booleanPreferencesKey("compact_header")] ?: false
+            if (previous != compact) {
+                val snapshot = HeaderSizes.snapshot(previous) { p[intPreferencesKey(it)] }
+                snapshot.forEach { (key, value) -> p[intPreferencesKey(key)] = value }
+                HeaderSizes.keys.forEach { p.remove(intPreferencesKey(it)) }
+                p[booleanPreferencesKey("compact_header")] = compact
+            }
+        }
+    }
+    suspend fun resetHeader() {
+        store.edit { p ->
+            HeaderSizes.keys.forEach { name ->
+                p.remove(intPreferencesKey(name))
+                p.remove(intPreferencesKey(HeaderSizes.key(false, name)))
+                p.remove(intPreferencesKey(HeaderSizes.key(true, name)))
+            }
+            p[booleanPreferencesKey("compact_header")] = false
         }
     }
     suspend fun resetAppearance() {

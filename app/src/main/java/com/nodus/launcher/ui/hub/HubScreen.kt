@@ -1,5 +1,6 @@
 package com.nodus.launcher.ui.hub
 
+import com.nodus.launcher.R
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -90,19 +91,19 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
     fun showResult(result: NotificationActionResult) {
         when (result) {
             NotificationActionResult.SUCCESS -> Unit
-            NotificationActionResult.SENT_NOT_REMOVED -> notify("Risposta inviata. La notifica è cambiata o non è eliminabile.")
-            NotificationActionResult.DISCONNECTED -> notify("Servizio notifiche scollegato.")
-            NotificationActionResult.MISSING -> notify("La notifica non è più disponibile.")
-            NotificationActionResult.CHANGED -> notify("La notifica è stata aggiornata. Riprova dalla voce attuale.")
-            NotificationActionResult.UNSUPPORTED -> notify("Azione non disponibile per questa notifica.")
-            NotificationActionResult.NOT_DISMISSIBLE -> notify("Questa notifica non può essere eliminata.")
+            NotificationActionResult.SENT_NOT_REMOVED -> notify(context.getString(R.string.ui_runtime_reply_sent_the_notification_changed_or_cannot))
+            NotificationActionResult.DISCONNECTED -> notify(context.getString(R.string.ui_runtime_notification_service_disconnected))
+            NotificationActionResult.MISSING -> notify(context.getString(R.string.ui_runtime_the_notification_is_no_longer_available))
+            NotificationActionResult.CHANGED -> notify(context.getString(R.string.ui_runtime_the_notification_was_updated_try_again_from))
+            NotificationActionResult.UNSUPPORTED -> notify(context.getString(R.string.ui_runtime_action_unavailable_for_this_notification))
+            NotificationActionResult.NOT_DISMISSIBLE -> notify(context.getString(R.string.ui_runtime_this_notification_cannot_be_dismissed))
             NotificationActionResult.EMPTY_REPLY -> Unit
-            NotificationActionResult.FAILED -> notify("Operazione non riuscita. Riprova.")
+            NotificationActionResult.FAILED -> notify(context.getString(R.string.ui_runtime_operation_failed_try_again))
         }
     }
     fun beginReply(item: NotificationItem) {
         if (!item.ref.canReply) {
-            notify("Risposta dall’hub non disponibile")
+            notify(context.getString(R.string.ui_runtime_replying_from_the_hub_is_unavailable))
         } else {
             draftKey = item.key
             draftRevision = item.ref.revision
@@ -175,19 +176,19 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
                 TextButton(onClick = { activity?.finish() }, modifier = Modifier.defaultMinSize(minWidth = 1.dp), contentPadding = PaddingValues(0.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(Modifier.width(ContentGrid.IconLane)) { HubText("‹", size = 14) }
-                        HubText("HUB", size = 14)
+                        HubText(context.getString(R.string.ui_runtime_hub), size = 14)
                     }
                 }
                 TextButton(
                     onClick = { clearTargets = notifications.filter { it.ref.dismissible }.map { it.ref } },
                     modifier = Modifier.defaultMinSize(minWidth = 1.dp), contentPadding = PaddingValues(0.dp),
                     enabled = permitted && listener == ListenerState.CONNECTED && notifications.any { it.ref.dismissible }
-                ) { HubText("Cancella tutte", size = 12, color = if (notifications.any { it.ref.dismissible }) Color.White else Color.Gray) }
+                ) { HubText(context.getString(R.string.ui_runtime_clear_all), size = 12, color = if (notifications.any { it.ref.dismissible }) Color.White else Color.Gray) }
             }
             Box(Modifier.fillMaxWidth().height(40.dp), contentAlignment = Alignment.Center) {
                 if (hasNew) TextButton(onClick = {
                     scope.launch { listState.animateScrollToItem(0); hasNew = false }
-                }) { HubText("Nuove notifiche ↑", size = 12) }
+                }) { HubText(context.getString(R.string.ui_runtime_new_notifications), size = 12) }
             }
             Column(Modifier.fillMaxWidth().weight(1f)) {
                 LazyColumn(state = listState, modifier = Modifier.fillMaxWidth(), contentPadding = PaddingValues(bottom = 8.dp)) {
@@ -203,22 +204,22 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
                     when {
                         !permitted -> item(key = "status:permission") {
                             Column {
-                                HubText("Accesso alle notifiche disattivato", color = Color.LightGray)
+                                HubText(context.getString(R.string.ui_runtime_notification_access_disabled), color = Color.LightGray)
                                 TextButton(modifier = Modifier.defaultMinSize(minWidth = 1.dp), contentPadding = PaddingValues(0.dp), onClick = {
                                     try { context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)) }
-                                    catch (_: Exception) { notify("Impossibile aprire le impostazioni Android.") }
-                                }) { HubText("Abilita accesso", size = 12) }
+                                    catch (_: Exception) { notify(context.getString(R.string.ui_runtime_cannot_open_android_settings)) }
+                                }) { HubText(context.getString(R.string.ui_runtime_enable_access), size = 12) }
                             }
                         }
                         listener != ListenerState.CONNECTED -> item(key = "status:connection") {
                             Column {
-                                HubText(if (listener == ListenerState.ERROR) "Impossibile leggere le notifiche" else "Servizio notifiche scollegato", color = Color.LightGray)
+                                HubText(if (listener == ListenerState.ERROR) context.getString(R.string.ui_runtime_cannot_read_notifications) else context.getString(R.string.ui_runtime_notification_service_disconnected_2), color = Color.LightGray)
                                 TextButton(modifier = Modifier.defaultMinSize(minWidth = 1.dp), contentPadding = PaddingValues(0.dp), onClick = {
-                                    if (!NodusNotificationListener.reconnect(context)) notify("Riconnessione non riuscita.")
-                                }) { HubText("Ricollega", size = 12) }
+                                    if (!NodusNotificationListener.reconnect(context)) notify(context.getString(R.string.ui_runtime_reconnection_failed))
+                                }) { HubText(context.getString(R.string.ui_runtime_reconnect), size = 12) }
                             }
                         }
-                        notifications.isEmpty() -> item(key = "status:empty") { HubText("Nessuna notifica", color = Color(0xFF9B9B9B)) }
+                        notifications.isEmpty() -> item(key = "status:empty") { HubText(context.getString(R.string.ui_runtime_no_notifications), color = Color(0xFF9B9B9B)) }
                         else -> items(notifications, key = { it.key }) { item ->
                             NotificationRow(item, defaultLines,
                                 onOpen = {
@@ -239,17 +240,17 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
     clearTargets?.let { targets ->
         AlertDialog(
             onDismissRequest = { clearTargets = null },
-            title = { HubText("Eliminare tutte le notifiche?", size = 16) },
-            text = { HubText("Verranno rimosse anche da Android. Le notifiche non eliminabili restano.") },
+            title = { HubText(context.getString(R.string.ui_runtime_dismiss_all_notifications), size = 16) },
+            text = { HubText(context.getString(R.string.ui_runtime_they_will_also_be_dismissed_in_android)) },
             confirmButton = {
                 TextButton(onClick = {
                     val results = NodusNotificationListener.dismissAll(targets)
                     clearTargets = null
                     val failed = results.count { it !in listOf(NotificationActionResult.SUCCESS, NotificationActionResult.MISSING) }
-                    if (failed > 0) notify("Alcune notifiche sono cambiate o non sono state rimosse. Controlla l’elenco.")
-                }) { HubText("Elimina", color = Color(0xFFF800FF)) }
+                    if (failed > 0) notify(context.getString(R.string.ui_runtime_some_notifications_changed_or_were_not_dismissed))
+                }) { HubText(context.getString(R.string.ui_runtime_dismiss), color = Color(0xFFF800FF)) }
             },
-            dismissButton = { TextButton(onClick = { clearTargets = null }) { HubText("Annulla") } },
+            dismissButton = { TextButton(onClick = { clearTargets = null }) { HubText(context.getString(R.string.ui_runtime_cancel)) } },
             containerColor = Color(0xFF171717)
         )
     }
@@ -259,23 +260,23 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
         val active = permitted && listener == ListenerState.CONNECTED && current != null &&
             current.ref.revision == draftRevision && current.ref.canReply
         val unavailableReason = when {
-            replySent -> "Risposta inviata. La rimozione non è stata completata: controlla la notifica nell’hub."
-            !permitted || listener != ListenerState.CONNECTED -> "Accesso alle notifiche non disponibile. Il testo è conservato."
-            current == null -> "La notifica non è più attiva. Il testo è conservato, l’invio è disabilitato."
-            current.ref.revision != draftRevision -> "La notifica è stata aggiornata. Copia il testo e riapri la risposta dalla voce attuale."
-            !current.ref.canReply -> "Risposta dall’hub non disponibile. Il testo è conservato."
+            replySent -> context.getString(R.string.ui_runtime_reply_sent_dismissal_did_not_finish_check)
+            !permitted || listener != ListenerState.CONNECTED -> context.getString(R.string.ui_runtime_notification_access_unavailable_your_text_has_been)
+            current == null -> context.getString(R.string.ui_runtime_the_notification_is_no_longer_active_your)
+            current.ref.revision != draftRevision -> context.getString(R.string.ui_runtime_the_notification_was_updated_copy_your_text)
+            !current.ref.canReply -> context.getString(R.string.ui_runtime_replying_from_the_hub_is_unavailable_your)
             else -> draftError
         }
         AlertDialog(
             onDismissRequest = { draftKey = null },
-            title = { HubText("Rispondi a $draftTitle", size = 16) },
+            title = { HubText(context.getString(R.string.ui_reply_to, draftTitle), size = 16) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = draftText,
                         onValueChange = { draftText = it; draftError = null },
                         modifier = Modifier.fillMaxWidth(),
-                        label = { HubText("Risposta") },
+                        label = { HubText(context.getString(R.string.ui_runtime_reply)) },
                         textStyle = LocalTextStyle.current.copy(fontFamily = LocalAppStyle.current.family, color = Color.White),
                         minLines = 3,
                         maxLines = 8,
@@ -284,7 +285,7 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
                     if (unavailableReason != null) HubText(unavailableReason, size = 12, color = Color.LightGray)
                     if (draftText.isNotEmpty()) TextButton(onClick = {
                         clipboard.setText(AnnotatedString(draftText))
-                    }) { HubText("Copia testo", size = 12) }
+                    }) { HubText(context.getString(R.string.ui_runtime_copy_text), size = 12) }
                 }
             },
             confirmButton = {
@@ -294,14 +295,14 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
                             NotificationActionResult.SUCCESS -> { draftKey = null; draftText = "" }
                             NotificationActionResult.SENT_NOT_REMOVED -> replySent = true
                             else -> {
-                                draftError = "Invio non riuscito. Il testo è conservato."
+                                draftError = context.getString(R.string.ui_runtime_sending_failed_your_text_has_been_kept)
                                 showResult(result)
                             }
                         }
                     }
-                }) { HubText("Invia", color = if (active && !replySent && draftText.isNotBlank()) Color(0xFFF800FF) else Color.Gray) }
+                }) { HubText(context.getString(R.string.ui_runtime_send), color = if (active && !replySent && draftText.isNotBlank()) Color(0xFFF800FF) else Color.Gray) }
             },
-            dismissButton = { TextButton(onClick = { draftKey = null }) { HubText(if (active && !replySent) "Annulla" else "Chiudi") } },
+            dismissButton = { TextButton(onClick = { draftKey = null }) { HubText(if (active && !replySent) context.getString(R.string.ui_runtime_cancel) else context.getString(R.string.ui_runtime_close)) } },
             containerColor = Color(0xFF171717)
         )
     }
@@ -316,6 +317,7 @@ private fun NotificationRow(
     onReply: (NotificationItem) -> Unit,
     onDismiss: (NotificationItem) -> Unit
 ) {
+    val context = LocalContext.current
     var offsetPx by remember(item.key) { mutableFloatStateOf(0f) }
     var expanded by rememberSaveable(item.key) { mutableStateOf(false) }
     val collapsedLines = rememberSaveable(item.key) { initialLines }
@@ -342,13 +344,13 @@ private fun NotificationRow(
                 )
             }
             .combinedClickable(
-                onClickLabel = "Apri nell’app",
+                onClickLabel = context.getString(R.string.ui_runtime_open_in_app),
                 onClick = { onOpen(item) },
-                onLongClickLabel = "Rispondi nell’hub",
+                onLongClickLabel = context.getString(R.string.ui_runtime_reply_in_hub),
                 onLongClick = { onReply(item) }
             )
             .semantics {
-                customActions = listOf(CustomAccessibilityAction("Elimina notifica") { onDismiss(item); true })
+                customActions = listOf(CustomAccessibilityAction(context.getString(R.string.ui_runtime_dismiss_notification)) { onDismiss(item); true })
             }
             .padding(top = 10.dp, bottom = 12.dp)
     ) {
@@ -368,9 +370,9 @@ private fun NotificationRow(
                 overflow = TextOverflow.Ellipsis,
                 onTextLayout = { if (!expanded) truncated = it.hasVisualOverflow },
                 modifier = Modifier.padding(top = 2.dp))
-            if (truncated && !expanded) TextButton(onClick = { expanded = true }, modifier = Modifier.defaultMinSize(minWidth = 1.dp), contentPadding = PaddingValues(0.dp)) { HubText("Mostra tutto", size = 11) }
+            if (truncated && !expanded) TextButton(onClick = { expanded = true }, modifier = Modifier.defaultMinSize(minWidth = 1.dp), contentPadding = PaddingValues(0.dp)) { HubText(context.getString(R.string.ui_runtime_show_all), size = 11) }
         }
-        if (!item.ref.dismissible) HubText("Non eliminabile", size = 11, color = Color.Gray)
+        if (!item.ref.dismissible) HubText(context.getString(R.string.ui_runtime_cannot_be_dismissed), size = 11, color = Color.Gray)
     }
 }
 

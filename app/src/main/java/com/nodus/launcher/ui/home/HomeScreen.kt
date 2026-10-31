@@ -50,6 +50,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
     val favorites by viewModel.favorites.collectAsState()
     val all by viewModel.allApps.collectAsState()
     val count by NodusNotificationListener.notificationCount.collectAsState()
+    val charging by viewModel.widgets.charging.collectAsState()
     val battery by viewModel.widgets.battery.collectAsState()
     val signal by viewModel.widgets.signal.collectAsState()
     val wifiConnected by viewModel.widgets.wifiConnected.collectAsState()
@@ -74,7 +75,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
     fun launchApp(item: AppItemUi) {
         try { context.startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
             .setComponent(ComponentName(item.app.packageName, item.app.activityName)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
-        catch (_: Exception) { scope.launch { snackbar.showSnackbar("App non disponibile. Aggiorno l’elenco.") }; viewModel.reload() }
+        catch (_: Exception) { scope.launch { snackbar.showSnackbar(context.getString(R.string.ui_runtime_app_unavailable_refreshing_the_list)) }; viewModel.reload() }
     }
     fun openDrawer() {
         drawer.settle(true)
@@ -109,7 +110,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
     }
     LaunchedEffect(favorites.size, config.count) {
         if (favorites.size > config.count) {
-            if (snackbar.showSnackbar("I preferiti superano il limite attuale. Aggiorna le impostazioni.", "Impostazioni") == SnackbarResult.ActionPerformed) openSettings()
+            if (snackbar.showSnackbar(context.getString(R.string.ui_runtime_favorites_exceed_the_current_limit_update_settings), context.getString(R.string.ui_runtime_settings)) == SnackbarResult.ActionPerformed) openSettings()
         }
     }
     BackHandler(enabled = drawerVisible) { drawer.settle(false) }
@@ -132,40 +133,40 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
             onDragEnd = { if (canOpenApps && dx < -80.dp.toPx()) openHub(); dx = 0f }, onDragCancel = { dx = 0f }) }
         .pointerInput(Unit) { detectTapGestures(onLongPress = { if (canOpenApps) openSettings() }) }
         .semantics { customActions = if (drawerVisible) listOf(
-            CustomAccessibilityAction("Torna alla home") { drawer.settle(false); true })
-            else listOf(CustomAccessibilityAction("Apri impostazioni") { openSettings(); true },
-                CustomAccessibilityAction("Apri tutte le app") { openDrawer(); true }) }
+            CustomAccessibilityAction(context.getString(R.string.ui_runtime_return_home)) { drawer.settle(false); true })
+            else listOf(CustomAccessibilityAction(context.getString(R.string.ui_runtime_open_settings)) { openSettings(); true },
+                CustomAccessibilityAction(context.getString(R.string.ui_runtime_open_all_apps)) { openDrawer(); true }) }
     ) {
         val body: @Composable () -> Unit = {
             Column(Modifier.fillMaxWidth().padding(top = HomePolicy.spacing(config.homeSpacing, 8f).dp, bottom = HomePolicy.spacing(config.homeSpacing, 16f).dp)) {
-                HomeHeader(config, now, weather, weatherError, battery, signal, wifiConnected, { openSettings() })
+                HomeHeader(config, now, weather, weatherError, battery, signal, wifiConnected, { openSettings() }, charging = charging)
                 TextButton(onClick = { openHub() }, modifier = Modifier.offset(x = (-10).dp).background(Color(0xFF1A1A1A), androidx.compose.foundation.shape.RoundedCornerShape(4.dp)),
                     contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)) {
-                    AppText(if (count == 0) "Hub notifiche: nessuna notifica" else "Hub notifiche: $count ${if (count == 1) "notifica" else "notifiche"}")
+                    AppText(if (count == 0) context.getString(R.string.ui_runtime_notification_hub_no_notifications) else context.resources.getQuantityString(R.plurals.ui_notification_count, count, count))
                 }
                 if (UiSettings.onHome(config.calendar) && events.isNotEmpty() && !calendarHidden) {
-                    DismissibleHomeWidget(WidgetVisibilityPolicy.fingerprint(today, *eventKeys.sorted().toTypedArray()), "calendario", onDismiss = {
+                    DismissibleHomeWidget(WidgetVisibilityPolicy.fingerprint(today, *eventKeys.sorted().toTypedArray()), context.getString(R.string.ui_runtime_calendar), onDismiss = {
                         hiddenCalendarDay = today; hiddenCalendarEvents = eventKeys
                     }) { Column {
-                    AppText("OGGI", size = 11, color = Color.Gray, modifier = Modifier.padding(top = HomePolicy.spacing(config.homeSpacing, 16f).dp, bottom = HomePolicy.spacing(config.homeSpacing, 4f).dp))
+                    AppText(context.getString(R.string.ui_runtime_today), size = 11, color = Color.Gray, modifier = Modifier.padding(top = HomePolicy.spacing(config.homeSpacing, 16f).dp, bottom = HomePolicy.spacing(config.homeSpacing, 4f).dp))
                     events.forEach { event ->
                         Column(Modifier.fillMaxWidth().combinedClickable(onClick = {
                             try { context.startActivity(Intent(Intent.ACTION_VIEW, ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, event.id)).putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.begin).putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.end)) }
-                            catch (_: Exception) { message("Impossibile aprire il calendario.") }
+                            catch (_: Exception) { message(context.getString(R.string.ui_runtime_cannot_open_the_calendar)) }
                         }).padding(vertical = HomePolicy.spacing(config.homeSpacing, 5f).dp)) {
-                            AppText(if (event.allDay) "Tutto il giorno" else SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(event.begin)), size = 12, color = Color.LightGray)
+                            AppText(if (event.allDay) context.getString(R.string.ui_runtime_all_day) else SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(event.begin)), size = 12, color = Color.LightGray)
                             AppText(event.title, size = 12)
                         }
                     }
                     } }
                 }
                 if (UiSettings.onHome(config.music)) music?.takeUnless { it.visibilityKey == hiddenMusicKey }?.let { entry ->
-                    DismissibleHomeWidget(entry.visibilityKey, "musica", onDismiss = { hiddenMusicKey = entry.visibilityKey }) {
+                    DismissibleHomeWidget(entry.visibilityKey, context.getString(R.string.ui_runtime_music_2), onDismiss = { hiddenMusicKey = entry.visibilityKey }) {
                     MusicWidget(entry, open = {
-                        try { if (entry.activity != null) entry.activity.send() else message("Apertura del lettore non disponibile.") }
-                        catch (_: Exception) { message("Impossibile aprire il lettore.") }
+                        try { if (entry.activity != null) entry.activity.send() else message(context.getString(R.string.ui_runtime_opening_the_player_is_unavailable)) }
+                        catch (_: Exception) { message(context.getString(R.string.ui_runtime_cannot_open_the_player)) }
                     }, control = { command ->
-                        if (!viewModel.widgets.control(command)) message("Controllo musicale non disponibile.")
+                        if (!viewModel.widgets.control(command)) message(context.getString(R.string.ui_runtime_music_control_unavailable))
                     })
                     }
                 }
@@ -193,15 +194,15 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
         SnackbarHost(snackbar, modifier = Modifier.align(Alignment.BottomCenter).zIndex(2f))
     }
     favoriteTarget?.let { item ->
-        AlertDialog(onDismissRequest = { favoriteTarget = null }, title = { AppText(if (item.app.isFavorite) "Rimuovere dai preferiti?" else "Aggiungere ai preferiti?", size = 16) },
+        AlertDialog(onDismissRequest = { favoriteTarget = null }, title = { AppText(if (item.app.isFavorite) context.getString(R.string.ui_runtime_remove_from_favorites) else context.getString(R.string.ui_runtime_add_to_favorites), size = 16) },
             text = { AppText(item.app.label) }, confirmButton = { TextButton(onClick = {
                 scope.launch {
                     if (!viewModel.prefs.toggleFavorite(item.app.packageName)) {
-                        val result = snackbar.showSnackbar("Hai raggiunto il limite. Aumentalo nelle impostazioni o rimuovi un preferito.", "Impostazioni")
+                        val result = snackbar.showSnackbar(context.getString(R.string.ui_runtime_limit_reached_increase_it_in_settings_or), context.getString(R.string.ui_runtime_settings))
                         if (result == SnackbarResult.ActionPerformed) openSettings()
                     }
                 }; favoriteTarget = null
-            }) { AppText("Sì", color = Accent) } }, dismissButton = { TextButton(onClick = { favoriteTarget = null }) { AppText("Annulla") } })
+            }) { AppText(context.getString(R.string.ui_runtime_yes), color = Accent) } }, dismissButton = { TextButton(onClick = { favoriteTarget = null }) { AppText(context.getString(R.string.ui_runtime_cancel)) } })
     }
 }
 

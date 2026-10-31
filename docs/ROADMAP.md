@@ -44,6 +44,16 @@ supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti
 
 ## Collaudo home e impostazioni
 
+- [ ] Collaudare 0.1.23 con il font pixel delle foto: iniziali nei menu senza
+  tagli, lingua coerente su home/hub/dialoghi e nomi/contenuti delle app invariati.
+- [ ] Provare Wi-Fi spento, modalità aereo, Wi-Fi riattivato in modalità aereo,
+  reti senza Internet, rientro nella home e cambi ripetuti: nessuna icona obsoleta.
+- [ ] Provare batteria normale, carica, scollegamento, carica completa, schermo
+  spento/rientro e dimensioni grandi; livello e fulmine coerenti con Android.
+- [ ] Provare migrazione delle dimensioni 0.1.22, personalizzare entrambi i
+  layout e alternarli ripetutamente, riavviare e ripristinare entrambi i profili.
+
+
 - [ ] Collaudare impostazioni 0.1.21 con italiano, inglese e una lingua non
   tradotta (ripiego inglese): cambio lingua Android e rientro, dialoghi,
   messaggi, singolare/plurale, anteprime e Informazioni/Benvenuto, con font

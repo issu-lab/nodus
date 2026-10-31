@@ -1,6 +1,8 @@
 package com.nodus.launcher.ui.settings
 
 import android.os.Bundle
+import androidx.compose.runtime.CompositionLocalProvider
+import com.nodus.launcher.ui.common.LocalMenuLeadingSpace
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +23,7 @@ class SettingsActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.Black
                 ) {
-                    SettingsScreen()
+                    CompositionLocalProvider(LocalMenuLeadingSpace provides true) { SettingsScreen() }
                 }
             }
         }

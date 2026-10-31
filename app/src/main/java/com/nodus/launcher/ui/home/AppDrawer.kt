@@ -1,5 +1,7 @@
 package com.nodus.launcher.ui.home
 
+import androidx.compose.ui.platform.LocalContext
+import com.nodus.launcher.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -26,6 +28,7 @@ import com.nodus.launcher.ui.common.*
 @Composable
 fun AppDrawer(state: AppDrawerState, visible: Boolean, apps: List<AppItemUi>, list: LazyListState,
               close: () -> Unit, open: (AppItemUi) -> Unit, favorite: (AppItemUi) -> Unit) {
+    val context = LocalContext.current
     var height by remember { mutableStateOf(0f) }
     val density = LocalDensity.current.density
     val scrollConnection = remember(state, list, density) {
@@ -55,12 +58,12 @@ fun AppDrawer(state: AppDrawerState, visible: Boolean, apps: List<AppItemUi>, li
     Column(Modifier.fillMaxSize().onSizeChanged { height = it.height.toFloat() }.zIndex(if (visible) 1f else -1f).graphicsLayer { translationY = size.height * (1f - state.progress) }
         .background(Color.Black)
         .pointerInput(Unit) { detectTapGestures(onTap = {}) }
-        .then(if (visible) Modifier.semantics { paneTitle = "Tutte le app" } else Modifier.clearAndSetSemantics {})
+        .then(if (visible) Modifier.semantics { paneTitle = context.getString(R.string.ui_runtime_all_apps) } else Modifier.clearAndSetSemantics {})
         .padding(start = ContentGrid.Outer, end = ContentGrid.End)) {
         TextButton(onClick = close, modifier = Modifier.defaultMinSize(minWidth = 1.dp), contentPadding = PaddingValues(0.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.width(ContentGrid.IconLane)) { AppText("‹") }
-                AppText("HOME")
+                AppText(context.getString(R.string.ui_runtime_home))
             }
         }
         LazyColumn(state = list, modifier = Modifier.fillMaxWidth().weight(1f).nestedScroll(scrollConnection), contentPadding = PaddingValues(bottom = 16.dp)) {

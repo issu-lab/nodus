@@ -1,5 +1,6 @@
 package com.nodus.launcher.widgets
 
+import com.nodus.launcher.R
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.PendingIntent
@@ -16,6 +17,8 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import android.net.wifi.WifiManager
+import android.provider.Settings
 import android.os.*
 import android.provider.CalendarContract
 import android.telephony.*
@@ -58,6 +61,7 @@ data class WeatherEntry(val temperature: Int, val code: Int, val city: String, v
 /** Observers belong to the visible home/hub surface; location is home-only. */
 class DeviceWidgets(private val context: Context, private val scope: CoroutineScope) {
     val battery = MutableStateFlow<Int?>(null)
+    val charging = MutableStateFlow(false)
     val signal = MutableStateFlow<Int?>(null)
     val wifiConnected = MutableStateFlow(false)
     val events = MutableStateFlow<List<CalendarEntry>>(emptyList())
@@ -67,6 +71,7 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
     private val handler = Handler(Looper.getMainLooper())
     private var batteryReceiver: BroadcastReceiver? = null
     private var phoneListener: PhoneStateListener? = null
+    private var radioReceiver: BroadcastReceiver? = null
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
     private val wifiNetworks = mutableSetOf<Network>()
     private var calendarObserver: ContentObserver? = null
@@ -111,11 +116,13 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
             signal.value = null
             try {
                 val listener = object : PhoneStateListener() {
-                    override fun onSignalStrengthsChanged(value: SignalStrength) { signal.value = value.level }
+                    override fun onSignalStrengthsChanged(value: SignalStrength) {
+                        if (running && phoneListener === this) signal.value = if (airplaneMode()) null else value.level
+                    }
                 }
+                phoneListener = listener
                 (context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager)
                     .listen(listener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS)
-                phoneListener = listener
             } catch (_: Exception) { signal.value = null }
         }
         if (onSurface(config.calendar) && permitted(context, Manifest.permission.READ_CALENDAR)) {
@@ -140,6 +147,7 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
     fun tick() {
         if (!running) return
         if (settings.battery && !hubSurface) updateBattery()
+        if (settings.signal && !hubSurface) refreshWifi()
         if (onSurface(settings.calendar)) refreshCalendar()
         if (onSurface(settings.music)) updateMusic()
         if (settings.weather && !hubSurface) refreshWeather()
@@ -151,6 +159,7 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
         networkCallback?.let { callback -> runCatching {
             (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).unregisterNetworkCallback(callback)
         } }; networkCallback = null
+        radioReceiver?.let { runCatching { context.unregisterReceiver(it) } }; radioReceiver = null
         wifiNetworks.clear(); wifiConnected.value = false
         calendarObserver?.let { context.contentResolver.unregisterContentObserver(it) }; calendarObserver = null
         mediaListener?.let { runCatching { (context.getSystemService(Context.MEDIA_SESSION_SERVICE) as MediaSessionManager).removeOnActiveSessionsChangedListener(it) } }; mediaListener = null
@@ -158,12 +167,16 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
         detachControllers(); calendarJob?.cancel(); weatherJob?.cancel()
     }
     private fun updateBattery(snapshot: Intent? = null) {
+        val batterySnapshot = snapshot ?: runCatching { context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) }.getOrNull()
+        val status = batterySnapshot?.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+        charging.value = if (status != null && status != -1) status == BatteryManager.BATTERY_STATUS_CHARGING
+            else runCatching { (context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager).isCharging }.getOrDefault(charging.value)
         val capacity = runCatching {
             (context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager).getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
         }.getOrNull()
         battery.value = BatteryReading.resolve(
-            snapshot?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1,
-            snapshot?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1,
+            batterySnapshot?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1,
+            batterySnapshot?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1,
             capacity, battery.value)
     }
 
@@ -208,43 +221,59 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
                 metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID).orEmpty(), text.title, text.artist)
             musicVersion = WidgetVisibilityPolicy.musicVersion(identity, !paused, musicIdentity, musicPlaying, musicVersion)
             musicIdentity = identity; musicPlaying = !paused
-            MusicEntry(text.title, text.artist, paused, c.sessionActivity,
+            MusicEntry(if (metadata?.getString(MediaMetadata.METADATA_KEY_TITLE).isNullOrBlank() &&
+                    metadata?.getString(MediaMetadata.METADATA_KEY_DISPLAY_TITLE).isNullOrBlank()) context.getString(R.string.ui_music) else text.title,
+                text.artist, paused, c.sessionActivity,
                 actions and PlaybackState.ACTION_SKIP_TO_PREVIOUS != 0L,
                 actions and (PlaybackState.ACTION_PLAY_PAUSE or if (paused) PlaybackState.ACTION_PLAY else PlaybackState.ACTION_PAUSE) != 0L,
                 actions and PlaybackState.ACTION_SKIP_TO_NEXT != 0L, "$identity:$musicVersion")
         }
         if (activeController == null) { musicIdentity = null; musicPlaying = false }
     }
+    private fun airplaneMode() = Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON, 0) != 0
+    private fun refreshWifi() {
+        if (!running || hubSurface || !settings.signal) return
+        val radioOn = runCatching { (context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager).wifiState == WifiManager.WIFI_STATE_ENABLED }.getOrDefault(false)
+        val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        wifiNetworks.clear()
+        if (radioOn) runCatching {
+            manager.allNetworks.filter { manager.getNetworkCapabilities(it)?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true }
+                .forEach { wifiNetworks.add(it) }
+        }
+        wifiConnected.value = radioOn && wifiNetworks.isNotEmpty()
+        if (airplaneMode()) signal.value = null
+    }
     private fun observeWifi() {
         wifiNetworks.clear(); wifiConnected.value = false
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(c: Context?, intent: Intent?) {
+                if (radioReceiver === this) refreshWifi()
+            }
+        }
+        radioReceiver = receiver
+        ContextCompat.registerReceiver(context, receiver, IntentFilter().apply {
+            addAction(WifiManager.WIFI_STATE_CHANGED_ACTION)
+            addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION)
+            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+        }, ContextCompat.RECEIVER_NOT_EXPORTED)
         try {
             val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val callback = object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    if (networkCallback !== this) return
-                    wifiNetworks.add(network); wifiConnected.value = wifiNetworks.isNotEmpty()
-                }
+                override fun onAvailable(network: Network) { if (networkCallback === this) refreshWifi() }
                 override fun onLost(network: Network) {
                     if (networkCallback !== this) return
-                    wifiNetworks.remove(network); wifiConnected.value = wifiNetworks.isNotEmpty()
-                }
-                override fun onCapabilitiesChanged(network: Network, capabilities: NetworkCapabilities) {
-                    if (networkCallback !== this) return
-                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) wifiNetworks.add(network)
-                    else wifiNetworks.remove(network)
+                    wifiNetworks.remove(network)
                     wifiConnected.value = wifiNetworks.isNotEmpty()
+                    // Read radio/capabilities again once ConnectivityManager has applied the loss.
+                    handler.post { if (networkCallback === this) refreshWifi() }
                 }
+                override fun onCapabilitiesChanged(network: Network, capabilities: NetworkCapabilities) { if (networkCallback === this) refreshWifi() }
             }
-            // All callbacks use the main handler, as do start/stop and UI state.
             networkCallback = callback
             manager.registerNetworkCallback(NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_WIFI).build(), callback, handler)
-            manager.allNetworks.filter { manager.getNetworkCapabilities(it)?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true }
-                .forEach { wifiNetworks.add(it) }
-            wifiConnected.value = wifiNetworks.isNotEmpty()
+            refreshWifi()
         } catch (_: Exception) {
-            networkCallback?.let { runCatching {
-                (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).unregisterNetworkCallback(it)
-            } }
+            networkCallback?.let { runCatching { (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).unregisterNetworkCallback(it) } }
             networkCallback = null; wifiNetworks.clear(); wifiConnected.value = false
         }
     }
@@ -275,10 +304,9 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
     private fun refreshWeather() {
         if (!settings.weather) { weatherError.value = null; return }
         if (!permitted(context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            weather.value = null; weatherError.value = "Autorizza la posizione"; return
+            weather.value = null; weatherError.value = context.getString(R.string.ui_runtime_allow_location_access_in_settings); lastAttempt = 0; return
         }
         val now = System.currentTimeMillis()
-        if (weatherError.value == "Autorizza la posizione") { lastAttempt = 0; weatherError.value = null }
         val monotonicNow = SystemClock.elapsedRealtime()
         if (weatherJob?.isActive == true || (lastAttempt != 0L && monotonicNow - lastAttempt < 10 * 60_000L)) return
         if (weather.value?.let { now - it.time in 0L until 30 * 60_000L } == true) return
@@ -287,7 +315,7 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
         weatherJob = scope.launch {
             try {
                 val location = withTimeoutOrNull(20_000) { currentLocation() }
-                if (location == null) { weatherError.value = "Posizione non disponibile"; return@launch }
+                if (location == null) { weatherError.value = context.getString(R.string.ui_runtime_location_unavailable); return@launch }
                 val entry = withContext(Dispatchers.IO) {
                     val lat = String.format(Locale.US, "%.2f", location.latitude)
                     val lon = String.format(Locale.US, "%.2f", location.longitude)
@@ -306,7 +334,7 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
                 weatherCache.edit().putString("snapshot", JSONObject().put("temperature", entry.temperature)
                     .put("code", entry.code).put("city", entry.city).put("time", entry.time).toString()).apply()
             } catch (cancel: CancellationException) { lastAttempt = 0; throw cancel }
-            catch (_: Exception) { weatherError.value = "Meteo non aggiornato" }
+            catch (_: Exception) { weatherError.value = context.getString(R.string.ui_runtime_weather_out_of_date) }
         }
     }
     @SuppressLint("MissingPermission")
@@ -352,7 +380,7 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
                             val allDay = cursor.getInt(4) == 1; val start = cursor.getLong(2); val finish = cursor.getLong(3)
                             if (selected != "*" && cursor.getLong(5).toString() !in ids) continue
                             if (cursor.getInt(6) == CalendarContract.Events.STATUS_CANCELED || cursor.getInt(7) == CalendarContract.Attendees.ATTENDEE_STATUS_DECLINED) continue
-                            if (HomePolicy.visibleToday(start, finish, allDay, now, zone)) add(CalendarEntry(cursor.getLong(0), cursor.getString(1) ?: "Evento",
+                            if (HomePolicy.visibleToday(start, finish, allDay, now, zone)) add(CalendarEntry(cursor.getLong(0), cursor.getString(1) ?: context.getString(R.string.ui_runtime_event),
                                 HomePolicy.eventStart(start, allDay, zone), HomePolicy.eventEnd(finish, allDay, zone), allDay))
                         }
                     } }.orEmpty()

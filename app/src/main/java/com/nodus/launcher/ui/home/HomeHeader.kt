@@ -26,7 +26,7 @@ import java.util.*
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun HomeHeader(config: UiSettings, now: Long, weather: WeatherEntry?, weatherError: String?,
-               battery: Int?, signal: Int?, wifiConnected: Boolean, openSettings: () -> Unit = {}) {
+               battery: Int?, signal: Int?, wifiConnected: Boolean, openSettings: () -> Unit = {}, charging: Boolean = false) {
     val context = LocalContext.current
     val weatherDescription = context.getString(when (weather?.code) {
         0 -> R.string.ui_weather_clear
@@ -51,7 +51,10 @@ fun HomeHeader(config: UiSettings, now: Long, weather: WeatherEntry?, weatherErr
     }
     val indicators: @Composable () -> Unit = {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            if (config.battery) AppText(battery?.let { "$it%" } ?: "—%", size = config.batterySize, color = Color.LightGray)
+            if (config.battery) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                BatteryGlyph(battery, charging, config.batterySize)
+                AppText(battery?.let { "$it%" } ?: "—%", size = config.batterySize, color = Color.LightGray)
+            }
             if (config.signal) {
                 if (wifiConnected) WifiGlyph(config.signalSize)
                 SignalGlyph(signal, config.signalSize)
@@ -94,7 +97,10 @@ fun HomeHeader(config: UiSettings, now: Long, weather: WeatherEntry?, weatherErr
                     if (wifiConnected) WifiGlyph(config.signalSize)
                     SignalGlyph(signal, config.signalSize)
                 }
-                if (config.battery) AppText(battery?.let { "$it%" } ?: "—%", size = config.batterySize, color = Color.LightGray)
+                if (config.battery) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                BatteryGlyph(battery, charging, config.batterySize)
+                AppText(battery?.let { "$it%" } ?: "—%", size = config.batterySize, color = Color.LightGray)
+            }
             }
         } else {
             FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -181,6 +187,29 @@ private fun WeatherGlyph(code: Int, description: String, iconSize: Int) {
             else if (code >= 51) for (i in 1..3) drawLine(Color.White,
                 androidx.compose.ui.geometry.Offset(w * i / 4, h * .82f),
                 androidx.compose.ui.geometry.Offset(w * i / 4 - 2, h), 1.dp.toPx())
+        }
+    }
+}
+
+@Composable
+private fun BatteryGlyph(level: Int?, charging: Boolean, iconSize: Int) {
+    val context = LocalContext.current
+    Canvas(Modifier.size((iconSize * 1.5f).dp, iconSize.dp).semantics {
+        contentDescription = context.getString(if (charging) R.string.ui_battery_charging else R.string.ui_battery_normal)
+    }) {
+        val w = size.width; val h = size.height
+        val stroke = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx())
+        drawRoundRect(Color.White, topLeft = androidx.compose.ui.geometry.Offset(w*.04f,h*.18f),
+            size = androidx.compose.ui.geometry.Size(w*.82f,h*.64f), cornerRadius = androidx.compose.ui.geometry.CornerRadius(h*.07f), style = stroke)
+        drawRect(Color.White, topLeft = androidx.compose.ui.geometry.Offset(w*.9f,h*.37f), size = androidx.compose.ui.geometry.Size(w*.08f,h*.26f))
+        if (level != null) drawRect(Color.White.copy(alpha = if (charging) .3f else .85f),
+            topLeft = androidx.compose.ui.geometry.Offset(w*.1f,h*.28f), size = androidx.compose.ui.geometry.Size(w*.7f*level.coerceIn(0,100)/100f,h*.44f))
+        if (charging) {
+            val bolt = androidx.compose.ui.graphics.Path().apply {
+                moveTo(w*.52f,h*.06f); lineTo(w*.3f,h*.53f); lineTo(w*.46f,h*.53f)
+                lineTo(w*.38f,h*.94f); lineTo(w*.64f,h*.43f); lineTo(w*.48f,h*.43f); close()
+            }
+            drawPath(bolt, Color.White)
         }
     }
 }

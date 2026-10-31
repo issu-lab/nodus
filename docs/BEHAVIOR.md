@@ -273,13 +273,16 @@ quelle delle icone di connessione in dp.
 
 Il layout attuale resta predefinito (42/14/14/16 sp e icone 18 dp). La disposizione
 super compatta mette l’ora sopra e data, meteo (icona e temperatura), segnale/Wi-Fi
-e batteria sotto, in quest’ordine, su una sola riga allineata a sinistra. Il cambio disposizione applica le dimensioni iniziali
-24/12/12/12 sp e icone 14 dp, oppure i valori attuali tornando al layout originale.
+e batteria sotto, in quest’ordine, su una sola riga allineata a sinistra. I due layout conservano profili dimensioni distinti. Alla prima attivazione la
+super compatta usa 24/12/12/12 sp e icone 14 dp; dopo le modifiche, ogni passaggio
+ripristina i valori salvati per quel layout. I valori precedenti all’aggiornamento
+vengono migrati nel profilo attivo senza perderli.
 Le successive regolazioni restano indipendenti e persistono al riavvio.
 
 L’anteprima con dati di esempio segue i cursori e gli elementi abilitati,
 senza attivare accessi a posizione o rete. Ripristina area superiore riporta
-layout e dimensioni originali preservando font, visibilità, preferiti, widget e
+layout e dimensioni originali (azzerando entrambi i profili), preservando font,
+visibilità, preferiti, widget e
 posizione verticale della home. La home resta fissa e l’intero blocco continua
 ad adattarsi allo spazio. Nel layout attuale le righe possono andare a capo. In super compatta la riga
 inferiore si riduce proporzionalmente se necessario, senza andare a capo; i valori
@@ -297,6 +300,21 @@ Un aggiornamento conserva le impostazioni esistenti. Nomi di app, calendari,
 contenuti delle notifiche e font importati restano i dati originali.
 
 Sono localizzati anche Informazioni/Benvenuto, controlli musica e testi meteo
-nell’area superiore/anteprime. Questa modifica riguarda le impostazioni e i
-componenti condivisi citati; gli altri comandi della home e dell’hub conservano
-per ora i testi italiani. Le date continuano a usare i formati di sistema.
+nell’area superiore/anteprime. Dalla 0.1.23 sono localizzati anche i comandi della home e dell’hub: conteggi,
+conferme, stati, errori, risposta diretta e azioni accessibili. Le date continuano a usare i formati di sistema.
+
+### Correzioni da collaudare della 0.1.23
+
+I testi dei menu impostazioni includono uno spazio iniziale non interrompibile,
+per dare margine ai font con tratti che sporgono a sinistra. Questo accorgimento
+resta limitato ai menu e non sposta la griglia della home.
+
+Il Wi-Fi è visibile solo quando la radio è abilitata e risulta una rete Wi-Fi
+connessa. Broadcast radio/modalità aereo, callback di rete e aggiornamenti periodici
+riallineano lo stato. In modalità aereo il Wi-Fi riattivato e connesso può essere
+mostrato; il segnale cellulare viene invalidato finché la modalità aereo è attiva.
+Il permesso aggiunto ACCESS_WIFI_STATE è normale, senza richiesta interattiva.
+
+La batteria mostra icona con livello e percentuale; il fulmine indica lo stato
+Android CHARGING. A carica completa l’icona mostra il livello pieno senza fulmine.
+Letture percentuali e stato di carica vengono dal broadcast sticky e dal BatteryManager.

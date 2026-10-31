@@ -142,7 +142,7 @@ fun SettingsScreen() {
                         SettingSlider(context.getString(R.string.ui_signal_and_wi_fi_size), config.signalSize, 12..32, "dp", previewChange = { headerPreview = headerPreview.copy(signalSize = it) }) { scope.launch { prefs.number("signal_size", it) } }
                         AppText(context.getString(R.string.ui_preview_with_sample_data), size = 11, color = Color.Gray)
                         HomeHeader(headerPreview, 0L, WeatherEntry(18, 0, context.getString(R.string.ui_location), 0L), null, 86, 3, true)
-                        Action(context.getString(R.string.ui_reset_header)) { scope.launch { prefs.headerPreset(false) } }
+                        Action(context.getString(R.string.ui_reset_header)) { scope.launch { prefs.resetHeader() } }
                         Section(context.getString(R.string.ui_home_vertical_position))
                         AppText(context.getString(R.string.ui_move_the_entire_block_while_keeping_its), size = 12, color = Color.Gray)
                         SettingSlider(context.getString(R.string.ui_requested_offset), config.padding, 0..200, "dp") { scope.launch { prefs.number("home_top_padding", it) } }

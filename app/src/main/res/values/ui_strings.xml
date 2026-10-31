@@ -33,7 +33,7 @@
     <string name="ui_hide_status_bar">Hide status bar</string>
     <string name="ui_clock">Clock</string>
     <string name="ui_date">Date</string>
-    <string name="ui_battery_percentage">Battery · percentage</string>
+    <string name="ui_battery_percentage">Battery · icon and percentage</string>
     <string name="ui_signal_and_wi_fi_icons_only">Signal and Wi-Fi · icons only</string>
     <string name="ui_weather">Weather</string>
     <string name="ui_text_only_weather_standard_layout">Text-only weather (standard layout)</string>
@@ -41,7 +41,7 @@
     <string name="ui_allow_location_access">Allow location access</string>
     <string name="ui_header_sizes_and_layout">Header sizes and layout</string>
     <string name="ui_super_compact_layout">Super compact layout</string>
-    <string name="ui_super_compact_clock_above_date_weather_signal">Super compact: clock above; date, weather, signal/Wi-Fi and battery below on one left-aligned line. Weather shows an icon and temperature. The row scales down if space is limited. Switching layouts applies initial sizes, which you can then adjust separately.</string>
+    <string name="ui_super_compact_clock_above_date_weather_signal">Super compact: clock above; date, weather, signal/Wi-Fi and battery below on one left-aligned line. Weather shows an icon and temperature. The row scales down if space is limited. Each layout remembers its own sizes when you switch between them.</string>
     <string name="ui_clock_size">Clock size</string>
     <string name="ui_date_size">Date size</string>
     <string name="ui_weather_size">Weather size</string>

@@ -2,7 +2,7 @@
 
 ## Android build
 
-The current source version is **0.1.22**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.23**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
@@ -20,7 +20,7 @@ python3 tests/run_notification_tests.py --gradle-cache /path/to/gradle/caches
 ```
 
 It runs 14 notification, 20 home/calendar/layout, 27 home interaction/music/destination and
-9 app drawer policy and 7 battery reading checks
+9 app drawer policy, 7 battery reading and 5 header profile checks
 without an Android runtime.
 They cover stale notifications, reply/removal ordering, failures, app selection,
 limits, usage events, reserved gesture edges, swipe direction/thresholds, music
@@ -195,8 +195,8 @@ Dynamic settings callbacks use their current activity context; plural messages
 use Android quantity resources. Brand names and stored preference/route keys
 are not translated. `tests/check_localization.py` validates locale parity,
 format placeholders and source resource references without an Android runtime.
-Settings and their shared welcome/header/music components are localized; other
-home/hub command labels remain Italian in this version.
+Settings, home/hub controls and their shared welcome/header/music components
+are localized. Message bodies, app names and calendar titles remain original data.
 
 The previously verified published beta is `v0.1.21-beta.1`. Its ZIP and extracted APK were
 redownloaded from GitHub and matched the local bytes and published SHA-256 sums;
@@ -213,3 +213,12 @@ The current beta `v0.1.22-beta.1` includes the approved lowercase n. Its downloa
 ZIP/APK and remote banner/social asset bytes match the local files and checksums.
 The social preview PNG is published as an asset; selecting it in repository
 Settings remains pending because the browser session is not authenticated.
+
+Header size profiles are selected atomically in DataStore. `HeaderSizes` defines
+profile keys, bounds and legacy reads; switching snapshots the active profile
+before removing legacy flat keys. Reset restores both profiles and the standard
+layout. New pure tests cover migration, repeated switching and profile isolation.
+Wi-Fi observation additionally gates connectivity on WifiManager radio state;
+system radio broadcasts and periodic refresh prevent retained callback snapshots.
+Battery charging uses the sticky Android status and falls back to BatteryManager.
+Menu-only leading NBSP leaves home/hub grid alignment unchanged.
