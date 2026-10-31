@@ -1,5 +1,13 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.23-beta.1] - 2026-10-31
+
+- Pubblicati sorgenti, documentazione, ZIP beta e SHA256SUMS.txt della 0.1.23.
+- Riscaricati gli asset da GitHub: archivio integro, ZIP e APK estratto identici
+  ai locali, entrambi i checksum validi. README remoto identico al locale.
+- APK e firma invariati dalla build verificata; foto della 0.1.22 mantenute con
+  versione indicata. Collaudo sul telefono ancora aperto nella roadmap.
+
 ## [Screenshot reali 0.1.22 con font pixel] - 2026-10-31
 
 - Aggiornata la galleria con sei catture originali fornite dall’utente: home
