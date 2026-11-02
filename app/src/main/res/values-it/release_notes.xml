@@ -1,11 +1,10 @@
 <resources>
     <string name="ui_update_title">Novità della versione %1$s</string>
     <string name="ui_update_intro">Ecco le modifiche di questa versione. Le tue impostazioni restano conservate.</string>
-    <string name="ui_update_swipe">Swipe delle notifiche più naturale: uscita animata, ritorno morbido per i gesti brevi e riposizionamento delle righe.</string>
-    <string name="ui_update_home">Il testo dell’hub nella home diventa magenta quando ci sono notifiche.</string>
-    <string name="ui_update_battery">Icona batteria verticale, con livello e stato di carica, per lasciare più spazio agli altri indicatori.</string>
-    <string name="ui_update_icon">Simbolo dell’app più piccolo, con maggiori margini nelle icone circolari.</string>
-    <string name="ui_update_notes">Questa schermata appare una volta dopo ogni aggiornamento e si può riaprire da Informazioni.</string>
     <string name="ui_update_continue">Continua</string>
     <string name="ui_update_review">Novità di questa versione</string>
+    <string name="ui_update_layout_controls">Pulsante hub a tutta larghezza, con testo chiaro e regolazioni separate di dimensione e spazio verticale.</string>
+    <string name="ui_update_presence_indicator">Pallino magenta fisso, con pulsazione lenta o disattivato. Compare solo con notifiche; le animazioni disabilitate vengono rispettate.</string>
+    <string name="ui_update_settings_groups">Impostazioni riordinate in Home, Ora e indicatori, Notifiche e hub, Widget, Aspetto e Informazioni. Le preferenze esistenti sono conservate.</string>
+    <string name="ui_update_licenses">Batteria a destra della percentuale nel layout normale. Licenze consultabili in Informazioni.</string>
 </resources>

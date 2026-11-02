@@ -2,10 +2,23 @@
 
 Sole attività approvate e ancora aperte. Le specifiche e il logo approvato sono
 nel [riferimento di comportamento](BEHAVIOR.md); presentazione e stato sono
-nel [README](../README.md). Le funzionalità della 0.1.24 sono implementate localmente; restano aperte le
+nel [README](../README.md). Le funzionalità della 0.1.25 sono implementate localmente; restano aperte le
 verifiche sul telefono indicate sotto.
 Il primo collaudo della 0.1.11 sul telefono ha fornito riscontri visivi e
-richieste di rifinitura. Restano il collaudo completo e le nuove prove della 0.1.21.
+richieste di rifinitura. Restano il collaudo completo e le nuove prove della 0.1.25.
+
+## Collaudo nuova versione 0.1.25
+
+- [ ] Controllare le sei sezioni con font di sistema/pixel e lingue IT/EN:
+  ogni controllo nel gruppo concordato, navigazione indietro da Calendari,
+  Preferiti e Licenze, preferenze/profili precedenti preservati.
+- [ ] Provare pulsante hub a tutta larghezza con font 10/26 sp e spazio verticale
+  8/32 dp, schermi stretti e molte app; conteggio/leggibilità e home fissa.
+- [ ] Provare pallino fisso/pulsante/off e stato vuoto, transizioni del conteggio,
+  rientro dall’hub, background e animazioni Android disattivate/riattivate.
+- [ ] Verificare percentuale → icona batteria → Wi-Fi/segnale nel layout normale
+  e ordine della riga super compatta invariato.
+- [ ] Verificare apertura e lettura offline dei documenti in Informazioni → Licenze.
 
 ## Collaudo nuova versione 0.1.24
 
@@ -31,8 +44,9 @@ richieste di rifinitura. Restano il collaudo completo e le nuove prove della 0.1
   includendo dispositivi Android meno recenti. Nessun invito automatico.
 
 - [ ] Completare il collaudo sul telefono e aggiornare gli screenshot alla beta corrente.
-- [ ] Includere e verificare le licenze dei font e le altre attribuzioni nel
-  pacchetto Android prima di distribuire un APK.
+- [ ] Completare l’inventario delle attribuzioni delle dipendenze Android prima
+  di una distribuzione di produzione/store; MIT, OFL e avvisi di progetto sono
+  ora inclusi e consultabili nell’APK locale 0.1.25.
 - [ ] Verificare la resa README desktop/mobile su GitHub e impostare la social
   preview dalle impostazioni del repository con l’asset già pronto.
 
@@ -41,7 +55,7 @@ sono distribuite come prerelease; nessuna pubblicazione sul Play Store.
 
 ## Priorità: collaudo dell'hub sul telefono
 
-Il prototipo 0.1.21 è compilato localmente; 77 test Kotlin e Android Lint
+Il prototipo 0.1.25 è compilato localmente; 91 test Kotlin e Android Lint
 supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti:
 
 - [ ] Provare accesso concesso/negato/revocato, disconnessione, riconnessione,

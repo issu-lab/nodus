@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.1.25 — pulsante hub e impostazioni riordinate, build locale] - 2026-11-02
+
+- Pulsante hub a tutta larghezza, testo sempre chiaro e nuovi controlli separati
+  per font e spazio verticale, con anteprima piena/vuota e altezza minima 48 dp.
+- Indicatore magenta fisso, con pulsazione lenta o spento. Compare solo con
+  notifiche, non si spegne completamente durante la pulsazione, si ferma in
+  background e resta fisso quando le animazioni Android sono disattivate.
+- Nel layout normale l’icona batteria segue la percentuale vicino a Wi-Fi/segnale
+  sulla destra; la data usa lo spazio restante. Riga super compatta invariata.
+- Sei sezioni impostazioni: Home, Ora e indicatori, Notifiche e hub, Widget,
+  Aspetto e Informazioni. Conservate chiavi e valori esistenti, inclusi i profili.
+  Meteo/permessi nei Widget, dimensione in Ora e indicatori; ritorno alle pagine
+  padre corretto per Preferiti, Calendari e Licenze.
+- Aggiunta pagina Licenze offline con cinque documenti MIT/OFL/attribuzioni,
+  sincronizzati dai master; verificata identità dei file inclusi nell’APK.
+- Aggiornate novità italiano/inglese per questa versione. Superati 91 test Kotlin,
+  controllo dei cataloghi, build debug e Lint (0 errori, 4 avvisi preesistenti).
+  APK 0.1.25 locale con SHA-256 e firma precedente; artefatti estranei preservati.
+- Verifica delle pagine e della pulsazione sul telefono ancora aperta nella
+  roadmap. Nessun push o release in questa implementazione.
+
 ## [Prerelease GitHub v0.1.24-beta.1] - 2026-11-02
 
 - Pubblicati sorgenti, README aggiornato, guida beta e note della release 0.1.24.

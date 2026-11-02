@@ -41,8 +41,8 @@ class ReleaseNotesActivity : ComponentActivity() {
                     AppText(stringResource(R.string.ui_update_title, installed.name), size = 20, medium = true)
                     AppText(stringResource(R.string.ui_update_intro), size = 12, color = Color.LightGray,
                         modifier = Modifier.padding(top = 8.dp, bottom = 20.dp))
-                    listOf(R.string.ui_update_swipe, R.string.ui_update_home, R.string.ui_update_battery, R.string.ui_update_icon,
-                        R.string.ui_update_notes).forEach { text ->
+                    listOf(R.string.ui_update_layout_controls, R.string.ui_update_presence_indicator,
+                        R.string.ui_update_settings_groups, R.string.ui_update_licenses).forEach { text ->
                         AppText("• " + stringResource(text), size = 13, modifier = Modifier.padding(bottom = 16.dp))
                     }
                     TextButton(onClick = { finish() }, contentPadding = PaddingValues(0.dp)) {

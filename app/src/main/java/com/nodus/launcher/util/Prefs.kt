@@ -19,6 +19,7 @@ data class UiSettings(
     val dots: Boolean = true, val dotSize: Int = 8, val dotUniform: Boolean = false,
     val dotColor: Int = 0xFFF800FF.toInt(), val font: String = "default", val fontFile: String = "",
     val homeText: Int = 16, val hubText: Int = 13,
+    val homeHubText: Int = 13, val homeHubPadding: Int = 12, val homeHubIndicator: String = "pulse",
     val compactHeader: Boolean = false, val clockSize: Int = 42, val dateSize: Int = 14,
     val weatherSize: Int = 14, val batterySize: Int = 16, val signalSize: Int = 18
 ) {
@@ -35,6 +36,9 @@ class Prefs(context: Context) {
     private val store = context.applicationContext.dataStore
     private val data = store.data.catch { if (it is IOException) emit(emptyPreferences()) else throw it }
     val settings = data.map { p -> UiSettings(
+        homeHubText = (p[intPreferencesKey("home_hub_text")] ?: 13).coerceIn(10, 26),
+        homeHubPadding = (p[intPreferencesKey("home_hub_padding")] ?: 12).coerceIn(8, 32),
+        homeHubIndicator = (p[stringPreferencesKey("home_hub_indicator")] ?: "pulse").takeIf { it in setOf("off", "fixed", "pulse") } ?: "pulse",
         count = (p[intPreferencesKey("visible_apps_count")] ?: 8).coerceAtLeast(1),
         padding = (p[intPreferencesKey("home_top_padding")] ?: 0).coerceIn(0, 400),
         homeSpacing = (p[intPreferencesKey("home_spacing")] ?: 20).coerceIn(0, 32),

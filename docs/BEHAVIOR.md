@@ -266,7 +266,7 @@ conserva l'ultima risposta in cache, indicando errore o età eccessiva (oltre
 
 ### Dimensioni e disposizione dell’area superiore
 
-In Impostazioni → Home, ora, data, meteo, batteria e icone segnale/Wi-Fi hanno
+In Impostazioni → Ora e indicatori, ora, data, meteo, batteria e icone segnale/Wi-Fi hanno
 regolazioni indipendenti. Il meteo adatta anche icona e testi secondari; segnale
 e Wi-Fi condividono la stessa dimensione. Le dimensioni del testo sono in sp,
 quelle delle icone di connessione in dp.
@@ -329,8 +329,9 @@ Le notifiche non eliminabili oppongono resistenza e ritornano al posto.
 Le righe rimaste si riposizionano con un’animazione. Errori e mancate conferme
 ripristinano la riga; nessun archivio o rimozione fittizia locale.
 
-Il testo del pulsante hub sulla home è magenta quando il conteggio è positivo,
-neutro quando vuoto; il conteggio resta presente e segue sempre Android.
+Dalla 0.1.25 il testo del pulsante hub resta chiaro. La presenza di notifiche
+è segnalata da un pallino magenta, fisso o con pulsazione lenta, disattivabile.
+Il conteggio resta presente e segue sempre Android.
 
 ### Icona e schermata delle novità (0.1.24)
 
@@ -344,3 +345,33 @@ Dopo un aggiornamento, il primo avvio mostra le novità della versione installat
 una sola volta. La versione vista viene registrata quando la schermata è mostrata;
 rotazione e downgrade non ripetono le novità. Informazioni permette di riaprirle.
 Non viene richiesto accesso alla rete e non vengono azzerate altre preferenze.
+
+### Pulsante hub e impostazioni riorganizzate (0.1.25)
+
+Il pulsante hub occupa tutta la larghezza utile tra i margini della home, con
+font indipendente (10–26 sp) e spazio verticale regolabile (8–32 dp per lato).
+L’altezza effettiva rispetta un minimo di 48 dp e cresce con il testo, che può
+andare a capo senza essere tagliato. Il blocco home resta fisso e si adatta come prima.
+
+L’indicatore compare solo con notifiche: fisso, pulsazione lenta (predefinita)
+o disattivato. La pulsazione varia da 55% a 100% di luminosità in 2.4 secondi,
+senza spegnimenti netti; si ferma in background e diventa fissa con animazioni
+Android disattivate. Le anteprime mostrano dati fittizi, con stato pieno/vuoto.
+Nel layout standard la percentuale precede l’icona batteria, vicina a Wi-Fi e
+segnale sulla destra; la riga super compatta mantiene il proprio ordine.
+
+Le pagine delle impostazioni sono:
+
+- Home: numero app, preferiti, posizione verticale, spaziatura e anteprima app.
+- Ora e indicatori: visibilità ora/data/batteria/segnale, layout e dimensioni.
+- Notifiche e hub: pulsante home, font, spazio verticale, pallino, anteprima,
+  accesso notifiche e guida ai gesti.
+- Widget: musica, calendario, selezione calendari, meteo e relativi permessi.
+- Aspetto: font, testo app/hub, puntini o icone, colori e barra di stato.
+- Informazioni: versione, novità, benvenuto, licenze e attribuzioni offline.
+
+Il meteo si attiva nei Widget; la dimensione si regola in Ora e indicatori, con
+un collegamento alle opzioni del widget. Le chiavi delle preferenze esistenti non
+cambiano. Le sottopagine Preferiti, Calendari e Licenze tornano al proprio gruppo.
+Le licenze incluse riproducono i file MIT/OFL e gli avvisi del repository; non sono
+un inventario automatico completo delle dipendenze Android.

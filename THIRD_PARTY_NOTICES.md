@@ -19,7 +19,7 @@ The fonts in `source/fonts/` are unmodified copies of the shared iSSU artwork
 fonts. The Android UI font is in `app/src/main/res/font/`.
 
 The iSSU wordmark, historic S, functional symbols and Open Homelab badge come
-from the shared iSSU identity assets. The noduS N uses the approved project mark.
+from the shared iSSU identity assets. The noduS lowercase n uses the approved project mark.
 
 ## Weather service
 
@@ -36,7 +36,8 @@ projects with their own licenses. The versions used by this project are declared
 in the Gradle files and artwork tool manifests. Their upstream notices remain
 applicable. This document is not a generated dependency license inventory.
 
-The prepared GitHub beta ZIP accompanies the unchanged debug APK with this file,
-the MIT license and full OFL copies. It does not add notices inside the APK itself.
+The GitHub beta ZIP accompanies the debug APK with this file, the MIT license
+and full OFL copies. Since 0.1.25, these documents are also bundled inside the
+APK under assets/licenses and can be read in Settings → About → Licenses.
 Before a standalone production APK or store release, complete and verify the
 distribution notices, including any applicable dependency notices.

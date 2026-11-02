@@ -52,8 +52,8 @@ fun HomeHeader(config: UiSettings, now: Long, weather: WeatherEntry?, weatherErr
     val indicators: @Composable () -> Unit = {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             if (config.battery) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                BatteryGlyph(battery, charging, config.batterySize)
                 AppText(battery?.let { "$it%" } ?: "—%", size = config.batterySize, color = Color.LightGray)
+                BatteryGlyph(battery, charging, config.batterySize)
             }
             if (config.signal) {
                 if (wifiConnected) WifiGlyph(config.signalSize)
@@ -108,9 +108,9 @@ fun HomeHeader(config: UiSettings, now: Long, weather: WeatherEntry?, weatherErr
                 if (config.weather) Column(horizontalAlignment = Alignment.End,
                     modifier = (if (config.clock) Modifier else Modifier.fillMaxWidth()).padding(start = if (config.clock) 12.dp else 0.dp)) { weatherContent() }
             }
-            FlowRow(Modifier.fillMaxWidth().padding(top = 2.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                date()
-                if (config.date) indicators() else Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) { indicators() }
+            Row(Modifier.fillMaxWidth().padding(top = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.weight(1f)) { date() }
+                indicators()
             }
         }
     }

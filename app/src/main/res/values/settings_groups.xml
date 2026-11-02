@@ -1,0 +1,28 @@
+<resources>
+    <string name="ui_group_indicators">Clock and indicators</string>
+    <string name="ui_group_widgets">Widgets</string>
+    <string name="ui_group_notifications">Notifications and hub</string>
+    <string name="ui_home_subtitle">Apps, favorites, position and spacing</string>
+    <string name="ui_indicators_subtitle">Layout, clock, date, sizes and indicators</string>
+    <string name="ui_notifications_subtitle">Home button, indicator, access and gestures</string>
+    <string name="ui_widgets_subtitle">Music, calendar, weather and permissions</string>
+    <string name="ui_appearance_subtitle">Fonts, app/hub text, icons and status bar</string>
+    <string name="ui_about_subtitle">Version, updates, welcome and licenses</string>
+    <string name="ui_weather_setup">Weather activation and options</string>
+    <string name="ui_widget_permissions">Available in Widgets</string>
+    <string name="ui_home_hub_button">Hub button on home</string>
+    <string name="ui_home_hub_font">Button text size</string>
+    <string name="ui_home_hub_padding">Button vertical padding</string>
+    <string name="ui_presence_mode">Notification presence indicator</string>
+    <string name="ui_presence_fixed">Fixed</string>
+    <string name="ui_presence_pulse">Slow pulse</string>
+    <string name="ui_presence_off">Off</string>
+    <string name="ui_home_hub_help">Always light text on a full-width button. The dot appears only with notifications and never turns fully off while pulsing. It stays fixed when Android animations are disabled. Minimum button height: 48 dp.</string>
+    <string name="ui_preview_notifications">Notifications present in preview</string>
+    <string name="ui_presence_present">Notifications present</string>
+    <string name="ui_licenses">Licenses and attribution</string>
+    <string name="ui_licenses_subtitle">Code, fonts and services</string>
+    <string name="ui_attributions">Third-party notices</string>
+    <string name="ui_license_document">Document</string>
+    <string name="ui_license_unavailable">Document unavailable.</string>
+</resources>

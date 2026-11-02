@@ -29,6 +29,7 @@ import com.nodus.launcher.data.AppRepository
 import com.nodus.launcher.ui.common.*
 import com.nodus.launcher.ui.home.AppItemUi
 import com.nodus.launcher.ui.home.AppRow
+import com.nodus.launcher.ui.home.HomeHubButton
 import com.nodus.launcher.ui.home.HomeHeader
 import com.nodus.launcher.widgets.WeatherEntry
 import com.nodus.launcher.ui.home.MusicWidget
@@ -44,6 +45,9 @@ fun SettingsScreen() {
     val context = LocalContext.current; val scope = rememberCoroutineScope()
     val prefs = remember { Prefs(context) }
     val config by prefs.settings.collectAsState(initial = UiSettings())
+    var hubPreview by remember(config) { mutableStateOf(config) }
+    var previewNotifications by rememberSaveable { mutableStateOf(true) }
+    var licenseFile by rememberSaveable { mutableStateOf("LICENSE.txt") }
     var headerPreview by remember(config) { mutableStateOf(config) }
     var spacingPreview by remember(config.homeSpacing) { mutableIntStateOf(config.homeSpacing) }
     val favorites by prefs.favoriteOrder.collectAsState(initial = emptyList())
@@ -94,20 +98,26 @@ fun SettingsScreen() {
         val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_RESUME) refreshed++ }
         lifecycle.addObserver(observer); onDispose { lifecycle.removeObserver(observer) }
     }
-    fun back() { if (page == "menu") (context as? Activity)?.finish() else page = if (page in listOf("favorites", "calendars")) "home" else "menu" }
+    fun back() { if (page == "menu") (context as? Activity)?.finish() else page = when (page) { "favorites" -> "home"; "calendars" -> "widgets"; "licenses" -> "about"; else -> "menu" } }
     BackHandler { back() }
     Box(Modifier.fillMaxSize().background(Color.Black).statusBarsPadding().navigationBarsPadding()) {
         Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
-            TextButton(onClick = { back() }) { AppText("‹ ${when(page) { "home" -> context.getString(R.string.ui_home); "favorites" -> context.getString(R.string.ui_favorites); "calendars" -> context.getString(R.string.ui_calendars); "hub" -> context.getString(R.string.ui_notification_hub); "appearance" -> context.getString(R.string.ui_appearance); "about" -> context.getString(R.string.ui_about); else -> context.getString(R.string.ui_settings) }}", size = 14) }
+            TextButton(onClick = { back() }) { AppText("‹ ${when(page) { "home" -> context.getString(R.string.ui_home); "indicators" -> context.getString(R.string.ui_group_indicators); "widgets" -> context.getString(R.string.ui_group_widgets); "licenses" -> context.getString(R.string.ui_licenses); "favorites" -> context.getString(R.string.ui_favorites); "calendars" -> context.getString(R.string.ui_calendars); "hub" -> context.getString(R.string.ui_group_notifications); "appearance" -> context.getString(R.string.ui_appearance); "about" -> context.getString(R.string.ui_about); else -> context.getString(R.string.ui_settings) }}", size = 14) }
             key(page) { Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState()).padding(bottom = 32.dp)) {
                 when (page) {
                     "menu" -> {
-                        MenuRow(context.getString(R.string.ui_home_2), context.getString(R.string.ui_apps_favorites_clock_and_widgets)) { page = "home" }
-                        MenuRow(context.getString(R.string.ui_notification_hub_2), context.getString(R.string.ui_access_and_gestures)) { page = "hub" }
-                        MenuRow(context.getString(R.string.ui_appearance_2), context.getString(R.string.ui_fonts_sizes_and_dots)) { page = "appearance" }
-                        MenuRow(context.getString(R.string.ui_about_nodus), context.getString(R.string.ui_version_features_and_welcome)) { page = "about" }
+                        MenuRow(context.getString(R.string.ui_home_2), context.getString(R.string.ui_home_subtitle)) { page = "home" }
+                        MenuRow(context.getString(R.string.ui_group_indicators), context.getString(R.string.ui_indicators_subtitle)) { page = "indicators" }
+                        MenuRow(context.getString(R.string.ui_group_notifications), context.getString(R.string.ui_notifications_subtitle)) { page = "hub" }
+                        MenuRow(context.getString(R.string.ui_group_widgets), context.getString(R.string.ui_widgets_subtitle)) { page = "widgets" }
+                        MenuRow(context.getString(R.string.ui_appearance_2), context.getString(R.string.ui_appearance_subtitle)) { page = "appearance" }
+                        MenuRow(context.getString(R.string.ui_about_nodus), context.getString(R.string.ui_about_subtitle)) { page = "about" }
                         Section(context.getString(R.string.ui_system))
                         Action(context.getString(R.string.ui_set_as_default_launcher)) { launchSettings(Settings.ACTION_HOME_SETTINGS) }
+                        Action(context.getString(R.string.ui_app_permissions_in_android)) {
+                            try { context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.parse("package:${context.packageName}"))) }
+                            catch (_: Exception) { message(context.getString(R.string.ui_setting_unavailable)) }
+                        }
                     }
                     "home" -> {
                         Section(context.getString(R.string.ui_home_apps))
@@ -115,34 +125,6 @@ fun SettingsScreen() {
                         MenuRow(context.getString(R.string.ui_reorder_favorites), favorites.size.toString()) { page = "favorites" }
                         AppText(context.getString(R.string.ui_empty_slots_use_app_openings_over_the), size = 12, color = Color.Gray)
                         Action(if (RecentApps.hasAccess(context)) context.getString(R.string.ui_usage_access_enabled) else context.getString(R.string.ui_allow_usage_access)) { launchSettings(Settings.ACTION_USAGE_ACCESS_SETTINGS) }
-                        Section(context.getString(R.string.ui_header))
-                        Toggle(context.getString(R.string.ui_hide_status_bar), config.hideStatusBar) { scope.launch { prefs.bool("hide_status_bar", it) } }
-                        Toggle(context.getString(R.string.ui_clock), config.clock) { scope.launch { prefs.bool("show_clock", it) } }
-                        Toggle(context.getString(R.string.ui_date), config.date) { scope.launch { prefs.bool("show_date", it) } }
-                        Toggle(context.getString(R.string.ui_battery_percentage), config.battery) { scope.launch { prefs.bool("show_battery", it) } }
-                        Toggle(context.getString(R.string.ui_signal_and_wi_fi_icons_only), config.signal) { scope.launch { prefs.bool("show_signal", it) } }
-                        Toggle(context.getString(R.string.ui_weather), config.weather) { enabled ->
-                            scope.launch { prefs.bool("show_weather", enabled) }
-                            if (enabled && !permitted(context, Manifest.permission.ACCESS_COARSE_LOCATION)) permission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-                        }
-                        if (config.weather) {
-                            Toggle(context.getString(R.string.ui_text_only_weather_standard_layout), config.weatherText) { scope.launch { prefs.bool("weather_text", it) } }
-                            AppText(context.getString(R.string.ui_phone_location_weather_open_meteo_approximate_coordinates), size = 11, color = Color.Gray)
-                            if (!permitted(context, Manifest.permission.ACCESS_COARSE_LOCATION)) Action(context.getString(R.string.ui_allow_location_access)) { permission.launch(Manifest.permission.ACCESS_COARSE_LOCATION) }
-                        }
-                        Section(context.getString(R.string.ui_header_sizes_and_layout))
-                        Toggle(context.getString(R.string.ui_super_compact_layout), config.compactHeader) { enabled ->
-                            scope.launch { prefs.headerPreset(enabled) }
-                        }
-                        AppText(context.getString(R.string.ui_super_compact_clock_above_date_weather_signal), size = 11, color = Color.Gray)
-                        SettingSlider(context.getString(R.string.ui_clock_size), config.clockSize, 18..64, "sp", previewChange = { headerPreview = headerPreview.copy(clockSize = it) }) { scope.launch { prefs.number("clock_size", it) } }
-                        SettingSlider(context.getString(R.string.ui_date_size), config.dateSize, 10..28, "sp", previewChange = { headerPreview = headerPreview.copy(dateSize = it) }) { scope.launch { prefs.number("date_size", it) } }
-                        SettingSlider(context.getString(R.string.ui_weather_size), config.weatherSize, 10..28, "sp", previewChange = { headerPreview = headerPreview.copy(weatherSize = it) }) { scope.launch { prefs.number("weather_size", it) } }
-                        SettingSlider(context.getString(R.string.ui_battery_size), config.batterySize, 10..28, "sp", previewChange = { headerPreview = headerPreview.copy(batterySize = it) }) { scope.launch { prefs.number("battery_size", it) } }
-                        SettingSlider(context.getString(R.string.ui_signal_and_wi_fi_size), config.signalSize, 12..32, "dp", previewChange = { headerPreview = headerPreview.copy(signalSize = it) }) { scope.launch { prefs.number("signal_size", it) } }
-                        AppText(context.getString(R.string.ui_preview_with_sample_data), size = 11, color = Color.Gray)
-                        HomeHeader(headerPreview, 0L, WeatherEntry(18, 0, context.getString(R.string.ui_location), 0L), null, 86, 3, true)
-                        Action(context.getString(R.string.ui_reset_header)) { scope.launch { prefs.resetHeader() } }
                         Section(context.getString(R.string.ui_home_vertical_position))
                         AppText(context.getString(R.string.ui_move_the_entire_block_while_keeping_its), size = 12, color = Color.Gray)
                         SettingSlider(context.getString(R.string.ui_requested_offset), config.padding, 0..200, "dp") { scope.launch { prefs.number("home_top_padding", it) } }
@@ -158,8 +140,40 @@ fun SettingsScreen() {
                                 listOf(context.getString(R.string.ui_phone), context.getString(R.string.ui_messages)).forEach { label ->
                                     AppRow(AppItemUi(com.nodus.launcher.model.AppInfo(label, "preview.$label", "", icon), 0xFF69A9D8.toInt()), {}, {})
                                 }
-                                MusicWidget(MusicEntry(context.getString(R.string.ui_track_title), context.getString(R.string.ui_artist), true, null, false, false, false, "preview"), open = {}, control = {})
                             }
+                        }
+                    }
+                    "indicators" -> {
+                        Section(context.getString(R.string.ui_header))
+                        Toggle(context.getString(R.string.ui_clock), config.clock) { scope.launch { prefs.bool("show_clock", it) } }
+                        Toggle(context.getString(R.string.ui_date), config.date) { scope.launch { prefs.bool("show_date", it) } }
+                        Toggle(context.getString(R.string.ui_battery_percentage), config.battery) { scope.launch { prefs.bool("show_battery", it) } }
+                        Toggle(context.getString(R.string.ui_signal_and_wi_fi_icons_only), config.signal) { scope.launch { prefs.bool("show_signal", it) } }
+                        Section(context.getString(R.string.ui_header_sizes_and_layout))
+                        Toggle(context.getString(R.string.ui_super_compact_layout), config.compactHeader) { enabled ->
+                            scope.launch { prefs.headerPreset(enabled) }
+                        }
+                        AppText(context.getString(R.string.ui_super_compact_clock_above_date_weather_signal), size = 11, color = Color.Gray)
+                        SettingSlider(context.getString(R.string.ui_clock_size), config.clockSize, 18..64, "sp", previewChange = { headerPreview = headerPreview.copy(clockSize = it) }) { scope.launch { prefs.number("clock_size", it) } }
+                        SettingSlider(context.getString(R.string.ui_date_size), config.dateSize, 10..28, "sp", previewChange = { headerPreview = headerPreview.copy(dateSize = it) }) { scope.launch { prefs.number("date_size", it) } }
+                        SettingSlider(context.getString(R.string.ui_weather_size), config.weatherSize, 10..28, "sp", previewChange = { headerPreview = headerPreview.copy(weatherSize = it) }) { scope.launch { prefs.number("weather_size", it) } }
+                        SettingSlider(context.getString(R.string.ui_battery_size), config.batterySize, 10..28, "sp", previewChange = { headerPreview = headerPreview.copy(batterySize = it) }) { scope.launch { prefs.number("battery_size", it) } }
+                        SettingSlider(context.getString(R.string.ui_signal_and_wi_fi_size), config.signalSize, 12..32, "dp", previewChange = { headerPreview = headerPreview.copy(signalSize = it) }) { scope.launch { prefs.number("signal_size", it) } }
+                        AppText(context.getString(R.string.ui_preview_with_sample_data), size = 11, color = Color.Gray)
+                        HomeHeader(headerPreview, 0L, WeatherEntry(18, 0, context.getString(R.string.ui_location), 0L), null, 86, 3, true)
+                        Action(context.getString(R.string.ui_reset_header)) { scope.launch { prefs.resetHeader() } }
+                        MenuRow(context.getString(R.string.ui_weather_setup), context.getString(R.string.ui_widget_permissions)) { page = "widgets" }
+                    }
+                    "widgets" -> {
+                        Section(context.getString(R.string.ui_weather))
+                        Toggle(context.getString(R.string.ui_weather), config.weather) { enabled ->
+                            scope.launch { prefs.bool("show_weather", enabled) }
+                            if (enabled && !permitted(context, Manifest.permission.ACCESS_COARSE_LOCATION)) permission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+                        }
+                        if (config.weather) {
+                            Toggle(context.getString(R.string.ui_text_only_weather_standard_layout), config.weatherText) { scope.launch { prefs.bool("weather_text", it) } }
+                            AppText(context.getString(R.string.ui_phone_location_weather_open_meteo_approximate_coordinates), size = 11, color = Color.Gray)
+                            if (!permitted(context, Manifest.permission.ACCESS_COARSE_LOCATION)) Action(context.getString(R.string.ui_allow_location_access)) { permission.launch(Manifest.permission.ACCESS_COARSE_LOCATION) }
                         }
                         Section(context.getString(R.string.ui_small_widgets))
                         Destination(context.getString(R.string.ui_music), config.music) { scope.launch { prefs.text("music_destination", it) } }
@@ -174,10 +188,8 @@ fun SettingsScreen() {
                             if (!permitted(context, Manifest.permission.READ_CALENDAR)) Action(context.getString(R.string.ui_allow_calendar_access)) { permission.launch(Manifest.permission.READ_CALENDAR) }
                             else MenuRow(context.getString(R.string.ui_calendars_to_show), if (config.calendarIds == "*") context.getString(R.string.ui_all_visible_calendars) else context.getString(R.string.ui_custom_selection)) { page = "calendars" }
                         }
-                        Action(context.getString(R.string.ui_app_permissions_in_android)) {
-                            try { context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.parse("package:${context.packageName}"))) }
-                            catch (_: Exception) { message(context.getString(R.string.ui_setting_unavailable)) }
-                        }
+                        AppText(context.getString(R.string.ui_preview_with_sample_data), size = 11, color = Color.Gray)
+                        MusicWidget(MusicEntry(context.getString(R.string.ui_track_title), context.getString(R.string.ui_artist), true, null, false, false, false, "preview"), open = {}, control = {})
                     }
                     "favorites" -> {
                         AppText(context.getString(R.string.ui_drag_to_reorder_use_the_arrows_to), size = 12, color = Color.Gray)
@@ -197,6 +209,20 @@ fun SettingsScreen() {
                         if (calendars.isEmpty()) AppText(context.getString(R.string.ui_no_visible_calendars_or_access_unavailable), color = Color.Gray)
                     }
                     "hub" -> {
+                        Section(context.getString(R.string.ui_home_hub_button))
+                        SettingSlider(context.getString(R.string.ui_home_hub_font), config.homeHubText, 10..26, "sp", previewChange = { hubPreview = hubPreview.copy(homeHubText = it) }) {
+                            scope.launch { prefs.number("home_hub_text", it) }
+                        }
+                        SettingSlider(context.getString(R.string.ui_home_hub_padding), config.homeHubPadding, 8..32, "dp", previewChange = { hubPreview = hubPreview.copy(homeHubPadding = it) }) {
+                            scope.launch { prefs.number("home_hub_padding", it) }
+                        }
+                        Choice(context.getString(R.string.ui_presence_mode), config.homeHubIndicator, listOf(
+                            "fixed" to context.getString(R.string.ui_presence_fixed), "pulse" to context.getString(R.string.ui_presence_pulse),
+                            "off" to context.getString(R.string.ui_presence_off))) { value -> scope.launch { prefs.text("home_hub_indicator", value) } }
+                        AppText(context.getString(R.string.ui_home_hub_help), size = 11, color = Color.Gray)
+                        Toggle(context.getString(R.string.ui_preview_notifications), previewNotifications) { previewNotifications = it }
+                        AppText(context.getString(R.string.ui_preview_with_sample_data), size = 11, color = Color.Gray)
+                        HomeHubButton(hubPreview, if (previewNotifications) 3 else 0) {}
                         Section(context.getString(R.string.ui_notification_access))
                         AppText(if (NotificationUtils.isNotificationListenerEnabled(context)) context.getString(R.string.ui_access_enabled) else context.getString(R.string.ui_access_disabled))
                         Action(context.getString(R.string.ui_manage_access)) { launchSettings(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS) }
@@ -204,6 +230,7 @@ fun SettingsScreen() {
                         AppText(context.getString(R.string.ui_tap_open_content_in_the_app_n), color = Color.LightGray)
                     }
                     "appearance" -> {
+                        Toggle(context.getString(R.string.ui_hide_status_bar), config.hideStatusBar) { scope.launch { prefs.bool("hide_status_bar", it) } }
                         Section(context.getString(R.string.ui_typeface))
                         Choice(context.getString(R.string.ui_interface_font), config.font, listOf("default" to "IBM Plex Mono", "system" to context.getString(R.string.ui_system), "custom" to context.getString(R.string.ui_import_ttf_otf))) { value ->
                             if (value == "custom") importer.launch(arrayOf("*/*")) else scope.launch { prefs.text("font", value) }
@@ -224,11 +251,23 @@ fun SettingsScreen() {
                         Text(context.getString(R.string.ui_alex_ni_will_arrive_in_ten_minutes), fontFamily = LocalAppStyle.current.family, fontSize = config.hubText.sp, color = Color.LightGray)
                         Action(context.getString(R.string.ui_reset_default_appearance)) { dialog = "reset" }
                     }
+                    "licenses" -> {
+                        val documents = listOf("LICENSE.txt" to "noduS · MIT", "THIRD_PARTY_NOTICES.md" to context.getString(R.string.ui_attributions),
+                            "IBM-Plex-Mono-OFL.txt" to "IBM Plex Mono · OFL", "Exo-2-OFL.txt" to "Exo 2 · OFL", "Inter-OFL.txt" to "Inter · OFL")
+                        Choice(context.getString(R.string.ui_license_document), licenseFile, documents) { licenseFile = it }
+                        val legalText by produceState("", licenseFile) {
+                            value = withContext(Dispatchers.IO) { runCatching {
+                                context.assets.open("licenses/$licenseFile").bufferedReader().use { it.readText() }
+                            }.getOrElse { context.getString(R.string.ui_license_unavailable) } }
+                        }
+                        AppText(legalText, size = 11, color = Color.LightGray)
+                    }
                     "about" -> {
-                        com.nodus.launcher.ui.welcome.AppIdentityContent(welcome = false)
+                        MenuRow(context.getString(R.string.ui_licenses), context.getString(R.string.ui_licenses_subtitle)) { page = "licenses" }
                         Action(context.getString(R.string.ui_update_review)) {
                             context.startActivity(Intent(context, com.nodus.launcher.ui.welcome.ReleaseNotesActivity::class.java))
                         }
+                        com.nodus.launcher.ui.welcome.AppIdentityContent(welcome = false)
                     }
                 }
             } }

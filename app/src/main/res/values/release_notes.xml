@@ -1,11 +1,10 @@
 <resources>
     <string name="ui_update_title">What’s new in %1$s</string>
     <string name="ui_update_intro">Here are the changes in this version. Your settings are preserved.</string>
-    <string name="ui_update_swipe">Smoother notification swipes: animated exit, gentle return for short gestures and animated row placement.</string>
-    <string name="ui_update_home">The hub label on home turns magenta when notifications are present.</string>
-    <string name="ui_update_battery">Vertical battery icon with level and charging state, leaving more room for other indicators.</string>
-    <string name="ui_update_icon">Smaller app symbol with more space inside circular icons.</string>
-    <string name="ui_update_notes">This screen appears once after each update and can be reopened from About.</string>
     <string name="ui_update_continue">Continue</string>
     <string name="ui_update_review">What’s new in this version</string>
+    <string name="ui_update_layout_controls">Full-width hub button with light text and separate text size and vertical padding controls.</string>
+    <string name="ui_update_presence_indicator">Magenta indicator: fixed, slowly pulsing or off. Visible only with notifications; disabled system animations are respected.</string>
+    <string name="ui_update_settings_groups">Settings reorganized into Home, Clock and indicators, Notifications and hub, Widgets, Appearance and About. Existing preferences are preserved.</string>
+    <string name="ui_update_licenses">Battery icon to the right of its percentage in the standard layout. Licenses available in About.</string>
 </resources>

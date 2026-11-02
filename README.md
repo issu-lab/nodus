@@ -1,6 +1,6 @@
 ![noduS launcher — minimal Android launcher with a notification hub](assets/nodus-banner.png)
 
-![Version 0.1.24](https://img.shields.io/badge/version-0.1.24-151923)
+![Version 0.1.25](https://img.shields.io/badge/version-0.1.25-151923)
 ![Android 8 or newer](https://img.shields.io/badge/Android-8%2B-3DDC84)
 ![Experimental](https://img.shields.io/badge/status-experimental-F800FF)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -16,11 +16,11 @@ inspired by simple launchers and the BlackBerry communications hub.
 | Field | Current state |
 |---|---|
 | Maturity | Experimental |
-| Used on a phone | Initial trials; 0.1.24 device checks pending |
+| Used on a phone | Initial trials; 0.1.25 device checks pending |
 | Recommended for everyday use | Not yet |
 | Setup difficulty | APK installation and manual permissions |
 | Documentation | In progress |
-| Current source version | 0.1.24 — experimental GitHub beta |
+| Current source version | 0.1.25 — experimental GitHub beta |
 | Local checks | 91 Kotlin checks; debug build and Android Lint pass |
 
 > [!WARNING]
@@ -38,8 +38,10 @@ an item in a separate noduS inbox.
 ## Features
 
 - Animated notification swipes with a gentle return for short gestures and
-  animated row placement; the home hub label turns magenta when notifications
-  are present (since 0.1.24).
+  animated row placement (since 0.1.24).
+- Full-width home hub button with always-light text, independent font/padding
+  controls and a magenta presence dot: fixed, slow pulse or off (since 0.1.25).
+  Pulse pauses in the background and respects disabled Android animations.
 - Full-screen notification hub, newest first, with expandable text and a fixed
   header for navigation and clearing dismissible notifications.
 - Direct replies when the originating app supports them; a successful handoff
@@ -97,7 +99,7 @@ Implementation details are in the [development guide](docs/DEVELOPMENT.md).
 
 Real phone screenshots supplied during testing, captured on **0.1.22** with a
 user-imported pixel font (not bundled with noduS). They show the current lowercase
-n branding and both home layouts. The 0.1.23/0.1.24 changes are not represented in these
+n branding and both home layouts. Changes from 0.1.23 onward are not represented in these
 captures. Tap an image to view it at full size.
 
 | Super compact home | Standard home | All apps |
@@ -110,7 +112,7 @@ captures. Tap an image to view it at full size.
 
 ## Beta testing and downloads
 
-[Download noduS 0.1.24 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.24-beta.1/nodus-0.1.24-beta.zip)
+[Download noduS 0.1.25 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.25-beta.1/nodus-0.1.25-beta.zip)
 
 Extract the ZIP and open the included APK on your phone. The package includes
 installation notes and full font license copies. It updates existing test
@@ -154,7 +156,10 @@ The home does not scroll: it moves up as content grows and fits proportionally
 only if it exceeds the available height. All apps and the hub remain scrollable.
 System Back or the Home button inside the app list returns to home. Android
 navigation gestures remain enabled.
-Settings are grouped into Home, Notification hub, Appearance and About.
+Settings are grouped into Home, Clock and indicators, Notifications and hub,
+Widgets, Appearance and About (since 0.1.25). Each control has one location;
+existing preferences are preserved. Font licenses and notices are bundled in the
+APK and accessible under About → Licenses.
 Settings, home and hub controls follow Italian or English according to Android since 0.1.23. App names, messages and calendar content remain as supplied by their apps.
 
 | Setting or access | Purpose |
@@ -196,7 +201,7 @@ Imported fonts are copied into private app storage; the original file is unchang
 ## Limitations
 
 - Initial phone trials provided appearance and interaction feedback.
-  The 0.1.24 changes and full gesture/permission/app integration checks remain
+  The 0.1.25 changes and full gesture/permission/app integration checks remain
   to be tested on the phone.
 - Reply and conversation opening depend on actions supplied by the originating app.
 - The hub filters group summaries and ongoing notifications outside configured

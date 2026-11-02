@@ -2,7 +2,7 @@
 
 ## Android build
 
-The current source version is **0.1.24**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.25**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
@@ -244,3 +244,17 @@ APK are byte-identical to the tested local files and match SHA256SUMS.txt.
 The remote README was verified against the updated source. Local untracked
 sync duplicates in the publishing checkout are excluded through an explicit
 export-manifest path list; workspace history and caches are never pushed.
+
+## Settings groups and home hub (0.1.25)
+
+The six settings pages keep existing DataStore keys; only home_hub_text,
+home_hub_padding and home_hub_indicator are new. HomeHubButton is shared by home
+and sample preview. Its dot uses a lifecycle-scoped animation, and a system setting
+observer falls back to a fixed indicator when animation duration scale is zero.
+Text remains white. Settings-only leading spacing is disabled for this preview.
+The standard header places the battery icon after its percentage.
+
+Run `python3 tools/sync_android_licenses.py` before building after editing the
+project license/notices, or add `--check` for read-only verification. Five checked-in
+Android assets are readable from About. This does not generate a dependency
+license inventory. Update notes were refreshed for the installed 0.1.25 changes.
