@@ -225,3 +225,12 @@ supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti
   reset a 16 sp, anteprime home/hub indipendenti con font standard e pixel.
 - Etichetta hub italiana/inglese con zero, una e più notifiche; testo spostato
   a sinistra senza pallino, sfondo visibile/zero e indicatore disattivato.
+
+### Collaudo icona 0.1.29
+
+- Verificare margine della n nelle maschere circolari e altre forme sul telefono.
+- Provare dots/icone con notifiche presenti e assenti e modi pulsante/fisso/spento;
+  controllare uniformità delle icone, background e animazioni Android disattivate.
+
+- Collaudare modalità aereo on/off a home visibile e dopo riapertura, nei due
+  layout; aeroplano al posto delle barre, Wi-Fi riattivato e widget segnale nascosto.

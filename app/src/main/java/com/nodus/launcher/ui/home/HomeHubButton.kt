@@ -5,6 +5,10 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
+import androidx.core.graphics.drawable.toBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
@@ -56,7 +60,7 @@ fun HomeHubButton(config: UiSettings, count: Int, open: () -> Unit) {
             if (count > 0 && config.homeHubIndicator != "off") Box(Modifier.width(ContentGrid.IconLane), contentAlignment = Alignment.CenterStart) {
                 Box(Modifier.size(24.dp), contentAlignment = Alignment.CenterStart) {
                     if (count > 0 && config.homeHubIndicator != "off") {
-                        PresenceDot(config.homeHubIndicator == "pulse", if (config.dots) config.dotSize else 8)
+                        PresenceDot(config.homeHubIndicator == "pulse", config.dotSize, config.dots)
                     }
                 }
             }
@@ -68,7 +72,7 @@ fun HomeHubButton(config: UiSettings, count: Int, open: () -> Unit) {
 }
 
 @Composable
-private fun PresenceDot(pulse: Boolean, dotSize: Int) {
+private fun PresenceDot(pulse: Boolean, dotSize: Int, dots: Boolean) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     var animate by remember { mutableStateOf(false) }
@@ -94,6 +98,11 @@ private fun PresenceDot(pulse: Boolean, dotSize: Int) {
         transition.animateFloat(1f, .55f, infiniteRepeatable(tween(1200), RepeatMode.Reverse), label = "presenceBrightness").value
     } else 1f
     val description = context.getString(R.string.ui_presence_present)
+    if (!dots) {
+        val icon = remember(context) { context.packageManager.getApplicationIcon(context.packageName).toBitmap(64, 64).asImageBitmap() }
+        Image(icon, contentDescription = description, modifier = Modifier.size(24.dp).graphicsLayer { alpha = brightness })
+        return
+    }
     Canvas(Modifier.size(dotSize.dp).semantics { contentDescription = description }) {
         val radius = size.minDimension / 2
         for (i in 4 downTo 1) drawCircle(Accent.copy(alpha = .035f * brightness), radius * (1f + i * .2f))

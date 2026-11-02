@@ -53,6 +53,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
     val charging by viewModel.widgets.charging.collectAsState()
     val battery by viewModel.widgets.battery.collectAsState()
     val signal by viewModel.widgets.signal.collectAsState()
+    val airplaneEnabled by viewModel.widgets.airplaneEnabled.collectAsState()
     val wifiConnected by viewModel.widgets.wifiConnected.collectAsState()
     val events by viewModel.widgets.events.collectAsState()
     val music by viewModel.widgets.music.collectAsState()
@@ -139,7 +140,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
     ) {
         val body: @Composable () -> Unit = {
             Column(Modifier.fillMaxWidth().padding(top = HomePolicy.spacing(config.homeSpacing, 8f).dp, bottom = HomePolicy.spacing(config.homeSpacing, 16f).dp)) {
-                HomeHeader(config, now, weather, weatherError, battery, signal, wifiConnected, { openSettings() }, charging = charging)
+                HomeHeader(config, now, weather, weatherError, battery, signal, wifiConnected, { openSettings() }, charging = charging, airplaneEnabled = airplaneEnabled)
                 HomeHubButton(config, count) { openHub() }
                 if (UiSettings.onHome(config.calendar) && events.isNotEmpty() && !calendarHidden) {
                     DismissibleHomeWidget(WidgetVisibilityPolicy.fingerprint(today, *eventKeys.sorted().toTypedArray()), context.getString(R.string.ui_runtime_calendar), onDismiss = {

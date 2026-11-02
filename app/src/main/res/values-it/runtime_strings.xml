@@ -75,4 +75,5 @@
         <item quantity="other">Hub notifiche · %1$d</item>
         <item quantity="many">Hub notifiche · %1$d</item>
     </plurals>
+    <string name="ui_airplane_mode">Modalità aereo</string>
 </resources>

@@ -26,7 +26,7 @@ import java.util.*
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun HomeHeader(config: UiSettings, now: Long, weather: WeatherEntry?, weatherError: String?,
-               battery: Int?, signal: Int?, wifiConnected: Boolean, openSettings: () -> Unit = {}, charging: Boolean = false) {
+               battery: Int?, signal: Int?, wifiConnected: Boolean, openSettings: () -> Unit = {}, charging: Boolean = false, airplaneEnabled: Boolean = false) {
     val context = LocalContext.current
     val weatherDescription = context.getString(when (weather?.code) {
         0 -> R.string.ui_weather_clear
@@ -57,7 +57,7 @@ fun HomeHeader(config: UiSettings, now: Long, weather: WeatherEntry?, weatherErr
             }
             if (config.signal) {
                 if (wifiConnected) WifiGlyph(config.signalSize)
-                SignalGlyph(signal, config.signalSize)
+                if (airplaneEnabled) AirplaneGlyph(config.signalSize) else SignalGlyph(signal, config.signalSize)
             }
         }
     }
@@ -95,7 +95,7 @@ fun HomeHeader(config: UiSettings, now: Long, weather: WeatherEntry?, weatherErr
                 }
                 if (config.signal) {
                     if (wifiConnected) WifiGlyph(config.signalSize)
-                    SignalGlyph(signal, config.signalSize)
+                    if (airplaneEnabled) AirplaneGlyph(config.signalSize) else SignalGlyph(signal, config.signalSize)
                 }
                 if (config.battery) Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 BatteryGlyph(battery, charging, config.batterySize)
@@ -215,5 +215,28 @@ private fun BatteryGlyph(level: Int?, charging: Boolean, iconSize: Int) {
             }
             drawPath(bolt, Color.White)
         }
+    }
+}
+
+@Composable
+private fun AirplaneGlyph(iconSize: Int) {
+    val context = LocalContext.current
+    Canvas(Modifier.size(iconSize.dp).semantics { contentDescription = context.getString(R.string.ui_airplane_mode) }) {
+        val w = size.width; val h = size.height
+        val plane = androidx.compose.ui.graphics.Path().apply {
+            moveTo(w * .5f, h * .04f)
+            cubicTo(w * .45f, h * .04f, w * .44f, h * .1f, w * .44f, h * .17f)
+            lineTo(w * .44f, h * .39f); lineTo(w * .06f, h * .64f)
+            lineTo(w * .06f, h * .74f); lineTo(w * .44f, h * .61f)
+            lineTo(w * .44f, h * .83f); lineTo(w * .29f, h * .93f)
+            lineTo(w * .29f, h * .99f); lineTo(w * .5f, h * .93f)
+            lineTo(w * .71f, h * .99f); lineTo(w * .71f, h * .93f)
+            lineTo(w * .56f, h * .83f); lineTo(w * .56f, h * .61f)
+            lineTo(w * .94f, h * .74f); lineTo(w * .94f, h * .64f)
+            lineTo(w * .56f, h * .39f); lineTo(w * .56f, h * .17f)
+            cubicTo(w * .56f, h * .1f, w * .55f, h * .04f, w * .5f, h * .04f)
+            close()
+        }
+        drawPath(plane, Color.White)
     }
 }

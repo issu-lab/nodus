@@ -63,6 +63,7 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
     val battery = MutableStateFlow<Int?>(null)
     val charging = MutableStateFlow(false)
     val signal = MutableStateFlow<Int?>(null)
+    val airplaneEnabled = MutableStateFlow(false)
     val wifiConnected = MutableStateFlow(false)
     val events = MutableStateFlow<List<CalendarEntry>>(emptyList())
     val music = MutableStateFlow<MusicEntry?>(null)
@@ -233,6 +234,7 @@ class DeviceWidgets(private val context: Context, private val scope: CoroutineSc
     private fun airplaneMode() = Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON, 0) != 0
     private fun refreshWifi() {
         if (!running || hubSurface || !settings.signal) return
+        airplaneEnabled.value = airplaneMode()
         val radioOn = runCatching { (context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager).wifiState == WifiManager.WIFI_STATE_ENABLED }.getOrDefault(false)
         val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         wifiNetworks.clear()

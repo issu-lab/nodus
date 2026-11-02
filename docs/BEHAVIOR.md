@@ -395,3 +395,16 @@ Aspetto → Testo impostazioni regola la base 13–24 sp, predefinita 16 sp anch
 per installazioni esistenti senza questa preferenza. Titoli e descrizioni scalano
 in proporzione; home, hub e anteprime non ereditano questa scala. Il valore è
 persistente e Reimposta aspetto lo riporta al predefinito.
+
+### Icona e indicatore 0.1.29
+
+La n nell’icona adattiva passa da scala 0.62 a 0.56, centrata. In modalità icone
+app, l’indicatore hub usa l’icona adattiva noduS a 24 dp nella colonna comune.
+Con dots resta il pallino della dimensione scelta. Entrambi seguono le modalità
+pulsazione lenta, fisso e disattivato. Senza notifiche non compare un indicatore
+e il testo resta a sinistra; animazioni disattivate e background fermano la pulsazione.
+
+In entrambi i layout, con modalità aereo attiva e widget segnale abilitato,
+l’aeroplano sostituisce le barre cellulari. Il Wi-Fi mantiene lo stato indipendente:
+compare se effettivamente connesso, anche quando riattivato in modalità aereo.
+Lo stato è riletto all’apertura della home e quando cambia la modalità aereo.

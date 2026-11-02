@@ -3,8 +3,8 @@
     <string name="ui_update_intro">Ecco le modifiche di questa versione. Le tue impostazioni restano conservate.</string>
     <string name="ui_update_continue">Continua</string>
     <string name="ui_update_review">Novità di questa versione</string>
-    <string name="ui_update_layout_controls">Etichetta breve: Hub notifiche · numero; solo Hub notifiche quando vuoto.</string>
-    <string name="ui_update_presence_indicator">Senza indicatore visibile il testo dell’hub si sposta a sinistra, eliminando la colonna vuota.</string>
-    <string name="ui_update_previews">Nuovo slider Testo impostazioni in Aspetto: dimensione predefinita aumentata, indipendente da home e hub.</string>
-    <string name="ui_update_row_spacing">La dimensione dei menu viene salvata, applicata subito e ripristinata con Reimposta aspetto.</string>
+    <string name="ui_update_layout_controls">Simbolo dell’app più piccolo: maggiore margine attorno alla n nelle maschere circolari e adattive.</string>
+    <string name="ui_update_presence_indicator">Quando usi le icone delle app, l’hub nella home mostra l’icona noduS al posto del pallino.</string>
+    <string name="ui_update_previews">La presenza di notifiche usa la stessa pulsazione lenta sul pallino o sull’icona noduS. Restano le modalità fissa e disattivata.</string>
+    <string name="ui_update_row_spacing">In modalità aereo l’aeroplano sostituisce le barre del segnale. Il Wi-Fi resta visibile se connesso.</string>
 </resources>

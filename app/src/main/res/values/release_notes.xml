@@ -3,8 +3,8 @@
     <string name="ui_update_intro">Here are the changes in this version. Your settings are preserved.</string>
     <string name="ui_update_continue">Continue</string>
     <string name="ui_update_review">What’s new in this version</string>
-    <string name="ui_update_layout_controls">Shorter home label: Notification hub · count; just Notification hub when empty.</string>
-    <string name="ui_update_presence_indicator">Without a visible indicator, the hub label moves left to remove the empty column.</string>
-    <string name="ui_update_previews">New Settings text slider in Appearance; larger default text, independently of home and hub.</string>
-    <string name="ui_update_row_spacing">Settings text size is saved, applied immediately and restored by Reset appearance.</string>
+    <string name="ui_update_layout_controls">Smaller launcher symbol: more room around the n inside circular and other adaptive masks.</string>
+    <string name="ui_update_presence_indicator">With app icons enabled, the home hub uses the noduS app icon instead of a dot.</string>
+    <string name="ui_update_previews">Notification presence uses the same slow pulse for either the dot or the noduS icon. Fixed and off modes remain available.</string>
+    <string name="ui_update_row_spacing">In airplane mode, the airplane icon replaces signal bars. Wi-Fi can still appear when connected.</string>
 </resources>

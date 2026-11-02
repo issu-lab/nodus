@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.29 — icone e modalità aereo, build locale] - 2026-11-02
+
+- Ridotta la n nell’icona adattiva da scala 0.62 a 0.56, con geometria invariata.
+- In modalità icone app, l’hub usa l’icona adattiva noduS a 24 dp al posto
+  del pallino. Stesse opzioni pulsazione lenta/fisso/spento e gestione del ciclo vita.
+- Modalità aereo: aeroplano al posto delle barre del segnale in entrambi i layout;
+  Wi-Fi indipendente, visibile se connesso. Novità versione bilingui aggiornate.
+- Verificati 91 test Kotlin, 259 coppie risorse, asset legali, build e Lint
+  isolati (0 errori, 4 avvisi preesistenti). Firma APK invariata; collaudi telefono
+  e pubblicazione ancora da eseguire. Artefatti preesistenti preservati.
+
 ## [Prerelease GitHub v0.1.28-beta.1] - 2026-11-02
 
 - Pubblicati sorgenti, documentazione, ZIP e checksum della 0.1.28.

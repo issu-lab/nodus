@@ -2,7 +2,7 @@
 
 ## Android build
 
-The current source version is **0.1.28**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.29**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
@@ -299,3 +299,16 @@ after the count. With zero notifications the localized title is shown alone.
 
 The current published beta is v0.1.28-beta.1. Downloaded ZIP and extracted APK
 match local bytes and SHA-256 sums; remote README verified. No CI workflow configured.
+
+## Adaptive icon and hub presence (0.1.29 local)
+
+The existing nodus_icon vector uses centered scale .56 instead of .62; approved
+path geometry is unchanged. HomeHubButton loads its own adaptive application
+icon through PackageManager and converts it to the same 64 px bitmap/24 dp
+presentation as AppRow. Icon alpha uses the existing lifecycle-aware brightness
+(.55–1); dots retain their glow. No new animation or preference is introduced.
+
+DeviceWidgets exposes airplaneEnabled from the existing radio refresh path and
+AIRPLANE_MODE_CHANGED receiver. HomeHeader replaces SignalGlyph in both standard
+and compact layouts without inferring airplane mode from missing signal. Preview
+calls default to airplane mode off. Wi-Fi remains independently connection-based.

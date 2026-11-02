@@ -74,4 +74,5 @@
         <item quantity="one">Notification hub · %1$d</item>
         <item quantity="other">Notification hub · %1$d</item>
     </plurals>
+    <string name="ui_airplane_mode">Airplane mode</string>
 </resources>
