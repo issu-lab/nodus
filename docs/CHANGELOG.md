@@ -1,5 +1,11 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.27-beta.1] - 2026-11-02
+
+- Pubblicati sorgenti, documentazione, ZIP e checksum della 0.1.27.
+- Riscaricati e verificati ZIP integro, APK identico al locale, checksum SHA-256
+  e README remoto. Nessun workflow CI configurato; collaudi telefono ancora aperti.
+
 ## [0.1.27 — rifinitura spazi hub, build locale] - 2026-11-02
 
 - Sfondo esteso a sinistra di 10 dp per lasciare margine al pallino senza

@@ -274,7 +274,7 @@ padding accepts 0–32; zero removes the panel and button minimum height. Total
 padding per side is max(global row padding, background padding). Existing values
 are preserved. All visual settings previews locally disable LocalMenuLeadingSpace,
 while menu text keeps its pixel-font clipping workaround. Update notes describe
-these changes. Physical-phone visual checks remain pending. The current published beta is v0.1.26-beta.1. Its downloaded ZIP, extracted APK,
+these changes. Physical-phone visual checks remain pending. The previously verified beta is v0.1.26-beta.1. Its downloaded ZIP, extracted APK,
 SHA-256 sums and remote README were verified against the local export. No CI
 workflow is configured; validation was performed locally.
 
@@ -284,3 +284,6 @@ The home section spacer is conditional on visible calendar/music widgets, includ
 dismissed-widget state. HomeHubButton draws its background 10 dp beyond the left
 content edge; decoration does not shift the dot or text columns. At zero background,
 only row padding remains between the hub and first app. Phone checks pending.
+
+The current published beta is v0.1.27-beta.1. Downloaded ZIP and APK match local
+bytes and SHA-256 sums; remote README verified. No CI workflow is configured.
