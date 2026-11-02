@@ -209,7 +209,7 @@ lockup from its Material background luminance (the current app theme remains dar
 Historic uppercase assets are archived only in the original working copy's
 `design-studies/uppercase-n-approved-2026-10-29`, outside the publication export.
 
-The current beta `v0.1.22-beta.1` includes the approved lowercase n. Its downloaded
+The beta `v0.1.22-beta.1` includes the approved lowercase n. Its downloaded
 ZIP/APK and remote banner/social asset bytes match the local files and checksums.
 The social preview PNG is published as an asset; selecting it in repository
 Settings remains pending because the browser session is not authenticated.
@@ -238,3 +238,9 @@ it. Update `values/release_notes.xml` and `values-it/release_notes.xml` with the
 actual changes whenever increasing the app version. No runtime download is used.
 Nine additional pure tests cover swipe thresholds/reversal/non-dismissibility and
 first-install/upgrade/downgrade gating, for 91 Kotlin checks in total.
+
+The current published beta is `v0.1.24-beta.1`. Its downloaded ZIP and extracted
+APK are byte-identical to the tested local files and match SHA256SUMS.txt.
+The remote README was verified against the updated source. Local untracked
+sync duplicates in the publishing checkout are excluded through an explicit
+export-manifest path list; workspace history and caches are never pushed.

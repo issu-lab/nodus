@@ -1,5 +1,14 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.24-beta.1] - 2026-11-02
+
+- Pubblicati sorgenti, README aggiornato, guida beta e note della release 0.1.24.
+- Pubblicati ZIP con APK/licenze e SHA256SUMS.txt; riscaricato da GitHub:
+  archivio integro, ZIP e APK estratto identici ai locali, entrambi gli hash validi.
+- Verificato README remoto contro la copia locale e confermata la prerelease.
+- Escluse le copie non versionate presenti nel checkout di pubblicazione;
+  mantenuti artefatti e release precedenti. Verifiche sul telefono ancora aperte.
+
 ## [0.1.24 — swipe animato, presenza notifiche e novità, build locale] - 2026-11-02
 
 - Introdotto swipe con movimento diretto, uscita di 180 ms e ritorno morbido
