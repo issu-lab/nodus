@@ -1,5 +1,11 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.28-beta.1] - 2026-11-02
+
+- Pubblicati sorgenti, documentazione, ZIP e checksum della 0.1.28.
+- Riscaricati e verificati ZIP integro, APK identico al locale, checksum SHA-256
+  e README remoto. Nessun workflow CI configurato; collaudi telefono ancora aperti.
+
 ## [0.1.28 — etichetta hub e dimensione menu] - 2026-11-02
 
 - Hub home abbreviato e tradotto: Hub notifiche · numero / Notification hub · numero;

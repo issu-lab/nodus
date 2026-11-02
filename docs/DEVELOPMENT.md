@@ -296,3 +296,6 @@ scales its nominal size by settingsText / 13 only inside the settings menu scope
 Existing home/hub size preferences are preserved. The home indicator lane is
 conditional on visible presence, and localized labels omit notification nouns
 after the count. With zero notifications the localized title is shown alone.
+
+The current published beta is v0.1.28-beta.1. Downloaded ZIP and extracted APK
+match local bytes and SHA-256 sums; remote README verified. No CI workflow configured.
