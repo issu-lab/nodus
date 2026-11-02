@@ -2,7 +2,7 @@
 
 ## Android build
 
-The current source version is **0.1.23**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.24**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
@@ -222,3 +222,19 @@ Wi-Fi observation additionally gates connectivity on WifiManager radio state;
 system radio broadcasts and periodic refresh prevent retained callback snapshots.
 Battery charging uses the sticky Android status and falls back to BatteryManager.
 Menu-only leading NBSP leaves home/hub grid alignment unchanged.
+
+## Swipe and update notes (0.1.24)
+
+`NotificationSwipe` updates graphics-layer translation directly while dragging;
+only settling launches a coroutine. Removal checks the captured notification
+revision after a 180 ms exit; native removal remains authoritative. Short swipes
+spring back and ongoing rows resist dragging. Stable lazy keys and
+animateItemPlacement animate remaining rows. Revision changes cancel stale motions.
+
+`UpdateNoticePolicy` selects upgrade notes from persisted last-seen version and
+PackageManager installed metadata. Initial welcome completion records both flags
+atomically. ReleaseNotesActivity records the viewed version, and About can reopen
+it. Update `values/release_notes.xml` and `values-it/release_notes.xml` with the
+actual changes whenever increasing the app version. No runtime download is used.
+Nine additional pure tests cover swipe thresholds/reversal/non-dismissibility and
+first-install/upgrade/downgrade gating, for 91 Kotlin checks in total.

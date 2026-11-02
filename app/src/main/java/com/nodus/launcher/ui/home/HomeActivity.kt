@@ -2,6 +2,9 @@ package com.nodus.launcher.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import com.nodus.launcher.util.installedVersion
+import com.nodus.launcher.home.UpdateNoticePolicy
+import com.nodus.launcher.ui.welcome.ReleaseNotesActivity
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,18 +34,25 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val prefs = Prefs(this)
+        val installed = installedVersion()
         setContent {
             NodusTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = androidx.compose.ui.graphics.Color.Black
                 ) {
-                    val firstRun by prefs.firstRun.collectAsState(initial = false)
+                    val launchState by prefs.launchState.collectAsState(initial = null)
                     var welcomed by rememberSaveable { mutableStateOf(false) }
-                    LaunchedEffect(firstRun) {
-                        if (firstRun && !welcomed) {
-                            welcomed = true
-                            startActivity(Intent(this@HomeActivity, WelcomeActivity::class.java))
+                    LaunchedEffect(launchState) {
+                        val state = launchState ?: return@LaunchedEffect
+                        if (!welcomed) {
+                            if (state.firstRun) {
+                                welcomed = true
+                                startActivity(Intent(this@HomeActivity, WelcomeActivity::class.java))
+                            } else if (UpdateNoticePolicy.show(false, state.seenVersion, installed.code)) {
+                                welcomed = true
+                                startActivity(Intent(this@HomeActivity, ReleaseNotesActivity::class.java))
+                            }
                         }
                     }
                     HomeScreen(homeRequest = homeRequests.intValue)

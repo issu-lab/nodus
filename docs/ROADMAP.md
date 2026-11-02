@@ -2,9 +2,28 @@
 
 Sole attività approvate e ancora aperte. Le specifiche e il logo approvato sono
 nel [riferimento di comportamento](BEHAVIOR.md); presentazione e stato sono
-nel [README](../README.md). Le funzionalità approvate sono implementate localmente.
+nel [README](../README.md). Le funzionalità della 0.1.24 sono implementate localmente; restano aperte le
+verifiche sul telefono indicate sotto.
 Il primo collaudo della 0.1.11 sul telefono ha fornito riscontri visivi e
 richieste di rifinitura. Restano il collaudo completo e le nuove prove della 0.1.21.
+
+## Collaudo nuova versione 0.1.24
+
+- [ ] Provare swipe brevi/lunghi/veloci, inversione, annullamento, gesture ripetute
+  e notifiche non eliminabili. Verificare uscita, ritorno e riposizionamento con
+  molte notifiche, font pixel e animazioni Android disattivate.
+- [ ] Provare aggiornamento/scomparsa della notifica durante il gesto o l’uscita,
+  revoca accesso ed errore di eliminazione: niente righe fantasma o cancellazioni
+  di revisioni nuove; recupero se Android non conferma la rimozione.
+- [ ] Controllare presenza notifiche a colpo d’occhio: testo hub magenta con
+  conteggio positivo e neutro quando vuoto, aggiornato anche eliminando da Android.
+- [ ] Verificare batteria verticale, livello e fulmine con dimensioni piccole/grandi
+  in entrambi i layout e allineamento della percentuale.
+- [ ] Provare icona adattiva e monocromatica ridotta su maschere circolari e altre
+  forme. I limiti vettoriali sono nella zona sicura centrale; resa reale da provare.
+- [ ] Provare Novità su aggiornamento da 0.1.23, successivi avvii, rotazione,
+  salto di versione e riapertura da Informazioni. Nuova installazione: solo
+  benvenuto iniziale. Confermare italiano/inglese e preferenze conservate.
 
 ## Preparazione della futura pubblicazione
 

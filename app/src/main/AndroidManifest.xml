@@ -20,6 +20,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Nodus">
+        <activity android:name=".ui.welcome.ReleaseNotesActivity" android:exported="false" android:theme="@style/Theme.Nodus" />
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="true"

@@ -318,3 +318,29 @@ Il permesso aggiunto ACCESS_WIFI_STATE è normale, senza richiesta interattiva.
 La batteria mostra icona con livello e percentuale; il fulmine indica lo stato
 Android CHARGING. A carica completa l’icona mostra il livello pieno senza fulmine.
 Letture percentuali e stato di carica vengono dal broadcast sticky e dal BatteryManager.
+
+### Animazioni hub e presenza notifiche (0.1.24)
+
+Lo swipe aggiorna direttamente lo spostamento al movimento del dito. Al rilascio,
+un gesto sufficiente per distanza o velocità fa uscire la riga con dissolvenza
+parziale; poi viene richiesta la rimozione Android della revisione effettivamente
+trascinata. Gesti brevi, invertiti o annullati tornano con una molla morbida.
+Le notifiche non eliminabili oppongono resistenza e ritornano al posto.
+Le righe rimaste si riposizionano con un’animazione. Errori e mancate conferme
+ripristinano la riga; nessun archivio o rimozione fittizia locale.
+
+Il testo del pulsante hub sulla home è magenta quando il conteggio è positivo,
+neutro quando vuoto; il conteggio resta presente e segue sempre Android.
+
+### Icona e schermata delle novità (0.1.24)
+
+L’icona batteria è verticale, con livello riempito dal basso e fulmine durante
+la carica. Il simbolo n dell’icona adattiva ha scala 0.62 anziché 0.76; tracciato
+e marchio restano gli stessi e i limiti sono nella zona sicura circolare centrale.
+
+Le novità sono incluse nell’app e localizzate in italiano e inglese. Un’installazione
+nuova mostra il benvenuto iniziale; completandolo registra anche la versione vista.
+Dopo un aggiornamento, il primo avvio mostra le novità della versione installata
+una sola volta. La versione vista viene registrata quando la schermata è mostrata;
+rotazione e downgrade non ripetono le novità. Informazioni permette di riaprirle.
+Non viene richiesto accesso alla rete e non vengono azzerate altre preferenze.

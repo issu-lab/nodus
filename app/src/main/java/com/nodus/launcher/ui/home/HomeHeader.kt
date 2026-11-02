@@ -194,20 +194,24 @@ private fun WeatherGlyph(code: Int, description: String, iconSize: Int) {
 @Composable
 private fun BatteryGlyph(level: Int?, charging: Boolean, iconSize: Int) {
     val context = LocalContext.current
-    Canvas(Modifier.size((iconSize * 1.5f).dp, iconSize.dp).semantics {
+    Canvas(Modifier.size((iconSize.coerceAtLeast(12) * .65f).dp, iconSize.coerceAtLeast(12).dp).semantics {
         contentDescription = context.getString(if (charging) R.string.ui_battery_charging else R.string.ui_battery_normal)
     }) {
         val w = size.width; val h = size.height
         val stroke = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx())
-        drawRoundRect(Color.White, topLeft = androidx.compose.ui.geometry.Offset(w*.04f,h*.18f),
-            size = androidx.compose.ui.geometry.Size(w*.82f,h*.64f), cornerRadius = androidx.compose.ui.geometry.CornerRadius(h*.07f), style = stroke)
-        drawRect(Color.White, topLeft = androidx.compose.ui.geometry.Offset(w*.9f,h*.37f), size = androidx.compose.ui.geometry.Size(w*.08f,h*.26f))
-        if (level != null) drawRect(Color.White.copy(alpha = if (charging) .3f else .85f),
-            topLeft = androidx.compose.ui.geometry.Offset(w*.1f,h*.28f), size = androidx.compose.ui.geometry.Size(w*.7f*level.coerceIn(0,100)/100f,h*.44f))
+        drawRoundRect(Color.White, topLeft = androidx.compose.ui.geometry.Offset(w*.12f,h*.15f),
+            size = androidx.compose.ui.geometry.Size(w*.76f,h*.8f), cornerRadius = androidx.compose.ui.geometry.CornerRadius(w*.08f), style = stroke)
+        drawRect(Color.White, topLeft = androidx.compose.ui.geometry.Offset(w*.34f,h*.02f), size = androidx.compose.ui.geometry.Size(w*.32f,h*.09f))
+        if (level != null) {
+            val fraction = level.coerceIn(0,100)/100f
+            drawRect(Color.White.copy(alpha = if (charging) .3f else .85f),
+                topLeft = androidx.compose.ui.geometry.Offset(w*.25f,h*(.25f+.6f*(1f-fraction))),
+                size = androidx.compose.ui.geometry.Size(w*.5f,h*.6f*fraction))
+        }
         if (charging) {
             val bolt = androidx.compose.ui.graphics.Path().apply {
-                moveTo(w*.52f,h*.06f); lineTo(w*.3f,h*.53f); lineTo(w*.46f,h*.53f)
-                lineTo(w*.38f,h*.94f); lineTo(w*.64f,h*.43f); lineTo(w*.48f,h*.43f); close()
+                moveTo(w*.6f,h*.22f); lineTo(w*.25f,h*.6f); lineTo(w*.49f,h*.6f)
+                lineTo(w*.4f,h*.88f); lineTo(w*.77f,h*.48f); lineTo(w*.53f,h*.48f); close()
             }
             drawPath(bolt, Color.White)
         }

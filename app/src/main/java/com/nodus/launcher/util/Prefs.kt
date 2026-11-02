@@ -28,7 +28,10 @@ data class UiSettings(
     }
 }
 
+data class LaunchState(val firstRun: Boolean, val seenVersion: Int)
+
 class Prefs(context: Context) {
+    private val version = context.installedVersion().code
     private val store = context.applicationContext.dataStore
     private val data = store.data.catch { if (it is IOException) emit(emptyPreferences()) else throw it }
     val settings = data.map { p -> UiSettings(
@@ -64,6 +67,11 @@ class Prefs(context: Context) {
         ?.split('\n')?.filter { it.isNotBlank() }?.distinct()
         ?: p[stringSetPreferencesKey("favorites")]?.sorted().orEmpty()
     val favoriteOrder = data.map(::ordered)
+    val launchState = data.map { LaunchState(it[booleanPreferencesKey("first_run")] ?: true,
+        it[intPreferencesKey("last_seen_version")] ?: 0) }
+    suspend fun markVersionSeen(version: Int) { store.edit { p ->
+        p[intPreferencesKey("last_seen_version")] = maxOf(p[intPreferencesKey("last_seen_version")] ?: 0, version)
+    } }
     val firstRun = data.map { it[booleanPreferencesKey("first_run")] ?: true }
     suspend fun bool(key: String, value: Boolean) { store.edit { it[booleanPreferencesKey(key)] = value } }
     suspend fun number(key: String, value: Int) {
@@ -73,7 +81,12 @@ class Prefs(context: Context) {
         }
     }
     suspend fun text(key: String, value: String) { store.edit { it[stringPreferencesKey(key)] = value } }
-    suspend fun setFirstRun(value: Boolean) = bool("first_run", value)
+    suspend fun setFirstRun(value: Boolean) {
+        store.edit { p ->
+            p[booleanPreferencesKey("first_run")] = value
+            if (!value) p[intPreferencesKey("last_seen_version")] = maxOf(p[intPreferencesKey("last_seen_version")] ?: 0, version)
+        }
+    }
     suspend fun setVisibleAppsCount(count: Int): Boolean {
         var accepted = false
         store.edit { p ->

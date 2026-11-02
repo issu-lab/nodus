@@ -48,7 +48,10 @@ with tempfile.TemporaryDirectory(prefix='nodus-command-tests-') as output:
                     str(root / 'app/src/main/java/com/nodus/launcher/widgets/BatteryReading.kt'),
                     str(root / 'tests/BatteryReadingTest.kt'),
                     str(root / 'app/src/main/java/com/nodus/launcher/home/HeaderSizes.kt'),
-                    str(root / 'tests/HeaderSizesTest.kt')], check=True)
+                    str(root / 'tests/HeaderSizesTest.kt'),
+                    str(root / 'app/src/main/java/com/nodus/launcher/notifications/NotificationSwipePolicy.kt'),
+                    str(root / 'app/src/main/java/com/nodus/launcher/home/UpdateNoticePolicy.kt'),
+                    str(root / 'tests/UpdateInteractionTest.kt')], check=True)
     subprocess.run([java, '-cp', os.pathsep.join([output, str(stdlib)]),
                     'NotificationActionsTestKt'], check=True)
     subprocess.run([java, '-cp', os.pathsep.join([output, str(stdlib)]),
@@ -65,3 +68,6 @@ with tempfile.TemporaryDirectory(prefix='nodus-command-tests-') as output:
 
     subprocess.run([java, '-cp', os.pathsep.join([output, str(stdlib)]),
                     'HeaderSizesTestKt'], check=True)
+
+    subprocess.run([java, '-cp', os.pathsep.join([output, str(stdlib)]),
+                    'UpdateInteractionTestKt'], check=True)

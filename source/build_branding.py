@@ -33,5 +33,5 @@ for theme,fg,gray in [('dark','#FFFFFF','#A3A5B1'),('light','#000000','#656976')
     filename='nodus-logo.svg' if theme=='dark' else 'nodus-logo-light.svg'
     ET.ElementTree(logo).write(folder/filename,encoding='utf-8',xml_declaration=True)
 android=ROOT/'app/src/main/res/drawable/nodus_icon.xml'
-android.write_text('<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="320" android:viewportHeight="320">\n    <group android:pivotX="160" android:pivotY="160" android:scaleX="0.76" android:scaleY="0.76">\n        <path android:fillColor="#F800FF" android:pathData="'+path+'" />\n    </group>\n</vector>\n')
+android.write_text('<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="320" android:viewportHeight="320">\n    <group android:pivotX="160" android:pivotY="160" android:scaleX="0.62" android:scaleY="0.62">\n        <path android:fillColor="#F800FF" android:pathData="'+path+'" />\n    </group>\n</vector>\n')
 print('Approved lowercase n, theme wordmarks and Android icon generated.')

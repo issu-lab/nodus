@@ -8,6 +8,8 @@ import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -56,6 +58,7 @@ import java.util.Date
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
     val context = LocalContext.current
@@ -221,12 +224,12 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
                         }
                         notifications.isEmpty() -> item(key = "status:empty") { HubText(context.getString(R.string.ui_runtime_no_notifications), color = Color(0xFF9B9B9B)) }
                         else -> items(notifications, key = { it.key }) { item ->
-                            NotificationRow(item, defaultLines,
+                            NotificationRow(item, defaultLines, modifier = Modifier.animateItemPlacement(spring(stiffness = Spring.StiffnessMediumLow)),
                                 onOpen = {
                                     val result = NodusNotificationListener.open(it.ref)
                                     if (result == NotificationActionResult.SUCCESS) activity?.finish() else showResult(result)
                                 }, onReply = ::beginReply,
-                                onDismiss = { showResult(NodusNotificationListener.dismiss(it.ref)) })
+                                onDismiss = { NodusNotificationListener.dismiss(it.ref).also(::showResult) })
                         }
                     }
                 }
@@ -313,44 +316,29 @@ fun HubScreen(widgetsModel: HubWidgetsViewModel = viewModel()) {
 private fun NotificationRow(
     item: NotificationItem,
     initialLines: Int,
+    modifier: Modifier = Modifier,
     onOpen: (NotificationItem) -> Unit,
     onReply: (NotificationItem) -> Unit,
-    onDismiss: (NotificationItem) -> Unit
+    onDismiss: (NotificationItem) -> NotificationActionResult
 ) {
     val context = LocalContext.current
-    var offsetPx by remember(item.key) { mutableFloatStateOf(0f) }
     var expanded by rememberSaveable(item.key) { mutableStateOf(false) }
     val collapsedLines = rememberSaveable(item.key) { initialLines }
     var truncated by remember(item.key) { mutableStateOf(false) }
-    val density = LocalDensity.current
     val hubSize = LocalAppStyle.current.settings.hubText
-    val thresholdPx = with(density) { 80.dp.toPx() }
-    val latestItem by rememberUpdatedState(item)
-    val dismiss by rememberUpdatedState(onDismiss)
     val time = remember(item.postTime) { DateFormat.getTimeInstance(DateFormat.SHORT).format(Date(item.postTime)) }
+    NotificationSwipe(item.key, item.ref.revision, item.ref.dismissible, modifier, onDismiss = { onDismiss(item) }) { requestDismiss, busy ->
     Column(
         Modifier.fillMaxWidth()
-            .offset { IntOffset(offsetPx.roundToInt(), 0) }
-            .pointerInput(item.key, thresholdPx) {
-                detectHorizontalDragGestures(
-                    onDragStart = { offsetPx = 0f },
-                    onHorizontalDrag = { change, amount -> offsetPx += amount; change.consume() },
-                    onDragEnd = {
-                        val shouldDismiss = abs(offsetPx) >= thresholdPx
-                        offsetPx = 0f
-                        if (shouldDismiss) dismiss(latestItem)
-                    },
-                    onDragCancel = { offsetPx = 0f }
-                )
-            }
             .combinedClickable(
+                enabled = !busy,
                 onClickLabel = context.getString(R.string.ui_runtime_open_in_app),
                 onClick = { onOpen(item) },
                 onLongClickLabel = context.getString(R.string.ui_runtime_reply_in_hub),
                 onLongClick = { onReply(item) }
             )
             .semantics {
-                customActions = listOf(CustomAccessibilityAction(context.getString(R.string.ui_runtime_dismiss_notification)) { onDismiss(item); true })
+                customActions = listOf(CustomAccessibilityAction(context.getString(R.string.ui_runtime_dismiss_notification)) { requestDismiss(); true })
             }
             .padding(top = 10.dp, bottom = 12.dp)
     ) {
@@ -374,6 +362,7 @@ private fun NotificationRow(
         }
         if (!item.ref.dismissible) HubText(context.getString(R.string.ui_runtime_cannot_be_dismissed), size = 11, color = Color.Gray)
     }
+}
 }
 
 private fun Modifier.blankBackSwipe(onBack: () -> Unit): Modifier = pointerInput(onBack) {

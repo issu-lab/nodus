@@ -224,7 +224,12 @@ fun SettingsScreen() {
                         Text(context.getString(R.string.ui_alex_ni_will_arrive_in_ten_minutes), fontFamily = LocalAppStyle.current.family, fontSize = config.hubText.sp, color = Color.LightGray)
                         Action(context.getString(R.string.ui_reset_default_appearance)) { dialog = "reset" }
                     }
-                    "about" -> com.nodus.launcher.ui.welcome.AppIdentityContent(welcome = false)
+                    "about" -> {
+                        com.nodus.launcher.ui.welcome.AppIdentityContent(welcome = false)
+                        Action(context.getString(R.string.ui_update_review)) {
+                            context.startActivity(Intent(context, com.nodus.launcher.ui.welcome.ReleaseNotesActivity::class.java))
+                        }
+                    }
                 }
             } }
         }

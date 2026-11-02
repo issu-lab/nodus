@@ -142,7 +142,8 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
                 HomeHeader(config, now, weather, weatherError, battery, signal, wifiConnected, { openSettings() }, charging = charging)
                 TextButton(onClick = { openHub() }, modifier = Modifier.offset(x = (-10).dp).background(Color(0xFF1A1A1A), androidx.compose.foundation.shape.RoundedCornerShape(4.dp)),
                     contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp)) {
-                    AppText(if (count == 0) context.getString(R.string.ui_runtime_notification_hub_no_notifications) else context.resources.getQuantityString(R.plurals.ui_notification_count, count, count))
+                    AppText(if (count == 0) context.getString(R.string.ui_runtime_notification_hub_no_notifications) else context.resources.getQuantityString(R.plurals.ui_notification_count, count, count),
+                        color = if (count > 0) Accent else Color.LightGray)
                 }
                 if (UiSettings.onHome(config.calendar) && events.isNotEmpty() && !calendarHidden) {
                     DismissibleHomeWidget(WidgetVisibilityPolicy.fingerprint(today, *eventKeys.sorted().toTypedArray()), context.getString(R.string.ui_runtime_calendar), onDismiss = {

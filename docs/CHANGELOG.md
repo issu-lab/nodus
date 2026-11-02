@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.1.24 — swipe animato, presenza notifiche e novità, build locale] - 2026-11-02
+
+- Introdotto swipe con movimento diretto, uscita di 180 ms e ritorno morbido
+  per i gesti insufficienti/invertiti; resistenza sulle notifiche non eliminabili.
+  Righe rimaste con riposizionamento animato. Comando sulla revisione trascinata,
+  recupero in caso di errore/mancata conferma; Android resta fonte di verità.
+- Testo del pulsante hub magenta con notifiche presenti, neutro quando vuoto.
+- Icona batteria verticale con livello e stato di carica; simbolo adattivo n
+  ridotto da 0.76 a 0.62, entro la zona sicura circolare centrale del viewport.
+- Aggiunta schermata Novità offline in italiano/inglese, una volta per versione
+  installata, riapribile da Informazioni. Benvenuto iniziale conservato, con
+  registrazione atomica della versione al completamento; preferenze preservate.
+- Superati 91 test Kotlin (9 nuovi su swipe e selezione novità), controllo
+  cataloghi, build debug e Lint (0 errori, 4 avvisi preesistenti). Controllati
+  i limiti del vettore adattivo. APK 0.1.24 locale con SHA-256 e firma precedente.
+- Fluidità, icona, batteria e avviso aggiornamento sul telefono ancora da
+  collaudare; nessun push o release in questa implementazione.
+
 ## [Prerelease GitHub v0.1.23-beta.1] - 2026-10-31
 
 - Pubblicati sorgenti, documentazione, ZIP beta e SHA256SUMS.txt della 0.1.23.

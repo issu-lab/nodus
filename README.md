@@ -1,6 +1,6 @@
 ![noduS launcher — minimal Android launcher with a notification hub](assets/nodus-banner.png)
 
-![Version 0.1.23](https://img.shields.io/badge/version-0.1.23-151923)
+![Version 0.1.24](https://img.shields.io/badge/version-0.1.24-151923)
 ![Android 8 or newer](https://img.shields.io/badge/Android-8%2B-3DDC84)
 ![Experimental](https://img.shields.io/badge/status-experimental-F800FF)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -16,12 +16,12 @@ inspired by simple launchers and the BlackBerry communications hub.
 | Field | Current state |
 |---|---|
 | Maturity | Experimental |
-| Used on a phone | Initial trials; 0.1.23 device checks pending |
+| Used on a phone | Initial trials; 0.1.24 device checks pending |
 | Recommended for everyday use | Not yet |
 | Setup difficulty | APK installation and manual permissions |
 | Documentation | In progress |
-| Current source version | 0.1.23 — experimental GitHub beta |
-| Local checks | 82 Kotlin checks; debug build and Android Lint pass |
+| Current source version | 0.1.24 — experimental GitHub beta |
+| Local checks | 91 Kotlin checks; debug build and Android Lint pass |
 
 > [!WARNING]
 > This project is experimental and intended for development and testing.
@@ -37,6 +37,9 @@ an item in a separate noduS inbox.
 
 ## Features
 
+- Animated notification swipes with a gentle return for short gestures and
+  animated row placement; the home hub label turns magenta when notifications
+  are present (since 0.1.24).
 - Full-screen notification hub, newest first, with expandable text and a fixed
   header for navigation and clearing dismissible notifications.
 - Direct replies when the originating app supports them; a successful handoff
@@ -51,12 +54,15 @@ an item in a separate noduS inbox.
 - Swipe music or calendar widgets sideways to hide them temporarily.
 - A setting to show or hide the system status bar throughout noduS.
 - Settings, home and hub controls follow the Android language: Italian and
-  English, with English as the fallback (home/hub completed in the 0.1.23).
+  English, with English as the fallback (home/hub completed in 0.1.23).
 - Separate sizes for clock, date, weather, battery and signal/Wi-Fi icons, with
   a super compact header preset (clock above; date, weather, signal/Wi-Fi and
   battery on one left-aligned line), live preview and reset (since 0.1.20).
   Standard and super compact layouts retain separate size profiles (0.1.23).
-- Battery icon with level and charging indicator beside the percentage (0.1.23).
+- Vertical battery icon with level and charging indicator beside the percentage
+  (since 0.1.24).
+- Update notes shown once per installed version and available again in About;
+  the first-install welcome remains separate (since 0.1.24).
 - Separate music and today's calendar widgets, with independent display choices.
 - Dots or original app icons, adjustable text sizes, built-in/system fonts or
   an imported TTF/OTF font, and vertical positioning of the whole home block.
@@ -91,7 +97,7 @@ Implementation details are in the [development guide](docs/DEVELOPMENT.md).
 
 Real phone screenshots supplied during testing, captured on **0.1.22** with a
 user-imported pixel font (not bundled with noduS). They show the current lowercase
-n branding and both home layouts. The 0.1.23 fixes are not represented in these
+n branding and both home layouts. The 0.1.23/0.1.24 changes are not represented in these
 captures. Tap an image to view it at full size.
 
 | Super compact home | Standard home | All apps |
@@ -104,7 +110,7 @@ captures. Tap an image to view it at full size.
 
 ## Beta testing and downloads
 
-[Download noduS 0.1.23 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.23-beta.1/nodus-0.1.23-beta.zip)
+[Download noduS 0.1.24 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.24-beta.1/nodus-0.1.24-beta.zip)
 
 Extract the ZIP and open the included APK on your phone. The package includes
 installation notes and full font license copies. It updates existing test
@@ -149,7 +155,7 @@ only if it exceeds the available height. All apps and the hub remain scrollable.
 System Back or the Home button inside the app list returns to home. Android
 navigation gestures remain enabled.
 Settings are grouped into Home, Notification hub, Appearance and About.
-Settings, home and hub controls follow Italian or English according to Android in the 0.1.23. App names, messages and calendar content remain as supplied by their apps.
+Settings, home and hub controls follow Italian or English according to Android since 0.1.23. App names, messages and calendar content remain as supplied by their apps.
 
 | Setting or access | Purpose |
 |---|---|
@@ -190,7 +196,7 @@ Imported fonts are copied into private app storage; the original file is unchang
 ## Limitations
 
 - Initial phone trials provided appearance and interaction feedback.
-  The 0.1.23 changes and full gesture/permission/app integration checks remain
+  The 0.1.24 changes and full gesture/permission/app integration checks remain
   to be tested on the phone.
 - Reply and conversation opening depend on actions supplied by the originating app.
 - The hub filters group summaries and ongoing notifications outside configured
