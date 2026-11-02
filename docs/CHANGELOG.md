@@ -1,5 +1,12 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.26-beta.1] - 2026-11-02
+
+- Pubblicati sorgenti, documentazione, ZIP e checksum della 0.1.26.
+- Riscaricati e verificati ZIP integro, APK identico alla build locale e checksum
+  SHA-256; README remoto identico all’esportazione. Nessun workflow CI configurato.
+- Rimangono da eseguire i collaudi visivi sul telefono indicati nel ROADMAP.
+
 ## [0.1.26 — allineamento hub, build locale] - 2026-11-02
 
 - Puntino e testo hub allineati alle colonne delle app, stabili anche senza notifiche.

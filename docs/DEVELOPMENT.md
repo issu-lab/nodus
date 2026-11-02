@@ -274,4 +274,6 @@ padding accepts 0–32; zero removes the panel and button minimum height. Total
 padding per side is max(global row padding, background padding). Existing values
 are preserved. All visual settings previews locally disable LocalMenuLeadingSpace,
 while menu text keeps its pixel-font clipping workaround. Update notes describe
-these changes. Physical-phone visual checks remain pending. The publication target is v0.1.26-beta.1.
+these changes. Physical-phone visual checks remain pending. The current published beta is v0.1.26-beta.1. Its downloaded ZIP, extracted APK,
+SHA-256 sums and remote README were verified against the local export. No CI
+workflow is configured; validation was performed locally.
