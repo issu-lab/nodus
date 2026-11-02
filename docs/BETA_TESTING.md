@@ -9,7 +9,7 @@ in a Play test.
 
 Open [GitHub Releases](https://github.com/issu-lab/nodus/releases) and choose
 the newest beta package. The current beta is
-[0.1.25 beta 1](https://github.com/issu-lab/nodus/releases/tag/v0.1.25-beta.1). Download `nodus-<version>-beta.zip`, extract it and open
+[0.1.26 beta 1](https://github.com/issu-lab/nodus/releases/tag/v0.1.26-beta.1). Download `nodus-<version>-beta.zip`, extract it and open
 the included APK on your phone. The ZIP includes the app, installation notes and
 license notices. A SHA-256 file accompanies the download for integrity checks.
 
@@ -17,7 +17,7 @@ Allow installation from the browser or file manager you use, if Android asks.
 Select **noduS launcher** in Android's default Home app settings. Keep your
 previous launcher installed so you can switch back from those settings.
 
-The current package uses the debug-signed 0.1.25 APK. It can
+The current package uses the debug-signed 0.1.26 APK. It can
 update the existing 0.1.17 test installation because the signing certificate is
 the same. Future packages must preserve the signing identity to update in place;
 a signing change requires a separate migration plan. Do not uninstall an existing
@@ -38,6 +38,11 @@ The beta remains experimental; device gesture and notification checks are ongoin
 
 ## Useful test cases
 
+- On 0.1.26, compare hub dot/label alignment with app rows using pixel and standard
+  fonts. Set background size to zero: only the panel disappears; the row still opens
+  the hub and follows Home → Spacing. Check stable columns without notifications
+  and with the indicator off, plus the super compact header preview.
+
 - On 0.1.25, check the six settings groups, Back navigation from Favorites,
   Calendars and Licenses, and preservation of existing values and size profiles.
 - Try the full-width home hub button with small/large text and vertical padding.
@@ -50,7 +55,7 @@ The beta remains experimental; device gesture and notification checks are ongoin
 - On 0.1.24, test short/long/fast notification swipes, reversals and cancellation,
   non-dismissible rows, new messages during swipes and revoked notification access.
   Check failed dismissals return and the remaining rows move smoothly.
-- Check the home hub label turns magenta only when notifications are present.
+- The current home hub label stays light; notification presence uses a magenta dot.
 - Check the vertical battery and the smaller app symbol inside circular icons.
 - After upgrading, check the update notes appear once and can be reopened in About.
   A fresh installation should keep the original welcome flow.
@@ -58,7 +63,7 @@ The beta remains experimental; device gesture and notification checks are ongoin
 
 - On 0.1.21, change the Android language between Italian, English and an unsupported
   language. Settings, dialogs and welcome/About should follow Android's language
-  selection with English fallback. Other home/hub commands still use Italian.
+  selection with English fallback. Notification content follows the originating app.
 - Try the super compact header: clock above; date, weather, signal/Wi-Fi and battery
   together on one left-aligned line. Check separate sizes, preview, reset and restart.
 

@@ -37,7 +37,7 @@ class Prefs(context: Context) {
     private val data = store.data.catch { if (it is IOException) emit(emptyPreferences()) else throw it }
     val settings = data.map { p -> UiSettings(
         homeHubText = (p[intPreferencesKey("home_hub_text")] ?: 13).coerceIn(10, 26),
-        homeHubPadding = (p[intPreferencesKey("home_hub_padding")] ?: 12).coerceIn(8, 32),
+        homeHubPadding = (p[intPreferencesKey("home_hub_padding")] ?: 12).coerceIn(0, 32),
         homeHubIndicator = (p[stringPreferencesKey("home_hub_indicator")] ?: "pulse").takeIf { it in setOf("off", "fixed", "pulse") } ?: "pulse",
         count = (p[intPreferencesKey("visible_apps_count")] ?: 8).coerceAtLeast(1),
         padding = (p[intPreferencesKey("home_top_padding")] ?: 0).coerceIn(0, 400),

@@ -2,7 +2,7 @@
 
 ## Android build
 
-The current source version is **0.1.25**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.26**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
@@ -259,9 +259,19 @@ project license/notices, or add `--check` for read-only verification. Five check
 Android assets are readable from About. This does not generate a dependency
 license inventory. Update notes were refreshed for the installed 0.1.25 changes.
 
-The current published beta is `v0.1.25-beta.1`. Its downloaded ZIP and extracted
+The previously verified beta is `v0.1.25-beta.1`. Its downloaded ZIP and extracted
 APK match the tested local bytes and SHA-256 sums; the README was also verified.
 Use a fresh publishing clone outside synchronized folders when conflict copies
 appear inside Git metadata. Keep affected checkouts intact; do not repair/delete
 references or rewrite public history as part of a release. Stage only paths in
 the reviewed export manifest.
+
+## Home hub alignment (0.1.26, local)
+
+HomeHubButton shares ContentGrid.IconLane, the 24 dp icon box and HomePolicy.spacing
+with app rows. The lane remains reserved when the indicator is absent. Background
+padding accepts 0–32; zero removes the panel and button minimum height. Total
+padding per side is max(global row padding, background padding). Existing values
+are preserved. All visual settings previews locally disable LocalMenuLeadingSpace,
+while menu text keeps its pixel-font clipping workaround. Update notes describe
+these changes. Physical-phone visual checks remain pending. The publication target is v0.1.26-beta.1.

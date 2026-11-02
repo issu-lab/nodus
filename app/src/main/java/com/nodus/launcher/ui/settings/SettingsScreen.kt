@@ -134,7 +134,7 @@ fun SettingsScreen() {
                         }
                         AppText(context.getString(R.string.ui_reduce_spacing_between_apps_and_around_widgets), size = 11, color = Color.Gray)
                         AppText(context.getString(R.string.ui_preview), size = 11, color = Color.Gray, modifier = Modifier.padding(top = 8.dp))
-                        CompositionLocalProvider(LocalAppStyle provides LocalAppStyle.current.copy(settings = config.copy(homeSpacing = spacingPreview))) {
+                        CompositionLocalProvider(LocalMenuLeadingSpace provides false, LocalAppStyle provides LocalAppStyle.current.copy(settings = config.copy(homeSpacing = spacingPreview))) {
                             Column(Modifier.fillMaxWidth().background(Color(0xFF111111)).padding(12.dp)) {
                                 val icon = context.packageManager.defaultActivityIcon
                                 listOf(context.getString(R.string.ui_phone), context.getString(R.string.ui_messages)).forEach { label ->
@@ -160,7 +160,9 @@ fun SettingsScreen() {
                         SettingSlider(context.getString(R.string.ui_battery_size), config.batterySize, 10..28, "sp", previewChange = { headerPreview = headerPreview.copy(batterySize = it) }) { scope.launch { prefs.number("battery_size", it) } }
                         SettingSlider(context.getString(R.string.ui_signal_and_wi_fi_size), config.signalSize, 12..32, "dp", previewChange = { headerPreview = headerPreview.copy(signalSize = it) }) { scope.launch { prefs.number("signal_size", it) } }
                         AppText(context.getString(R.string.ui_preview_with_sample_data), size = 11, color = Color.Gray)
-                        HomeHeader(headerPreview, 0L, WeatherEntry(18, 0, context.getString(R.string.ui_location), 0L), null, 86, 3, true)
+                        CompositionLocalProvider(LocalMenuLeadingSpace provides false) {
+                            HomeHeader(headerPreview, 0L, WeatherEntry(18, 0, context.getString(R.string.ui_location), 0L), null, 86, 3, true)
+                        }
                         Action(context.getString(R.string.ui_reset_header)) { scope.launch { prefs.resetHeader() } }
                         MenuRow(context.getString(R.string.ui_weather_setup), context.getString(R.string.ui_widget_permissions)) { page = "widgets" }
                     }
@@ -189,7 +191,9 @@ fun SettingsScreen() {
                             else MenuRow(context.getString(R.string.ui_calendars_to_show), if (config.calendarIds == "*") context.getString(R.string.ui_all_visible_calendars) else context.getString(R.string.ui_custom_selection)) { page = "calendars" }
                         }
                         AppText(context.getString(R.string.ui_preview_with_sample_data), size = 11, color = Color.Gray)
+                        CompositionLocalProvider(LocalMenuLeadingSpace provides false) {
                         MusicWidget(MusicEntry(context.getString(R.string.ui_track_title), context.getString(R.string.ui_artist), true, null, false, false, false, "preview"), open = {}, control = {})
+                        }
                     }
                     "favorites" -> {
                         AppText(context.getString(R.string.ui_drag_to_reorder_use_the_arrows_to), size = 12, color = Color.Gray)
@@ -213,7 +217,7 @@ fun SettingsScreen() {
                         SettingSlider(context.getString(R.string.ui_home_hub_font), config.homeHubText, 10..26, "sp", previewChange = { hubPreview = hubPreview.copy(homeHubText = it) }) {
                             scope.launch { prefs.number("home_hub_text", it) }
                         }
-                        SettingSlider(context.getString(R.string.ui_home_hub_padding), config.homeHubPadding, 8..32, "dp", previewChange = { hubPreview = hubPreview.copy(homeHubPadding = it) }) {
+                        SettingSlider(context.getString(R.string.ui_home_hub_padding), config.homeHubPadding, 0..32, "dp", previewChange = { hubPreview = hubPreview.copy(homeHubPadding = it) }) {
                             scope.launch { prefs.number("home_hub_padding", it) }
                         }
                         Choice(context.getString(R.string.ui_presence_mode), config.homeHubIndicator, listOf(
@@ -222,7 +226,10 @@ fun SettingsScreen() {
                         AppText(context.getString(R.string.ui_home_hub_help), size = 11, color = Color.Gray)
                         Toggle(context.getString(R.string.ui_preview_notifications), previewNotifications) { previewNotifications = it }
                         AppText(context.getString(R.string.ui_preview_with_sample_data), size = 11, color = Color.Gray)
-                        HomeHubButton(hubPreview, if (previewNotifications) 3 else 0) {}
+                        CompositionLocalProvider(LocalMenuLeadingSpace provides false) {
+                            HomeHubButton(hubPreview, if (previewNotifications) 3 else 0) {}
+                            AppRow(AppItemUi(com.nodus.launcher.model.AppInfo(context.getString(R.string.ui_phone), "preview.hub", "", context.packageManager.defaultActivityIcon), 0xFF69A9D8.toInt()), {}, {})
+                        }
                         Section(context.getString(R.string.ui_notification_access))
                         AppText(if (NotificationUtils.isNotificationListenerEnabled(context)) context.getString(R.string.ui_access_enabled) else context.getString(R.string.ui_access_disabled))
                         Action(context.getString(R.string.ui_manage_access)) { launchSettings(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS) }
@@ -247,7 +254,9 @@ fun SettingsScreen() {
                             if (config.dotUniform) Action(context.getString(R.string.ui_color_1_06x, config.dotColor and 0xFFFFFF)) { dialog = "color" }
                         }
                         Section(context.getString(R.string.ui_preview))
+                        CompositionLocalProvider(LocalMenuLeadingSpace provides false) {
                         AppRow(AppItemUi(com.nodus.launcher.model.AppInfo("Telegram", "preview", "", context.packageManager.defaultActivityIcon), 0xFF69A9D8.toInt()), {}, {})
+                        }
                         Text(context.getString(R.string.ui_alex_ni_will_arrive_in_ten_minutes), fontFamily = LocalAppStyle.current.family, fontSize = config.hubText.sp, color = Color.LightGray)
                         Action(context.getString(R.string.ui_reset_default_appearance)) { dialog = "reset" }
                     }

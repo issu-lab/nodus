@@ -12,12 +12,12 @@
     <string name="ui_widget_permissions">Available in Widgets</string>
     <string name="ui_home_hub_button">Hub button on home</string>
     <string name="ui_home_hub_font">Button text size</string>
-    <string name="ui_home_hub_padding">Button vertical padding</string>
+    <string name="ui_home_hub_padding">Background size (0 = hidden)</string>
     <string name="ui_presence_mode">Notification presence indicator</string>
     <string name="ui_presence_fixed">Fixed</string>
     <string name="ui_presence_pulse">Slow pulse</string>
     <string name="ui_presence_off">Off</string>
-    <string name="ui_home_hub_help">Always light text on a full-width button. The dot appears only with notifications and never turns fully off while pulsing. It stays fixed when Android animations are disabled. Minimum button height: 48 dp.</string>
+    <string name="ui_home_hub_help">The dot and label use the app columns, including when the indicator is off or there are no notifications. At zero the background disappears and the row uses app spacing. Use Home → Spacing for row gaps. Text stays light; the dot stays fixed when Android animations are disabled.</string>
     <string name="ui_preview_notifications">Notifications present in preview</string>
     <string name="ui_presence_present">Notifications present</string>
     <string name="ui_licenses">Licenses and attribution</string>

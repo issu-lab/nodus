@@ -3,8 +3,8 @@
     <string name="ui_update_intro">Ecco le modifiche di questa versione. Le tue impostazioni restano conservate.</string>
     <string name="ui_update_continue">Continua</string>
     <string name="ui_update_review">Novità di questa versione</string>
-    <string name="ui_update_layout_controls">Pulsante hub a tutta larghezza, con testo chiaro e regolazioni separate di dimensione e spazio verticale.</string>
-    <string name="ui_update_presence_indicator">Pallino magenta fisso, con pulsazione lenta o disattivato. Compare solo con notifiche; le animazioni disabilitate vengono rispettate.</string>
-    <string name="ui_update_settings_groups">Impostazioni riordinate in Home, Ora e indicatori, Notifiche e hub, Widget, Aspetto e Informazioni. Le preferenze esistenti sono conservate.</string>
-    <string name="ui_update_licenses">Batteria a destra della percentuale nel layout normale. Licenze consultabili in Informazioni.</string>
+    <string name="ui_update_layout_controls">Hub allineato alle righe delle app: pallino e testo nelle stesse colonne, senza margini interni che li spostano.</string>
+    <string name="ui_update_presence_indicator">La colonna del pallino resta riservata anche senza notifiche o con indicatore disattivato, così il testo non si sposta.</string>
+    <string name="ui_update_previews">Anteprime corrette: la visualizzazione super compatta non eredita gli spazi iniziali dei menu.</string>
+    <string name="ui_update_row_spacing">Sfondo riducibile fino a zero: a zero scompare il riquadro e la riga segue la spaziatura delle app, senza altezza minima da pulsante.</string>
 </resources>

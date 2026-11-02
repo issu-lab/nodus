@@ -349,9 +349,14 @@ Non viene richiesto accesso alla rete e non vengono azzerate altre preferenze.
 ### Pulsante hub e impostazioni riorganizzate (0.1.25)
 
 Il pulsante hub occupa tutta la larghezza utile tra i margini della home, con
-font indipendente (10–26 sp) e spazio verticale regolabile (8–32 dp per lato).
-L’altezza effettiva rispetta un minimo di 48 dp e cresce con il testo, che può
-andare a capo senza essere tagliato. Il blocco home resta fisso e si adatta come prima.
+font indipendente (10–26 sp). Dalla 0.1.26 puntino e testo condividono le colonne
+delle app, senza rientri orizzontali. La colonna del puntino resta riservata anche
+senza notifiche o con indicatore spento. Dimensione sfondo: 0–32 dp per lato;
+a zero scompare soltanto il riquadro, senza altezza minima del pulsante, e la riga
+segue Home → Spaziatura. Con sfondo visibile lo spazio per lato è il maggiore
+tra quello globale e quello dello sfondo. Il testo può andare a capo.
+Il blocco home resta fisso. Le anteprime visive escludono lo spazio iniziale
+riservato ai menu, anche nel layout super compatto.
 
 L’indicatore compare solo con notifiche: fisso, pulsazione lenta (predefinita)
 o disattivato. La pulsazione varia da 55% a 100% di luminosità in 2.4 secondi,

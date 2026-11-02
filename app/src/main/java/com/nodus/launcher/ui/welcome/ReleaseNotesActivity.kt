@@ -42,7 +42,7 @@ class ReleaseNotesActivity : ComponentActivity() {
                     AppText(stringResource(R.string.ui_update_intro), size = 12, color = Color.LightGray,
                         modifier = Modifier.padding(top = 8.dp, bottom = 20.dp))
                     listOf(R.string.ui_update_layout_controls, R.string.ui_update_presence_indicator,
-                        R.string.ui_update_settings_groups, R.string.ui_update_licenses).forEach { text ->
+                        R.string.ui_update_previews, R.string.ui_update_row_spacing).forEach { text ->
                         AppText("• " + stringResource(text), size = 13, modifier = Modifier.padding(bottom = 16.dp))
                     }
                     TextButton(onClick = { finish() }, contentPadding = PaddingValues(0.dp)) {

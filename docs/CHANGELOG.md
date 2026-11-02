@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.26 — allineamento hub, build locale] - 2026-11-02
+
+- Puntino e testo hub allineati alle colonne delle app, stabili anche senza notifiche.
+- Sfondo regolabile fino a zero: riquadro nascosto, riga ancora apribile e
+  spaziatura gestita dal controllo Home esistente, senza minimo del pulsante.
+- Anteprime visive senza gli spazi iniziali riservati ai menu, incluso super compatto.
+- Preferenze precedenti conservate; note della versione aggiornate in italiano e inglese.
+- Verificati 91 test Kotlin, 257 coppie di risorse, 5 asset legali e build/Lint
+  isolati (0 errori, 4 avvisi preesistenti). Conservati 298 artefatti preesistenti.
+- APK locale 0.1.26; verifica sul telefono e pubblicazione ancora da eseguire.
+
 ## [Prerelease GitHub v0.1.25-beta.1] - 2026-11-02
 
 - Pubblicati sorgenti, documentazione, guida beta, note release, ZIP e checksum

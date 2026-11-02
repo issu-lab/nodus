@@ -3,8 +3,8 @@
     <string name="ui_update_intro">Here are the changes in this version. Your settings are preserved.</string>
     <string name="ui_update_continue">Continue</string>
     <string name="ui_update_review">What’s new in this version</string>
-    <string name="ui_update_layout_controls">Full-width hub button with light text and separate text size and vertical padding controls.</string>
-    <string name="ui_update_presence_indicator">Magenta indicator: fixed, slowly pulsing or off. Visible only with notifications; disabled system animations are respected.</string>
-    <string name="ui_update_settings_groups">Settings reorganized into Home, Clock and indicators, Notifications and hub, Widgets, Appearance and About. Existing preferences are preserved.</string>
-    <string name="ui_update_licenses">Battery icon to the right of its percentage in the standard layout. Licenses available in About.</string>
+    <string name="ui_update_layout_controls">Hub aligned with app rows: dot and label share the same columns without extra horizontal insets.</string>
+    <string name="ui_update_presence_indicator">The dot column stays reserved with no notifications or with the indicator disabled, so the label does not shift.</string>
+    <string name="ui_update_previews">Corrected previews: the super compact layout no longer inherits menu-only leading spaces.</string>
+    <string name="ui_update_row_spacing">Background size can reach zero: the panel disappears and the row follows app spacing without a button minimum height.</string>
 </resources>

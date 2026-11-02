@@ -12,12 +12,12 @@
     <string name="ui_widget_permissions">Disponibili nella sezione Widget</string>
     <string name="ui_home_hub_button">Pulsante hub sulla home</string>
     <string name="ui_home_hub_font">Dimensione testo del pulsante</string>
-    <string name="ui_home_hub_padding">Spazio verticale del pulsante</string>
+    <string name="ui_home_hub_padding">Dimensione sfondo (0 = nascosto)</string>
     <string name="ui_presence_mode">Indicatore presenza notifiche</string>
     <string name="ui_presence_fixed">Fisso</string>
     <string name="ui_presence_pulse">Pulsazione lenta</string>
     <string name="ui_presence_off">Disattivato</string>
-    <string name="ui_home_hub_help">Testo sempre chiaro, pulsante a tutta larghezza. Il pallino compare solo con notifiche e non si spegne durante la pulsazione. Senza animazioni Android resta fisso. Altezza minima del pulsante: 48 dp.</string>
+    <string name="ui_home_hub_help">Il pallino e il testo seguono le colonne delle app, anche con indicatore spento o nessuna notifica. A zero lo sfondo scompare e la riga usa la spaziatura delle app. Per la distanza tra righe usa Home → Spaziatura. Testo sempre chiaro; con animazioni Android disattivate il pallino resta fisso.</string>
     <string name="ui_preview_notifications">Notifiche presenti nell’anteprima</string>
     <string name="ui_presence_present">Notifiche presenti</string>
     <string name="ui_licenses">Licenze e attribuzioni</string>

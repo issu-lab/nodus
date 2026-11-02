@@ -204,3 +204,10 @@ supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti
 - [ ] Verificare su telefono icona adattiva e monocromatica, benvenuto e
   Informazioni con la n minuscola. Controllare cache delle icone dopo aggiornamento.
 - [ ] Aggiornare gli screenshot quando l’utente fornisce nuove catture del marchio.
+
+### Collaudo locale 0.1.26 sul telefono
+
+- Verificare allineamento hub/app con font pixel e standard, sfondo zero e positivo.
+- Controllare colonna stabile con notifiche presenti, assenti e indicatore spento.
+- Provare spaziatura 0/20/32 e apertura hub toccando la riga senza sfondo.
+- Confrontare anteprima super compatta e home reale, senza rientri dei menu.
