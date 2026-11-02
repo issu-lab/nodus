@@ -211,3 +211,10 @@ supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti
 - Controllare colonna stabile con notifiche presenti, assenti e indicatore spento.
 - Provare spaziatura 0/20/32 e apertura hub toccando la riga senza sfondo.
 - Confrontare anteprima super compatta e home reale, senza rientri dei menu.
+
+### Collaudo rifinitura 0.1.27
+
+- Sul telefono: verificare margine sinistro del pallino nello sfondo, colonna
+  testo invariata senza notifiche e distanza hub/prima app senza sfondo.
+- Provare widget presenti, nascosti e rimossi tramite swipe: separazione aggiuntiva
+  solo con widget effettivamente visibili; confrontare con anteprima impostazioni.

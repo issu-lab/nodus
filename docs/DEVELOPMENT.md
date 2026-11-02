@@ -2,7 +2,7 @@
 
 ## Android build
 
-The current source version is **0.1.26**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.27**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
@@ -277,3 +277,10 @@ while menu text keeps its pixel-font clipping workaround. Update notes describe
 these changes. Physical-phone visual checks remain pending. The current published beta is v0.1.26-beta.1. Its downloaded ZIP, extracted APK,
 SHA-256 sums and remote README were verified against the local export. No CI
 workflow is configured; validation was performed locally.
+
+## Hub section spacing (0.1.27 local)
+
+The home section spacer is conditional on visible calendar/music widgets, including
+dismissed-widget state. HomeHubButton draws its background 10 dp beyond the left
+content edge; decoration does not shift the dot or text columns. At zero background,
+only row padding remains between the hub and first app. Phone checks pending.

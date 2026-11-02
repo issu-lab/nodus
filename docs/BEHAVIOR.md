@@ -380,3 +380,10 @@ un collegamento alle opzioni del widget. Le chiavi delle preferenze esistenti no
 cambiano. Le sottopagine Preferiti, Calendari e Licenze tornano al proprio gruppo.
 Le licenze incluse riproducono i file MIT/OFL e gli avvisi del repository; non sono
 un inventario automatico completo delle dipendenze Android.
+
+### Rifinitura hub 0.1.27
+
+Lo sfondo si estende di 10 dp a sinistra della colonna dei puntini, senza
+spostare i contenuti. La colonna del testo resta invariata senza notifiche.
+La separazione aggiuntiva prima delle app compare solo se sono realmente visibili
+widget musica o calendario; con il solo hub si applica la spaziatura delle righe.

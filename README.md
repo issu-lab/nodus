@@ -1,6 +1,6 @@
 ![noduS launcher — minimal Android launcher with a notification hub](assets/nodus-banner.png)
 
-![Version 0.1.26](https://img.shields.io/badge/version-0.1.26-151923)
+![Version 0.1.27](https://img.shields.io/badge/version-0.1.27-151923)
 ![Android 8 or newer](https://img.shields.io/badge/Android-8%2B-3DDC84)
 ![Experimental](https://img.shields.io/badge/status-experimental-F800FF)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -16,11 +16,11 @@ inspired by simple launchers and the BlackBerry communications hub.
 | Field | Current state |
 |---|---|
 | Maturity | Experimental |
-| Used on a phone | Initial trials; 0.1.26 device checks pending |
+| Used on a phone | Initial trials; 0.1.27 device checks pending |
 | Recommended for everyday use | Not yet |
 | Setup difficulty | APK installation and manual permissions |
 | Documentation | In progress |
-| Current source version | 0.1.26 — experimental GitHub beta |
+| Current source version | 0.1.27 — experimental GitHub beta |
 | Local checks | 91 Kotlin checks; debug build and Android Lint pass |
 
 > [!WARNING]
@@ -113,7 +113,7 @@ captures. Tap an image to view it at full size.
 
 ## Beta testing and downloads
 
-[Download noduS 0.1.26 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.26-beta.1/nodus-0.1.26-beta.zip)
+[Download noduS 0.1.27 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.27-beta.1/nodus-0.1.27-beta.zip)
 
 Extract the ZIP and open the included APK on your phone. The package includes
 installation notes and full font license copies. It updates existing test
@@ -202,7 +202,7 @@ Imported fonts are copied into private app storage; the original file is unchang
 ## Limitations
 
 - Initial phone trials provided appearance and interaction feedback.
-  The 0.1.26 changes and full gesture/permission/app integration checks remain
+  The 0.1.27 changes and full gesture/permission/app integration checks remain
   to be tested on the phone.
 - Reply and conversation opening depend on actions supplied by the originating app.
 - The hub filters group summaries and ongoing notifications outside configured

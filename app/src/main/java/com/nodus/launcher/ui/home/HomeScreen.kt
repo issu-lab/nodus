@@ -167,7 +167,10 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
                     })
                     }
                 }
-                Spacer(Modifier.height(HomePolicy.spacing(config.homeSpacing, 12f).dp))
+                // Only widgets need a section gap. Hub-to-app spacing is already provided by both rows.
+                val visibleCalendar = UiSettings.onHome(config.calendar) && events.isNotEmpty() && !calendarHidden
+                val visibleMusic = UiSettings.onHome(config.music) && music?.takeUnless { it.visibilityKey == hiddenMusicKey } != null
+                if (visibleCalendar || visibleMusic) Spacer(Modifier.height(HomePolicy.spacing(config.homeSpacing, 12f).dp))
                 apps.forEach { item ->
                     key(item.app.packageName) {
                         AppRow(item, onLongClick = { favoriteTarget = item }, onClick = { launchApp(item) })

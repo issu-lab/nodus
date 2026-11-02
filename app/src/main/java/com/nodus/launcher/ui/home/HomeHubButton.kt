@@ -6,14 +6,16 @@ import android.os.Looper
 import android.provider.Settings
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.semantics.Role
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -42,7 +44,14 @@ fun HomeHubButton(config: UiSettings, count: Int, open: () -> Unit) {
     Column(Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = open)
         .padding(vertical = outerGap.dp)) {
         Row(Modifier.fillMaxWidth()
-            .then(if (backgroundPadding > 0) Modifier.background(Color(0xFF1A1A1A), RoundedCornerShape(6.dp)) else Modifier)
+            .drawBehind {
+                if (backgroundPadding > 0) {
+                    // Decorate outside the app grid: never push the dot or label inward.
+                    val inset = 10.dp.toPx()
+                    drawRoundRect(Color(0xFF1A1A1A), topLeft = Offset(-inset, 0f),
+                        size = Size(size.width + inset, size.height), cornerRadius = CornerRadius(6.dp.toPx()))
+                }
+            }
             .padding(vertical = backgroundPadding.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(Modifier.width(ContentGrid.IconLane), contentAlignment = Alignment.CenterStart) {
                 Box(Modifier.size(24.dp), contentAlignment = Alignment.CenterStart) {

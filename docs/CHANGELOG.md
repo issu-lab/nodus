@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.27 — rifinitura spazi hub, build locale] - 2026-11-02
+
+- Sfondo esteso a sinistra di 10 dp per lasciare margine al pallino senza
+  spostare le colonne del contenuto, anche senza notifiche.
+- Rimossa la separazione aggiuntiva hub/app quando non sono visibili widget:
+  con sfondo zero si usa la spaziatura delle normali righe app.
+- Build isolata e Lint completati (0 errori, 4 avvisi preesistenti); 91 test
+  Kotlin, 257 coppie di risorse e 5 asset legali verificati. Firma APK invariata.
+- Artefatti preesistenti preservati. Prova sul telefono e pubblicazione pendenti.
+
 ## [Prerelease GitHub v0.1.26-beta.1] - 2026-11-02
 
 - Pubblicati sorgenti, documentazione, ZIP e checksum della 0.1.26.
