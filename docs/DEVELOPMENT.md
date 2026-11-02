@@ -258,3 +258,10 @@ Run `python3 tools/sync_android_licenses.py` before building after editing the
 project license/notices, or add `--check` for read-only verification. Five checked-in
 Android assets are readable from About. This does not generate a dependency
 license inventory. Update notes were refreshed for the installed 0.1.25 changes.
+
+The current published beta is `v0.1.25-beta.1`. Its downloaded ZIP and extracted
+APK match the tested local bytes and SHA-256 sums; the README was also verified.
+Use a fresh publishing clone outside synchronized folders when conflict copies
+appear inside Git metadata. Keep affected checkouts intact; do not repair/delete
+references or rewrite public history as part of a release. Stage only paths in
+the reviewed export manifest.

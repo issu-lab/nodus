@@ -1,5 +1,15 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.25-beta.1] - 2026-11-02
+
+- Pubblicati sorgenti, documentazione, guida beta, note release, ZIP e checksum
+  della 0.1.25. APK invariato rispetto alla build locale verificata.
+- Riscaricati gli asset da GitHub: archivio integro, ZIP e APK estratto identici
+  ai locali, entrambi gli hash SHA-256 validi. README remoto identico al locale.
+- Pubblicazione da clone pulito, conservando il vecchio checkout locale con
+  riferimenti duplicati senza riparazioni o cancellazioni; storia pubblica preservata.
+- Rimangono aperti i collaudi sul telefono della navigazione e dell’indicatore.
+
 ## [0.1.25 — pulsante hub e impostazioni riordinate, build locale] - 2026-11-02
 
 - Pulsante hub a tutta larghezza, testo sempre chiaro e nuovi controlli separati
