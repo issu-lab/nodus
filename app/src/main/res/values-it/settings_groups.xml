@@ -25,4 +25,5 @@
     <string name="ui_attributions">Attribuzioni di terze parti</string>
     <string name="ui_license_document">Documento</string>
     <string name="ui_license_unavailable">Documento non disponibile.</string>
+    <string name="ui_settings_text">Testo impostazioni</string>
 </resources>

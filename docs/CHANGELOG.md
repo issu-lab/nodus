@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.28 — etichetta hub e dimensione menu] - 2026-11-02
+
+- Hub home abbreviato e tradotto: Hub notifiche · numero / Notification hub · numero;
+  senza notifiche resta il titolo e, senza indicatore, si elimina la colonna vuota.
+- Aspetto → Testo impostazioni: base 13–24 sp, predefinita 16 sp, proporzioni
+  di titoli/descrizioni conservate, indipendente dalle anteprime e dalla home.
+- Preferenza persistente, reset aspetto a 16 sp e note versione bilingui aggiornate.
+- Verificati 91 test Kotlin, 258 coppie risorse, 5 asset legali, build e Lint
+  isolati (0 errori, 4 avvisi preesistenti). Firma APK invariata, 298 artefatti
+  preesistenti preservati. Collaudi visivi sul telefono ancora aperti.
+
 ## [Prerelease GitHub v0.1.27-beta.1] - 2026-11-02
 
 - Pubblicati sorgenti, documentazione, ZIP e checksum della 0.1.27.

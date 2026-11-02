@@ -53,7 +53,7 @@ fun HomeHubButton(config: UiSettings, count: Int, open: () -> Unit) {
                 }
             }
             .padding(vertical = backgroundPadding.dp), verticalAlignment = Alignment.CenterVertically) {
-            Box(Modifier.width(ContentGrid.IconLane), contentAlignment = Alignment.CenterStart) {
+            if (count > 0 && config.homeHubIndicator != "off") Box(Modifier.width(ContentGrid.IconLane), contentAlignment = Alignment.CenterStart) {
                 Box(Modifier.size(24.dp), contentAlignment = Alignment.CenterStart) {
                     if (count > 0 && config.homeHubIndicator != "off") {
                         PresenceDot(config.homeHubIndicator == "pulse", if (config.dots) config.dotSize else 8)

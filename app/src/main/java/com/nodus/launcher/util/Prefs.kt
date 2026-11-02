@@ -18,7 +18,7 @@ data class UiSettings(
     val music: String = "home", val calendar: String = "hub", val calendarIds: String = "*",
     val dots: Boolean = true, val dotSize: Int = 8, val dotUniform: Boolean = false,
     val dotColor: Int = 0xFFF800FF.toInt(), val font: String = "default", val fontFile: String = "",
-    val homeText: Int = 16, val hubText: Int = 13,
+    val settingsText: Int = 16, val homeText: Int = 16, val hubText: Int = 13,
     val homeHubText: Int = 13, val homeHubPadding: Int = 12, val homeHubIndicator: String = "pulse",
     val compactHeader: Boolean = false, val clockSize: Int = 42, val dateSize: Int = 14,
     val weatherSize: Int = 14, val batterySize: Int = 16, val signalSize: Int = 18
@@ -36,6 +36,7 @@ class Prefs(context: Context) {
     private val store = context.applicationContext.dataStore
     private val data = store.data.catch { if (it is IOException) emit(emptyPreferences()) else throw it }
     val settings = data.map { p -> UiSettings(
+        settingsText = (p[intPreferencesKey("settings_text")] ?: 16).coerceIn(13, 24),
         homeHubText = (p[intPreferencesKey("home_hub_text")] ?: 13).coerceIn(10, 26),
         homeHubPadding = (p[intPreferencesKey("home_hub_padding")] ?: 12).coerceIn(0, 32),
         homeHubIndicator = (p[stringPreferencesKey("home_hub_indicator")] ?: "pulse").takeIf { it in setOf("off", "fixed", "pulse") } ?: "pulse",
@@ -155,7 +156,7 @@ class Prefs(context: Context) {
     suspend fun resetAppearance() {
         store.edit { p ->
             listOf("use_dots", "dot_uniform").forEach { p.remove(booleanPreferencesKey(it)) }
-            listOf("dot_size", "dot_color", "home_text", "hub_text").forEach { p.remove(intPreferencesKey(it)) }
+            listOf("dot_size", "dot_color", "home_text", "hub_text", "settings_text").forEach { p.remove(intPreferencesKey(it)) }
             listOf("font", "font_file").forEach { p.remove(stringPreferencesKey(it)) }
         }
     }

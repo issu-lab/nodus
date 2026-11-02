@@ -3,8 +3,8 @@
     <string name="ui_update_intro">Ecco le modifiche di questa versione. Le tue impostazioni restano conservate.</string>
     <string name="ui_update_continue">Continua</string>
     <string name="ui_update_review">Novità di questa versione</string>
-    <string name="ui_update_layout_controls">Hub allineato alle righe delle app: pallino e testo nelle stesse colonne, senza margini interni che li spostano.</string>
-    <string name="ui_update_presence_indicator">La colonna del pallino resta riservata anche senza notifiche o con indicatore disattivato, così il testo non si sposta.</string>
-    <string name="ui_update_previews">Anteprime corrette: la visualizzazione super compatta non eredita gli spazi iniziali dei menu.</string>
-    <string name="ui_update_row_spacing">Sfondo riducibile fino a zero: a zero scompare il riquadro e la riga segue la spaziatura delle app, senza altezza minima da pulsante.</string>
+    <string name="ui_update_layout_controls">Etichetta breve: Hub notifiche · numero; solo Hub notifiche quando vuoto.</string>
+    <string name="ui_update_presence_indicator">Senza indicatore visibile il testo dell’hub si sposta a sinistra, eliminando la colonna vuota.</string>
+    <string name="ui_update_previews">Nuovo slider Testo impostazioni in Aspetto: dimensione predefinita aumentata, indipendente da home e hub.</string>
+    <string name="ui_update_row_spacing">La dimensione dei menu viene salvata, applicata subito e ripristinata con Reimposta aspetto.</string>
 </resources>

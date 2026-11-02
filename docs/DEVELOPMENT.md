@@ -2,7 +2,7 @@
 
 ## Android build
 
-The current source version is **0.1.27**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.28**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
@@ -269,7 +269,7 @@ the reviewed export manifest.
 ## Home hub alignment (0.1.26, local)
 
 HomeHubButton shares ContentGrid.IconLane, the 24 dp icon box and HomePolicy.spacing
-with app rows. The lane remains reserved when the indicator is absent. Background
+with app rows. From 0.1.28 the lane is omitted when the indicator is absent. Background
 padding accepts 0–32; zero removes the panel and button minimum height. Total
 padding per side is max(global row padding, background padding). Existing values
 are preserved. All visual settings previews locally disable LocalMenuLeadingSpace,
@@ -285,5 +285,14 @@ dismissed-widget state. HomeHubButton draws its background 10 dp beyond the left
 content edge; decoration does not shift the dot or text columns. At zero background,
 only row padding remains between the hub and first app. Phone checks pending.
 
-The current published beta is v0.1.27-beta.1. Downloaded ZIP and APK match local
+The previously verified beta is v0.1.27-beta.1. Downloaded ZIP and APK match local
 bytes and SHA-256 sums; remote README verified. No CI workflow is configured.
+
+## Settings text and compact hub label (0.1.28)
+
+settings_text is a new integer preference, default 16, clamped 13–24. AppText
+scales its nominal size by settingsText / 13 only inside the settings menu scope
+(LocalMenuLeadingSpace); visual previews opt out. Reset appearance removes the key.
+Existing home/hub size preferences are preserved. The home indicator lane is
+conditional on visible presence, and localized labels omit notification nouns
+after the count. With zero notifications the localized title is shown alone.

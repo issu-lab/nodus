@@ -53,7 +53,7 @@
     <string name="ui_runtime_return_home">Return home</string>
     <string name="ui_runtime_open_settings">Open settings</string>
     <string name="ui_runtime_open_all_apps">Open all apps</string>
-    <string name="ui_runtime_notification_hub_no_notifications">Notification hub: no notifications</string>
+    <string name="ui_runtime_notification_hub_no_notifications">Notification hub</string>
     <string name="ui_runtime_remove_from_favorites">Remove from favorites?</string>
     <string name="ui_runtime_add_to_favorites">Add to favorites?</string>
     <string name="ui_runtime_limit_reached_increase_it_in_settings_or">Limit reached. Increase it in settings or remove a favorite.</string>
@@ -71,7 +71,7 @@
     <string name="ui_battery_charging">Battery charging</string>
     <string name="ui_battery_normal">Battery</string>
     <plurals name="ui_notification_count">
-        <item quantity="one">Notification hub: %1$d notification</item>
-        <item quantity="other">Notification hub: %1$d notifications</item>
+        <item quantity="one">Notification hub · %1$d</item>
+        <item quantity="other">Notification hub · %1$d</item>
     </plurals>
 </resources>

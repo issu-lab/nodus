@@ -239,6 +239,7 @@ fun SettingsScreen() {
                     "appearance" -> {
                         Toggle(context.getString(R.string.ui_hide_status_bar), config.hideStatusBar) { scope.launch { prefs.bool("hide_status_bar", it) } }
                         Section(context.getString(R.string.ui_typeface))
+                        SettingSlider(context.getString(R.string.ui_settings_text), config.settingsText, 13..24) { scope.launch { prefs.number("settings_text", it) } }
                         Choice(context.getString(R.string.ui_interface_font), config.font, listOf("default" to "IBM Plex Mono", "system" to context.getString(R.string.ui_system), "custom" to context.getString(R.string.ui_import_ttf_otf))) { value ->
                             if (value == "custom") importer.launch(arrayOf("*/*")) else scope.launch { prefs.text("font", value) }
                         }

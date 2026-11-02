@@ -9,7 +9,7 @@ in a Play test.
 
 Open [GitHub Releases](https://github.com/issu-lab/nodus/releases) and choose
 the newest beta package. The current beta is
-[0.1.27 beta 1](https://github.com/issu-lab/nodus/releases/tag/v0.1.27-beta.1). Download `nodus-<version>-beta.zip`, extract it and open
+[0.1.28 beta 1](https://github.com/issu-lab/nodus/releases/tag/v0.1.28-beta.1). Download `nodus-<version>-beta.zip`, extract it and open
 the included APK on your phone. The ZIP includes the app, installation notes and
 license notices. A SHA-256 file accompanies the download for integrity checks.
 
@@ -17,7 +17,7 @@ Allow installation from the browser or file manager you use, if Android asks.
 Select **noduS launcher** in Android's default Home app settings. Keep your
 previous launcher installed so you can switch back from those settings.
 
-The current package uses the debug-signed 0.1.27 APK. It can
+The current package uses the debug-signed 0.1.28 APK. It can
 update the existing 0.1.17 test installation because the signing certificate is
 the same. Future packages must preserve the signing identity to update in place;
 a signing change requires a separate migration plan. Do not uninstall an existing
@@ -38,13 +38,19 @@ The beta remains experimental; device gesture and notification checks are ongoin
 
 ## Useful test cases
 
+- On 0.1.28, set Appearance → Settings text to 13/16/24 sp, restart and verify
+  persistence, scrolling and readable dialogs. Reset appearance returns to 16 sp.
+  Check home and hub preview sizes remain independent.
+- Check “Notification hub · 1/3” in English and “Hub notifiche · 1/3” in Italian.
+  With no notifications, only the title remains and moves left to the dot column.
+
 - On 0.1.27, check the left margin around the hub presence dot with a visible
   background. With background zero and no music/calendar widgets, hub-to-first-app
   spacing should follow normal app rows. Dismiss widgets and compare the result.
 
 - On 0.1.26, compare hub dot/label alignment with app rows using pixel and standard
   fonts. Set background size to zero: only the panel disappears; the row still opens
-  the hub and follows Home → Spacing. Check stable columns without notifications
+  the hub and follows Home → Spacing. Check the label moves left without notifications
   and with the indicator off, plus the super compact header preview.
 
 - On 0.1.25, check the six settings groups, Back navigation from Favorites,

@@ -350,8 +350,8 @@ Non viene richiesto accesso alla rete e non vengono azzerate altre preferenze.
 
 Il pulsante hub occupa tutta la larghezza utile tra i margini della home, con
 font indipendente (10–26 sp). Dalla 0.1.26 puntino e testo condividono le colonne
-delle app, senza rientri orizzontali. La colonna del puntino resta riservata anche
-senza notifiche o con indicatore spento. Dimensione sfondo: 0–32 dp per lato;
+delle app, senza rientri orizzontali. Dalla 0.1.28 la colonna del puntino è rimossa
+senza notifiche o con indicatore spento: il testo si allinea a sinistra. Dimensione sfondo: 0–32 dp per lato;
 a zero scompare soltanto il riquadro, senza altezza minima del pulsante, e la riga
 segue Home → Spaziatura. Con sfondo visibile lo spazio per lato è il maggiore
 tra quello globale e quello dello sfondo. Il testo può andare a capo.
@@ -384,6 +384,14 @@ un inventario automatico completo delle dipendenze Android.
 ### Rifinitura hub 0.1.27
 
 Lo sfondo si estende di 10 dp a sinistra della colonna dei puntini, senza
-spostare i contenuti. La colonna del testo resta invariata senza notifiche.
+spostare i contenuti. Dalla 0.1.28 senza notifiche la colonna vuota è rimossa e il testo si sposta a sinistra.
 La separazione aggiuntiva prima delle app compare solo se sono realmente visibili
 widget musica o calendario; con il solo hub si applica la spaziatura delle righe.
+
+### Testi e dimensioni 0.1.28
+
+Hub home: “Hub notifiche · 3” / “Notification hub · 3”; a zero resta il solo titolo.
+Aspetto → Testo impostazioni regola la base 13–24 sp, predefinita 16 sp anche
+per installazioni esistenti senza questa preferenza. Titoli e descrizioni scalano
+in proporzione; home, hub e anteprime non ereditano questa scala. Il valore è
+persistente e Reimposta aspetto lo riporta al predefinito.

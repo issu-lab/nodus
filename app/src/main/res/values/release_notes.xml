@@ -3,8 +3,8 @@
     <string name="ui_update_intro">Here are the changes in this version. Your settings are preserved.</string>
     <string name="ui_update_continue">Continue</string>
     <string name="ui_update_review">What’s new in this version</string>
-    <string name="ui_update_layout_controls">Hub aligned with app rows: dot and label share the same columns without extra horizontal insets.</string>
-    <string name="ui_update_presence_indicator">The dot column stays reserved with no notifications or with the indicator disabled, so the label does not shift.</string>
-    <string name="ui_update_previews">Corrected previews: the super compact layout no longer inherits menu-only leading spaces.</string>
-    <string name="ui_update_row_spacing">Background size can reach zero: the panel disappears and the row follows app spacing without a button minimum height.</string>
+    <string name="ui_update_layout_controls">Shorter home label: Notification hub · count; just Notification hub when empty.</string>
+    <string name="ui_update_presence_indicator">Without a visible indicator, the hub label moves left to remove the empty column.</string>
+    <string name="ui_update_previews">New Settings text slider in Appearance; larger default text, independently of home and hub.</string>
+    <string name="ui_update_row_spacing">Settings text size is saved, applied immediately and restored by Reset appearance.</string>
 </resources>

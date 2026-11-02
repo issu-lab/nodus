@@ -208,13 +208,20 @@ supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti
 ### Collaudo locale 0.1.26 sul telefono
 
 - Verificare allineamento hub/app con font pixel e standard, sfondo zero e positivo.
-- Controllare colonna stabile con notifiche presenti, assenti e indicatore spento.
+- Controllare testo sulla colonna app con pallino; dalla 0.1.28 spostato a sinistra senza pallino.
 - Provare spaziatura 0/20/32 e apertura hub toccando la riga senza sfondo.
 - Confrontare anteprima super compatta e home reale, senza rientri dei menu.
 
 ### Collaudo rifinitura 0.1.27
 
 - Sul telefono: verificare margine sinistro del pallino nello sfondo, colonna
-  testo invariata senza notifiche e distanza hub/prima app senza sfondo.
+  testo spostata a sinistra senza notifiche dalla 0.1.28 e distanza hub/prima app senza sfondo.
 - Provare widget presenti, nascosti e rimossi tramite swipe: separazione aggiuntiva
   solo con widget effettivamente visibili; confrontare con anteprima impostazioni.
+
+### Collaudo 0.1.28
+
+- Testo impostazioni 13/16/24 sp, persistenza al riavvio, dialoghi e scrolling,
+  reset a 16 sp, anteprime home/hub indipendenti con font standard e pixel.
+- Etichetta hub italiana/inglese con zero, una e più notifiche; testo spostato
+  a sinistra senza pallino, sfondo visibile/zero e indicatore disattivato.

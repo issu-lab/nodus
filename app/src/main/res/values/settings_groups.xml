@@ -25,4 +25,5 @@
     <string name="ui_attributions">Third-party notices</string>
     <string name="ui_license_document">Document</string>
     <string name="ui_license_unavailable">Document unavailable.</string>
+    <string name="ui_settings_text">Settings text</string>
 </resources>

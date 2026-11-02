@@ -13,6 +13,7 @@ val LocalMenuLeadingSpace = staticCompositionLocalOf { false }
 val Accent = Color(0xFFF800FF)
 @Composable
 fun AppText(text: String, modifier: Modifier = Modifier, size: Int = 13, color: Color = Color.White, medium: Boolean = false) {
+    val effectiveSize = if (LocalMenuLeadingSpace.current) size * LocalAppStyle.current.settings.settingsText / 13f else size.toFloat()
     Text(if (LocalMenuLeadingSpace.current) "\u00A0$text" else text, modifier, color = color, fontFamily = LocalAppStyle.current.family,
-        fontSize = size.sp, lineHeight = (size * 1.5f).sp, fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal)
+        fontSize = effectiveSize.sp, lineHeight = (effectiveSize * 1.5f).sp, fontWeight = if (medium) FontWeight.Medium else FontWeight.Normal)
 }
