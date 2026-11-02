@@ -297,7 +297,7 @@ Existing home/hub size preferences are preserved. The home indicator lane is
 conditional on visible presence, and localized labels omit notification nouns
 after the count. With zero notifications the localized title is shown alone.
 
-The current published beta is v0.1.28-beta.1. Downloaded ZIP and extracted APK
+The previously verified beta is v0.1.28-beta.1. Downloaded ZIP and extracted APK
 match local bytes and SHA-256 sums; remote README verified. No CI workflow configured.
 
 ## Adaptive icon and hub presence (0.1.29 local)
@@ -312,3 +312,6 @@ DeviceWidgets exposes airplaneEnabled from the existing radio refresh path and
 AIRPLANE_MODE_CHANGED receiver. HomeHeader replaces SignalGlyph in both standard
 and compact layouts without inferring airplane mode from missing signal. Preview
 calls default to airplane mode off. Wi-Fi remains independently connection-based.
+
+The current published beta is v0.1.29-beta.1. Downloaded ZIP and APK match local
+bytes and SHA-256 sums; remote README verified. No CI workflow configured.
