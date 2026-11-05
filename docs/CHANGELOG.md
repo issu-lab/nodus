@@ -1,5 +1,11 @@
 # Changelog
 
+## [Prerelease GitHub v0.1.30-beta.1] - 2026-11-05
+
+- Pubblicati sorgenti, documentazione, ZIP e checksum della 0.1.30.
+- Riscaricati e verificati ZIP integro, APK identico al locale, checksum SHA-256
+  e README remoto. Nessun workflow CI configurato; collaudi telefono ancora aperti.
+
 ## [0.1.30 — terminale, backup e switch compatti, build locale] - 2026-11-05
 
 - Pagina terminale a sinistra della home con trascinamento orizzontale, tastiera

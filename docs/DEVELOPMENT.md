@@ -346,3 +346,6 @@ exercise Typeface, DataStore or document providers. No test dependency is bundle
 in the app. Run tests/check_localization.py on a clean source export to exclude
 untracked synchronization conflict copies. It checks ui_, term_ and backup_ keys.
 Physical-phone gesture/IME, font persistence and provider testing remain pending.
+
+The current published beta is v0.1.30-beta.1. Downloaded ZIP and APK match local
+bytes and SHA-256 sums; remote README verified. No CI workflow configured.
