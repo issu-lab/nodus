@@ -9,6 +9,10 @@ import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.*
@@ -41,7 +45,7 @@ import java.io.File
 import kotlin.math.abs
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(initialPage: String = "menu") {
     val context = LocalContext.current; val scope = rememberCoroutineScope()
     val prefs = remember { Prefs(context) }
     val config by prefs.settings.collectAsState(initial = UiSettings())
@@ -51,7 +55,7 @@ fun SettingsScreen() {
     var headerPreview by remember(config) { mutableStateOf(config) }
     var spacingPreview by remember(config.homeSpacing) { mutableIntStateOf(config.homeSpacing) }
     val favorites by prefs.favoriteOrder.collectAsState(initial = emptyList())
-    var page by rememberSaveable { mutableStateOf("menu") }
+    var page by rememberSaveable { mutableStateOf(initialPage.takeIf { it in setOf("menu", "home", "indicators", "hub", "widgets", "appearance", "terminal", "backup", "about") } ?: "menu") }
     var refreshed by remember { mutableIntStateOf(0) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val snackbar = remember { SnackbarHostState() }
@@ -94,6 +98,34 @@ fun SettingsScreen() {
             catch (_: Exception) { message(context.getString(R.string.ui_invalid_or_unreadable_font_ttf_otf_maximum)) }
         }
     }
+    var pendingBackup by remember { mutableStateOf<ConfigBackup.Snapshot?>(null) }
+    var backupBusy by remember { mutableStateOf(false) }
+    val exportConfig = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+        if (uri != null) scope.launch {
+            backupBusy = true
+            try {
+                withContext(Dispatchers.IO) {
+                    val snapshot = prefs.exportSnapshot()
+                    context.contentResolver.openOutputStream(uri)?.use { ConfigBackup.write(it, snapshot) } ?: error("output")
+                }
+                message(context.getString(R.string.backup_exported))
+            } catch (cancel: CancellationException) { throw cancel }
+            catch (_: Exception) { message(context.getString(R.string.backup_error)) }
+            finally { backupBusy = false }
+        }
+    }
+    val importConfig = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) scope.launch {
+            backupBusy = true
+            try {
+                pendingBackup = withContext(Dispatchers.IO) {
+                    context.contentResolver.openInputStream(uri)?.use { ConfigBackup.read(it) } ?: error("input")
+                }
+            } catch (cancel: CancellationException) { throw cancel }
+            catch (_: Exception) { message(context.getString(R.string.backup_invalid)) }
+            finally { backupBusy = false }
+        }
+    }
     DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event -> if (event == Lifecycle.Event.ON_RESUME) refreshed++ }
         lifecycle.addObserver(observer); onDispose { lifecycle.removeObserver(observer) }
@@ -102,7 +134,7 @@ fun SettingsScreen() {
     BackHandler { back() }
     Box(Modifier.fillMaxSize().background(Color.Black).statusBarsPadding().navigationBarsPadding()) {
         Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
-            TextButton(onClick = { back() }) { AppText("‹ ${when(page) { "home" -> context.getString(R.string.ui_home); "indicators" -> context.getString(R.string.ui_group_indicators); "widgets" -> context.getString(R.string.ui_group_widgets); "licenses" -> context.getString(R.string.ui_licenses); "favorites" -> context.getString(R.string.ui_favorites); "calendars" -> context.getString(R.string.ui_calendars); "hub" -> context.getString(R.string.ui_group_notifications); "appearance" -> context.getString(R.string.ui_appearance); "about" -> context.getString(R.string.ui_about); else -> context.getString(R.string.ui_settings) }}", size = 14) }
+            TextButton(onClick = { back() }) { AppText("‹ ${when(page) { "terminal" -> context.getString(R.string.term_title); "backup" -> context.getString(R.string.backup_title); "home" -> context.getString(R.string.ui_home); "indicators" -> context.getString(R.string.ui_group_indicators); "widgets" -> context.getString(R.string.ui_group_widgets); "licenses" -> context.getString(R.string.ui_licenses); "favorites" -> context.getString(R.string.ui_favorites); "calendars" -> context.getString(R.string.ui_calendars); "hub" -> context.getString(R.string.ui_group_notifications); "appearance" -> context.getString(R.string.ui_appearance); "about" -> context.getString(R.string.ui_about); else -> context.getString(R.string.ui_settings) }}", size = 14) }
             key(page) { Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState()).padding(bottom = 32.dp)) {
                 when (page) {
                     "menu" -> {
@@ -111,6 +143,8 @@ fun SettingsScreen() {
                         MenuRow(context.getString(R.string.ui_group_notifications), context.getString(R.string.ui_notifications_subtitle)) { page = "hub" }
                         MenuRow(context.getString(R.string.ui_group_widgets), context.getString(R.string.ui_widgets_subtitle)) { page = "widgets" }
                         MenuRow(context.getString(R.string.ui_appearance_2), context.getString(R.string.ui_appearance_subtitle)) { page = "appearance" }
+                        MenuRow(context.getString(R.string.term_title), context.getString(R.string.term_subtitle)) { page = "terminal" }
+                        MenuRow(context.getString(R.string.backup_title), context.getString(R.string.backup_subtitle)) { page = "backup" }
                         MenuRow(context.getString(R.string.ui_about_nodus), context.getString(R.string.ui_about_subtitle)) { page = "about" }
                         Section(context.getString(R.string.ui_system))
                         Action(context.getString(R.string.ui_set_as_default_launcher)) { launchSettings(Settings.ACTION_HOME_SETTINGS) }
@@ -118,6 +152,19 @@ fun SettingsScreen() {
                             try { context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.parse("package:${context.packageName}"))) }
                             catch (_: Exception) { message(context.getString(R.string.ui_setting_unavailable)) }
                         }
+                    }
+                    "terminal" -> {
+                        Toggle(context.getString(R.string.term_enabled), config.terminalEnabled) { scope.launch { prefs.bool("terminal_enabled", it) } }
+                        AppText(context.getString(R.string.term_help), color = Color.Gray)
+                        PromptField(context.getString(R.string.term_user), config.terminalUser) { scope.launch { prefs.text("terminal_user", it) } }
+                        PromptField(context.getString(R.string.term_device), config.terminalDevice) { scope.launch { prefs.text("terminal_device", it) } }
+                        AppText(context.getString(R.string.term_device_help), size = 12, color = Color.Gray)
+                    }
+                    "backup" -> {
+                        AppText(context.getString(R.string.backup_help), color = Color.Gray)
+                        TextButton(enabled = !backupBusy, onClick = { exportConfig.launch("nodus-configuration.zip") }) { AppText(context.getString(R.string.backup_export), color = Accent) }
+                        TextButton(enabled = !backupBusy, onClick = { importConfig.launch(arrayOf("application/zip", "application/octet-stream")) }) { AppText(context.getString(R.string.backup_import), color = Accent) }
+                        if (backupBusy) AppText(context.getString(R.string.backup_working), color = Color.Gray)
                     }
                     "home" -> {
                         Section(context.getString(R.string.ui_home_apps))
@@ -284,6 +331,21 @@ fun SettingsScreen() {
         }
         SnackbarHost(snackbar, modifier = Modifier.align(Alignment.BottomCenter))
     }
+    pendingBackup?.let { snapshot ->
+        AlertDialog(onDismissRequest = { if (!backupBusy) pendingBackup = null },
+            title = { AppText(context.getString(R.string.backup_import), size = 16) },
+            text = { AppText(context.getString(R.string.backup_confirm, (snapshot.values["favorite_order"] as? String).orEmpty().split('\n').count { it.isNotEmpty() })) },
+            confirmButton = { TextButton(enabled = !backupBusy, onClick = {
+                scope.launch {
+                    backupBusy = true
+                    try { withContext(Dispatchers.IO) { prefs.importSnapshot(snapshot) }; pendingBackup = null; message(context.getString(R.string.backup_imported)) }
+                    catch (cancel: CancellationException) { throw cancel }
+                    catch (_: Exception) { message(context.getString(R.string.backup_invalid)) }
+                    finally { backupBusy = false }
+                }
+            }) { AppText(context.getString(R.string.backup_restore), color = Accent) } },
+            dismissButton = { TextButton(enabled = !backupBusy, onClick = { pendingBackup = null }) { AppText(context.getString(R.string.ui_cancel)) } })
+    }
     when (dialog) {
         "count" -> AlertDialog(onDismissRequest = { dialog = null }, title = { AppText(context.getString(R.string.ui_maximum_number_of_apps), size = 16) }, text = {
             Column(Modifier.heightIn(max = 360.dp).verticalScroll(rememberScrollState())) {
@@ -320,8 +382,15 @@ private fun MenuRow(title: String, subtitle: String, onClick: () -> Unit) {
 }
 @Composable
 private fun Toggle(title: String, value: Boolean, onChange: (Boolean) -> Unit) {
-    Row(Modifier.fillMaxWidth().clickable { onChange(!value) }.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-        AppText(title, modifier = Modifier.weight(1f)); Switch(checked = value, onCheckedChange = onChange)
+    val track by animateColorAsState(if (value) Accent else Color(0xFF39393D), label = "switchTrack")
+    val position by animateFloatAsState(if (value) 1f else 0f, label = "switchThumb")
+    Row(Modifier.fillMaxWidth().heightIn(min = 48.dp).toggleable(value = value, role = Role.Switch, onValueChange = onChange).padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        AppText(title, modifier = Modifier.weight(1f).padding(end = 12.dp))
+        Canvas(Modifier.size(44.dp, 26.dp)) {
+            drawRoundRect(track, cornerRadius = androidx.compose.ui.geometry.CornerRadius(size.height / 2))
+            drawCircle(Color.White, radius = size.height / 2 - 2.dp.toPx(),
+                center = androidx.compose.ui.geometry.Offset(size.height / 2 + (size.width - size.height) * position, size.height / 2))
+        }
     }
 }
 @Composable
@@ -375,4 +444,11 @@ private fun FavoriteOrder(ids: List<String>, apps: Map<String, com.nodus.launche
             }, contentPadding = PaddingValues(4.dp), modifier = Modifier.widthIn(min = 36.dp).semantics { contentDescription = "${if (delta < 0) context.getString(R.string.ui_move_up) else context.getString(R.string.ui_move_down)} ${apps[id]?.label ?: id}" }) { AppText(arrow, color = Color.LightGray) } }
         }
     } }
+}
+
+@Composable
+private fun PromptField(title: String, stored: String, save: (String) -> Unit) {
+    var text by remember { mutableStateOf(stored) }
+    OutlinedTextField(value = text, onValueChange = { if (ConfigSchema.validPrompt(it)) { text = it; save(it) } },
+        label = { AppText(title) }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
 }

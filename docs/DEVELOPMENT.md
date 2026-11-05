@@ -2,7 +2,7 @@
 
 ## Android build
 
-The current source version is **0.1.29**, package `com.nodus.launcher`, minimum
+The current source version is **0.1.30**, package `com.nodus.launcher`, minimum
 SDK 26, target/compile SDK 34. Use JDK 17 and Android Build-Tools 34.0.0.
 The Gradle wrapper selects Gradle 8.4. Build and inspect with:
 
@@ -313,5 +313,36 @@ AIRPLANE_MODE_CHANGED receiver. HomeHeader replaces SignalGlyph in both standard
 and compact layouts without inferring airplane mode from missing signal. Preview
 calls default to airplane mode off. Wi-Fi remains independently connection-based.
 
-The current published beta is v0.1.29-beta.1. Downloaded ZIP and APK match local
+The previously verified beta is v0.1.29-beta.1. Downloaded ZIP and APK match local
 bytes and SHA-256 sums; remote README verified. No CI workflow configured.
+
+## Terminal and backup (0.1.30 local)
+
+TerminalQuery is a pure bilingual local grammar and deterministic app ranking;
+there is no shell evaluation or remote AI dependency. TerminalScreen is an in-home
+horizontal overlay using AppDrawerState with the axis inverted. Child widget
+swipes retain ownership; mandatory gesture edges are excluded. Focus/IME are
+requested only after settling open. User text is bounded to 512 characters.
+Contact lookup is opt-in READ_CONTACTS, debounced and bounded; web runs only via
+an explicit external browser intent. Device controls use supported intents or
+Wi-Fi on Android 8–9 with CHANGE_WIFI_STATE. Android 10+ uses Settings.Panel.
+SettingsActivity accepts an allowlisted internal destination via intent extra.
+
+ConfigSchema defines portable typed preference keys and ranges; runtime state is
+excluded. ConfigBackup reads only configuration.json (128 KiB maximum) and optional
+font.bin (8 MiB) from ZIP, rejects duplicate/unknown paths, and validates schema 1.
+No archive paths are extracted. Prefs validates font bytes with Android Typeface
+before one DataStore edit; first-run and seen-version keys survive restoration.
+The font path is generated locally. Effective defaults and both size profiles are
+materialized on export, so later default changes do not alter a restored setup. Unknown keys/schema and invalid values are
+rejected. Export can include personal prompt names, app IDs, calendar IDs and a
+font; users choose the destination through Storage Access Framework.
+
+Run tests/run_notification_tests.py for policy/parser/schema regressions.
+For ZIP round-trip and malformed input tests, run tests/run_backup_tests.py with
+--json-jar pointing to a JSON-java runtime and --android-jar pointing to the SDK
+android.jar. The latter only compiles Android signatures; these JVM tests do not
+exercise Typeface, DataStore or document providers. No test dependency is bundled
+in the app. Run tests/check_localization.py on a clean source export to exclude
+untracked synchronization conflict copies. It checks ui_, term_ and backup_ keys.
+Physical-phone gesture/IME, font persistence and provider testing remain pending.

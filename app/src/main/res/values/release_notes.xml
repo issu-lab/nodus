@@ -3,8 +3,8 @@
     <string name="ui_update_intro">Here are the changes in this version. Your settings are preserved.</string>
     <string name="ui_update_continue">Continue</string>
     <string name="ui_update_review">What’s new in this version</string>
-    <string name="ui_update_layout_controls">Smaller launcher symbol: more room around the n inside circular and other adaptive masks.</string>
-    <string name="ui_update_presence_indicator">With app icons enabled, the home hub uses the noduS app icon instead of a dot.</string>
-    <string name="ui_update_previews">Notification presence uses the same slow pulse for either the dot or the noduS icon. Fixed and off modes remain available.</string>
-    <string name="ui_update_row_spacing">In airplane mode, the airplane icon replaces signal bars. Wi-Fi can still appear when connected.</string>
+    <string name="ui_update_layout_controls">New terminal page to the left of home: swipe right, type after your user@device prompt and choose a result.</string>
+    <string name="ui_update_presence_indicator">Search apps, optional contacts, noduS settings and the web. Open camera or apps and request supported device actions locally.</string>
+    <string name="ui_update_previews">Export and import configuration ZIPs, including favourites, both header profiles and your imported font. Restore requires confirmation.</string>
+    <string name="ui_update_row_spacing">More compact switches, with a smaller visual track and an accessible touch area. SSH and AI remain future work.</string>
 </resources>

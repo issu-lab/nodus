@@ -234,3 +234,24 @@ supportano la verifica locale. Restano aperte le verifiche Android e UI seguenti
 
 - Collaudare modalità aereo on/off a home visibile e dopo riapertura, nei due
   layout; aeroplano al posto delle barre, Wi-Fi riattivato e widget segnale nascosto.
+
+## Collaudo 0.1.30 — terminale, backup e switch
+
+- [ ] Su telefono: apertura terminale verso destra, trascinamento/annullamento,
+  bordi Android, swipe widget, cassetto app e hub preesistenti. Verificare focus
+  tastiera dopo apertura, Indietro IME/pagina, richiesta Home e riavvio processo.
+- [ ] Prompt issu@galaxyS8, nomi personalizzati e modello automatico; cursore
+  lampeggiante/fisso con animazioni disattivate, font pixel e tastiere diverse.
+- [ ] Ricerca app e impostazioni, contatti consentiti/negati/revocati, risultati
+  ambigui, nessun risultato e web esplicito offline/online. Comandi fotocamera,
+  Wi-Fi su Android 8–9 e 10+, Bluetooth/modalità aereo e app rimosse.
+- [ ] Backup tramite provider locali/cloud, annullamento, input corrotto, font
+  reali TTF/OTF e riavvio dopo ripristino. Confrontare entrambi i profili header,
+  preferiti, prompt e menu. Altro telefono: app mancanti, calendari e permessi.
+- [ ] Switch compatti con testo grande, traduzioni, TalkBack e touch sull’intera riga.
+
+### Evoluzione successiva, da progettare separatamente
+
+- [ ] Valutare l’estensione dello stesso prompt a operazioni e comandi avanzati,
+  tra cui SSH e ricerche AI. Definire in seguito sintassi, servizi, credenziali e
+  conferme necessarie; queste funzioni non fanno parte della prima ricerca.

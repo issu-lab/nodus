@@ -9,7 +9,7 @@ in a Play test.
 
 Open [GitHub Releases](https://github.com/issu-lab/nodus/releases) and choose
 the newest beta package. The current beta is
-[0.1.29 beta 1](https://github.com/issu-lab/nodus/releases/tag/v0.1.29-beta.1). Download `nodus-<version>-beta.zip`, extract it and open
+[0.1.30 beta 1](https://github.com/issu-lab/nodus/releases/tag/v0.1.30-beta.1). Download `nodus-<version>-beta.zip`, extract it and open
 the included APK on your phone. The ZIP includes the app, installation notes and
 license notices. A SHA-256 file accompanies the download for integrity checks.
 
@@ -17,7 +17,7 @@ Allow installation from the browser or file manager you use, if Android asks.
 Select **noduS launcher** in Android's default Home app settings. Keep your
 previous launcher installed so you can switch back from those settings.
 
-The current package uses the debug-signed 0.1.29 APK. It can
+The current package uses the debug-signed 0.1.30 APK. It can
 update the existing 0.1.17 test installation because the signing certificate is
 the same. Future packages must preserve the signing identity to update in place;
 a signing change requires a separate migration plan. Do not uninstall an existing
@@ -37,6 +37,19 @@ The beta remains experimental; device gesture and notification checks are ongoin
 | Custom fonts | Choose your own TTF/OTF through Android's file picker |
 
 ## Useful test cases
+
+- On 0.1.30, drag right slowly/quickly from inside home, cancel and
+  reverse the gesture, test widget swipes and Android Back edges. Keyboard should
+  appear only after opening. Back first dismisses the keyboard, then the page.
+- Set Terminal user/device to issu and galaxyS8. Type apps, open Instagram,
+  open camera, turn off Wi-Fi, web queries and optional contacts; verify permission
+  denial/revocation, app ambiguity and offline use. Android 10+ Wi-Fi opens its panel.
+- Export configuration with a custom font, changed favourites and both header
+  profiles. Change settings, restore and check persistence after restart. Cancel
+  import and try invalid files: current preferences must remain intact. Check file
+  providers and other-device missing apps/calendar IDs. Permissions do not transfer.
+- Check compact switches with TalkBack, larger settings text, long translations
+  and toggling both the capsule and the full row.
 
 - On 0.1.29, check the smaller n inside circular/adaptive launcher masks. Switch
   dots/app icons and test the noduS hub icon with pulse/fixed/off modes, no

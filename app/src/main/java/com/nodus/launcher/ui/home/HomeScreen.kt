@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
@@ -64,6 +65,11 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
     var showAll by rememberSaveable { mutableStateOf(false) }
     val drawer = remember { AppDrawerState(showAll, scope) { showAll = it } }
     val drawerVisible by remember { derivedStateOf { drawer.visible } }
+    var showTerminal by rememberSaveable { mutableStateOf(false) }
+    val terminal = remember { AppDrawerState(showTerminal, scope) { showTerminal = it } }
+    val terminalVisible by remember { derivedStateOf { terminal.visible } }
+    val terminalActive by remember { derivedStateOf { showTerminal && terminal.progress >= .999f } }
+    LaunchedEffect(config.terminalEnabled) { if (!config.terminalEnabled) terminal.settle(false) }
     val drawerList = rememberLazyListState()
     LaunchedEffect(drawerVisible) { if (!drawerVisible) drawerList.scrollToItem(0) }
     var hiddenMusicKey by rememberSaveable { mutableStateOf<String?>(null) }
@@ -115,11 +121,11 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
         }
     }
     BackHandler(enabled = drawerVisible) { drawer.settle(false) }
-    val canOpenApps by remember { derivedStateOf { drawer.canStart } }
+    val canOpenApps by remember { derivedStateOf { drawer.canStart && terminal.canStart } }
     var observedHomeRequest by remember { mutableIntStateOf(homeRequest) }
     LaunchedEffect(homeRequest) {
         if (homeRequest != observedHomeRequest) {
-            drawer.settle(false); observedHomeRequest = homeRequest
+            drawer.settle(false); terminal.settle(false); observedHomeRequest = homeRequest
         }
     }
     Box(Modifier.fillMaxSize().background(Color.Black)
@@ -129,13 +135,18 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
             detectAppDrawerSwipe(edge = 24.dp.toPx(), canOpen = { canOpenApps },
                 start = drawer::start, drag = drawer::drag, release = drawer::release, cancel = drawer::cancelDrag)
         }
-        .pointerInput(Unit) { var dx = 0f; detectHorizontalDragGestures(
-            onDragStart = { dx = 0f }, onHorizontalDrag = { change, amount -> dx += amount; change.consume() },
-            onDragEnd = { if (canOpenApps && dx < -80.dp.toPx()) openHub(); dx = 0f }, onDragCancel = { dx = 0f }) }
+        .pointerInput(Unit) {
+            detectHomeHorizontalSwipe(24.dp.toPx(), canOpen = { canOpenApps },
+                startRight = { config.terminalEnabled && terminal.start() }, dragRight = terminal::drag,
+                releaseRight = terminal::release, cancelRight = terminal::cancelDrag, openLeft = ::openHub)
+        }
         .pointerInput(Unit) { detectTapGestures(onLongPress = { if (canOpenApps) openSettings() }) }
-        .semantics { customActions = if (drawerVisible) listOf(
+        .semantics { customActions = if (terminalVisible) listOf(
+            CustomAccessibilityAction(context.getString(R.string.ui_runtime_return_home)) { terminal.settle(false); true })
+            else if (drawerVisible) listOf(
             CustomAccessibilityAction(context.getString(R.string.ui_runtime_return_home)) { drawer.settle(false); true })
-            else listOf(CustomAccessibilityAction(context.getString(R.string.ui_runtime_open_settings)) { openSettings(); true },
+            else (if (config.terminalEnabled) listOf(CustomAccessibilityAction(context.getString(R.string.term_title)) { terminal.settle(true); true }) else emptyList()) + listOf(
+                CustomAccessibilityAction(context.getString(R.string.ui_runtime_open_settings)) { openSettings(); true },
                 CustomAccessibilityAction(context.getString(R.string.ui_runtime_open_all_apps)) { openDrawer(); true }) }
     ) {
         val body: @Composable () -> Unit = {
@@ -181,9 +192,9 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
         }
         val bodyModifier = Modifier.fillMaxSize().padding(start = ContentGrid.Outer, end = ContentGrid.End)
         // Full-size home surface owns blank-area touches, so the warm panel below it cannot capture them.
-        Box(Modifier.fillMaxSize().background(Color.Black)
+        Box(Modifier.fillMaxSize().graphicsLayer { translationX = size.width * terminal.progress }.background(Color.Black)
             .pointerInput(Unit) { detectTapGestures(onTap = {}, onLongPress = { if (canOpenApps) openSettings() }) }
-            .then(if (drawerVisible) Modifier.clearAndSetSemantics {} else Modifier)) {
+            .then(if (drawerVisible || terminalVisible) Modifier.clearAndSetSemantics {} else Modifier)) {
             FixedHomeLayout(offset = config.padding.dp, modifier = bodyModifier, content = body)
         }
         if (drawerVisible) {
@@ -192,7 +203,16 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), homeRequest: Int = 0) {
         }
         AppDrawer(drawer, drawerVisible, all, drawerList, close = { drawer.settle(false) },
             open = ::launchApp, favorite = { favoriteTarget = it })
-        SnackbarHost(snackbar, modifier = Modifier.align(Alignment.BottomCenter).zIndex(2f))
+        if (terminalVisible) {
+            Box(Modifier.fillMaxSize().graphicsLayer { translationX = -size.width * (1f - terminal.progress) }.zIndex(2f)) {
+                com.nodus.launcher.search.TerminalScreen(config, all.map { it.app }, terminalActive,
+                    close = { terminal.settle(false) }, openSettings = { page ->
+                        terminal.settle(false)
+                        context.startActivity(Intent(context, SettingsActivity::class.java).putExtra("page", page))
+                    }, message = ::message)
+            }
+        }
+        SnackbarHost(snackbar, modifier = Modifier.align(Alignment.BottomCenter).zIndex(3f))
     }
     favoriteTarget?.let { item ->
         AlertDialog(onDismissRequest = { favoriteTarget = null }, title = { AppText(if (item.app.isFavorite) context.getString(R.string.ui_runtime_remove_from_favorites) else context.getString(R.string.ui_runtime_add_to_favorites), size = 16) },

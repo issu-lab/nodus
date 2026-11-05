@@ -7,11 +7,16 @@ import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
+import java.io.File
 import java.io.IOException
 
 private val Context.dataStore by preferencesDataStore(name = "nodus_prefs")
 
 data class UiSettings(
+    val terminalEnabled: Boolean = true, val terminalUser: String = "issu", val terminalDevice: String = "",
     val count: Int = 8, val padding: Int = 0, val homeSpacing: Int = 20,
     val clock: Boolean = true, val date: Boolean = true, val battery: Boolean = true,
     val signal: Boolean = true, val hideStatusBar: Boolean = false, val weather: Boolean = false, val weatherText: Boolean = false,
@@ -32,10 +37,14 @@ data class UiSettings(
 data class LaunchState(val firstRun: Boolean, val seenVersion: Int)
 
 class Prefs(context: Context) {
+    private val appContext = context.applicationContext
     private val version = context.installedVersion().code
     private val store = context.applicationContext.dataStore
     private val data = store.data.catch { if (it is IOException) emit(emptyPreferences()) else throw it }
     val settings = data.map { p -> UiSettings(
+        terminalEnabled = p[booleanPreferencesKey("terminal_enabled")] ?: true,
+        terminalUser = p[stringPreferencesKey("terminal_user")] ?: "issu",
+        terminalDevice = p[stringPreferencesKey("terminal_device")] ?: "",
         settingsText = (p[intPreferencesKey("settings_text")] ?: 16).coerceIn(13, 24),
         homeHubText = (p[intPreferencesKey("home_hub_text")] ?: 13).coerceIn(10, 26),
         homeHubPadding = (p[intPreferencesKey("home_hub_padding")] ?: 12).coerceIn(0, 32),
@@ -159,5 +168,50 @@ class Prefs(context: Context) {
             listOf("dot_size", "dot_color", "home_text", "hub_text", "settings_text").forEach { p.remove(intPreferencesKey(it)) }
             listOf("font", "font_file").forEach { p.remove(stringPreferencesKey(it)) }
         }
+    }
+
+    suspend fun exportSnapshot(): ConfigBackup.Snapshot {
+        val p = data.first()
+        val values = mutableMapOf<String, Any>(
+            "terminal_enabled" to true, "terminal_user" to "issu", "terminal_device" to "",
+            "visible_apps_count" to 8, "home_top_padding" to 0, "home_spacing" to 20,
+            "show_clock" to true, "show_date" to true, "show_battery" to true, "show_signal" to true,
+            "hide_status_bar" to false, "show_weather" to false, "weather_text" to false,
+            "music_destination" to "home", "calendar_destination" to "hub", "calendar_ids" to "*",
+            "use_dots" to true, "dot_size" to 8, "dot_uniform" to false, "dot_color" to 0xFFF800FF.toInt(),
+            "font" to "default", "home_text" to 16, "hub_text" to 13, "settings_text" to 16,
+            "home_hub_text" to 13, "home_hub_padding" to 12, "home_hub_indicator" to "pulse", "compact_header" to false)
+        values.putAll(p.asMap().filterKeys { it.name in ConfigSchema.keys }.mapKeys { it.key.name })
+        // Materialize defaults too: a backup must not depend on a future release changing them.
+        val activeCompact = p[booleanPreferencesKey("compact_header")] ?: false
+        for (compact in listOf(false, true)) values.putAll(HeaderSizes.snapshot(compact) { key ->
+            if (key in HeaderSizes.keys && compact != activeCompact) null else p[intPreferencesKey(key)]
+        })
+        HeaderSizes.keys.forEach { values.remove(it) }
+        values["favorite_order"] = ordered(p).joinToString("\n")
+        val font = if (values["font"] == "custom") {
+            val file = File(appContext.filesDir, p[stringPreferencesKey("font_file")] ?: error("font"))
+            require(file.canonicalFile.parentFile == File(appContext.filesDir, "fonts").canonicalFile)
+            require(file.length() in 4..8L * 1024 * 1024); file.readBytes()
+        } else null
+        ConfigSchema.validate(values)
+        return ConfigBackup.Snapshot(values, font)
+    }
+    suspend fun importSnapshot(snapshot: ConfigBackup.Snapshot) {
+        ConfigSchema.validate(snapshot.values)
+        require((snapshot.values["font"] == "custom") == (snapshot.font != null))
+        val fontFile = snapshot.font?.let { ConfigBackup.checkedFont(appContext, it) }
+        try {
+            withContext(NonCancellable) { store.edit { p ->
+                p.asMap().keys.filter { it.name in ConfigSchema.keys || it.name == "font_file" || it.name == "favorites" }.forEach { p.remove(it) }
+                snapshot.values.forEach { (key, value) -> when (value) {
+                    is Boolean -> p[booleanPreferencesKey(key)] = value
+                    is Int -> p[intPreferencesKey(key)] = value
+                    is String -> p[stringPreferencesKey(key)] = value
+                } }
+                p[stringSetPreferencesKey("favorites")] = (snapshot.values["favorite_order"] as? String).orEmpty().split('\n').filter { it.isNotEmpty() }.toSet()
+                fontFile?.let { p[stringPreferencesKey("font_file")] = "fonts/${it.name}" }
+            } }
+        } catch (e: Exception) { fontFile?.delete(); throw e }
     }
 }

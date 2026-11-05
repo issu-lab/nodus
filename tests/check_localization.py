@@ -11,7 +11,7 @@ def strings(folder):
     for file in (res / folder).glob('*.xml'):
         for entry in ET.parse(file).getroot():
             key = entry.attrib['name']
-            if key.startswith('ui_'):
+            if key.startswith(('ui_', 'term_', 'backup_')):
                 assert key not in values, f'Duplicate resource: {key}'
                 if entry.tag == 'plurals':
                     for item in entry:
@@ -30,7 +30,7 @@ references = 0
 for file in (root / 'app/src/main/java').rglob('*.kt'):
     if file.name.endswith(' 2.kt'):
         continue
-    for key in re.findall(r'R\.(?:string|plurals)\.(ui_\w+)', file.read_text()):
+    for key in re.findall(r'R\.(?:string|plurals)\.((?:ui_|term_|backup_)\w+)', file.read_text()):
         references += 1
         assert key in english or key + '/other' in english, f'Missing default translation: {file.name}: {key}'
 assert references > 0, 'No source resource references checked'

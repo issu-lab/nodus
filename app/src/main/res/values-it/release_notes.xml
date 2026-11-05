@@ -3,8 +3,8 @@
     <string name="ui_update_intro">Ecco le modifiche di questa versione. Le tue impostazioni restano conservate.</string>
     <string name="ui_update_continue">Continua</string>
     <string name="ui_update_review">Novità di questa versione</string>
-    <string name="ui_update_layout_controls">Simbolo dell’app più piccolo: maggiore margine attorno alla n nelle maschere circolari e adattive.</string>
-    <string name="ui_update_presence_indicator">Quando usi le icone delle app, l’hub nella home mostra l’icona noduS al posto del pallino.</string>
-    <string name="ui_update_previews">La presenza di notifiche usa la stessa pulsazione lenta sul pallino o sull’icona noduS. Restano le modalità fissa e disattivata.</string>
-    <string name="ui_update_row_spacing">In modalità aereo l’aeroplano sostituisce le barre del segnale. Il Wi-Fi resta visibile se connesso.</string>
+    <string name="ui_update_layout_controls">Nuova pagina terminale a sinistra della home: scorri verso destra, scrivi dopo il prompt utente@dispositivo e scegli un risultato.</string>
+    <string name="ui_update_presence_indicator">Ricerca app, contatti opzionali, impostazioni noduS e web. Apri fotocamera o app e richiedi localmente azioni supportate sul dispositivo.</string>
+    <string name="ui_update_previews">Esporta e importa ZIP di configurazione, inclusi preferiti, entrambi i profili dell’intestazione e font importato. Ripristino con conferma.</string>
+    <string name="ui_update_row_spacing">Switch più compatti, con interruttore visivo più piccolo e area di tocco accessibile. SSH e AI restano sviluppi futuri.</string>
 </resources>

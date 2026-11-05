@@ -1,0 +1,37 @@
+<resources>
+    <string name="term_title">Terminale</string>
+    <string name="term_subtitle">Ricerca, comandi locali e prompt</string>
+    <string name="term_enabled">Abilita pagina terminale</string>
+    <string name="term_help">Scorri verso destra dall’interno della home per aprire il terminale. Scrivi un’app, un contatto, apri fotocamera, spegni Wi-Fi oppure web seguito da una ricerca. L’azione parte solo selezionando un risultato o premendo Invio.</string>
+    <string name="term_user">Nome utente</string>
+    <string name="term_device">Nome dispositivo</string>
+    <string name="term_device_help">Lascia vuoto il nome dispositivo per usare il modello del telefono. I nomi accettano lettere, numeri, punti, trattini e underscore.</string>
+    <string name="term_input">Input terminale</string>
+    <string name="term_unavailable">Azione non disponibile su questo telefono.</string>
+    <string name="term_wifi_requested">Modifica Wi-Fi richiesta.</string>
+    <string name="term_wifi_panel">Usa il controllo Wi-Fi di sistema per completare l’azione.</string>
+    <string name="term_wifi_on">Accendi Wi-Fi</string>
+    <string name="term_wifi_off">Spegni Wi-Fi</string>
+    <string name="term_wifi">Impostazioni Wi-Fi</string>
+    <string name="term_system_panel">Controllo di sistema</string>
+    <string name="term_device_action">Azione dispositivo</string>
+    <string name="term_camera">Apri fotocamera</string>
+    <string name="term_app">App</string>
+    <string name="term_contact">Contatto</string>
+    <string name="term_web">Web · %1$s</string>
+    <string name="term_browser">Apri nel browser</string>
+    <string name="term_enable_contacts">Includi contatti…</string>
+    <string name="term_no_results">Nessun risultato locale</string>
+    <string name="backup_title">Configurazione</string>
+    <string name="backup_subtitle">Esporta e importa le tue impostazioni</string>
+    <string name="backup_help">Esporta uno ZIP con preferiti, layout, dimensioni, prompt terminale e font importato. Sono esclusi notifiche, contatti, dati meteo, autorizzazioni Android e stato del benvenuto. Il file può contenere nomi personali e il tuo font: condividilo solo quando opportuno. L’importazione sostituisce le preferenze dopo conferma; le app mancanti vengono rimosse dai preferiti e su un altro telefono potrebbe servire aggiornare la scelta dei calendari.</string>
+    <string name="backup_export">Esporta configurazione</string>
+    <string name="backup_import">Importa configurazione</string>
+    <string name="backup_restore">Ripristina</string>
+    <string name="backup_exported">Configurazione esportata.</string>
+    <string name="backup_imported">Configurazione ripristinata.</string>
+    <string name="backup_error">Impossibile salvare il backup completo. Prova un’altra destinazione.</string>
+    <string name="backup_invalid">Backup non valido, incompatibile o illeggibile. La configurazione non è stata sostituita.</string>
+    <string name="backup_working">Operazione in corso…</string>
+    <string name="backup_confirm">Sostituire le preferenze attuali del launcher? Preferiti nel backup: %1$d. Verranno ripristinati font e layout; le autorizzazioni Android restano invariate.</string>
+</resources>

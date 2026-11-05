@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -23,6 +25,7 @@
         <activity android:name=".ui.welcome.ReleaseNotesActivity" android:exported="false" android:theme="@style/Theme.Nodus" />
         <activity
             android:name=".ui.home.HomeActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true"
             android:launchMode="singleTask"
             android:stateNotNeeded="true"

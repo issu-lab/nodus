@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.1.30 — terminale, backup e switch compatti, build locale] - 2026-11-05
+
+- Pagina terminale a sinistra della home con trascinamento orizzontale, tastiera
+  ad apertura completata, prompt utente@dispositivo configurabile e cursore a blocco.
+- Ricerca app, pagine impostazioni noduS, contatti opzionali e web esplicito nel browser.
+  Parser locale italiano/inglese per apertura app/fotocamera e controlli di sistema;
+  nessuna esecuzione in shell. Wi-Fi diretto su Android 8–9, pannello su Android 10+.
+- Esportazione/importazione ZIP tramite selettore file, preferiti, profili header,
+  dimensioni, prompt e font importato. Default espliciti, validazione prima del
+  ripristino, conferma e transazione DataStore; esclusi runtime e autorizzazioni.
+- Switch a capsula 44×26 dp, cursore bianco e area di tocco della riga almeno 48 dp.
+- Aggiornate note versione e traduzioni. Verificati 111 test Kotlin (103 di policy,
+  parser/schema e regressione; 8 sugli archivi ZIP), 294 coppie risorse e 5 asset legali.
+- Build isolata e Lint riusciti: 0 errori, 4 avvisi preesistenti. Verificati risorse
+  finali nell’APK, versione 30/0.1.30, integrità ZIP e firma invariata.
+- Conservati gli artefatti preesistenti. APK locale e checksum disponibili;
+  pubblicazione e collaudi telefono ancora da eseguire, descritti nel ROADMAP.
+
 ## [Prerelease GitHub v0.1.29-beta.1] - 2026-11-02
 
 - Pubblicati sorgenti, documentazione, ZIP e checksum della 0.1.29.

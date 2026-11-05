@@ -1,0 +1,37 @@
+<resources>
+    <string name="term_title">Terminal</string>
+    <string name="term_subtitle">Search, local commands and prompt</string>
+    <string name="term_enabled">Enable terminal page</string>
+    <string name="term_help">Swipe right from inside the home to open the terminal. Type an app, a contact, open camera, turn off Wi-Fi or web followed by a query. Nothing runs until you select a result or press Search.</string>
+    <string name="term_user">User name</string>
+    <string name="term_device">Device name</string>
+    <string name="term_device_help">Leave the device name empty to use the phone model. Names accept letters, numbers, dots, hyphens and underscores.</string>
+    <string name="term_input">Terminal input</string>
+    <string name="term_unavailable">This action is unavailable on this phone.</string>
+    <string name="term_wifi_requested">Wi-Fi change requested.</string>
+    <string name="term_wifi_panel">Use the system Wi-Fi control to complete the action.</string>
+    <string name="term_wifi_on">Turn on Wi-Fi</string>
+    <string name="term_wifi_off">Turn off Wi-Fi</string>
+    <string name="term_wifi">Wi-Fi settings</string>
+    <string name="term_system_panel">System control</string>
+    <string name="term_device_action">Device action</string>
+    <string name="term_camera">Open camera</string>
+    <string name="term_app">App</string>
+    <string name="term_contact">Contact</string>
+    <string name="term_web">Web · %1$s</string>
+    <string name="term_browser">Open in your browser</string>
+    <string name="term_enable_contacts">Include contacts…</string>
+    <string name="term_no_results">No local results</string>
+    <string name="backup_title">Configuration</string>
+    <string name="backup_subtitle">Export and import your setup</string>
+    <string name="backup_help">Export a ZIP with your favourites, layout, sizes, terminal prompt and imported font. Notifications, contacts, weather data, Android permissions and welcome state are excluded. The file can contain personal names and your font: share it only when appropriate. Import replaces launcher preferences after confirmation; missing apps are removed from favourites and calendar selection may need updating on another phone.</string>
+    <string name="backup_export">Export configuration</string>
+    <string name="backup_import">Import configuration</string>
+    <string name="backup_restore">Restore</string>
+    <string name="backup_exported">Configuration exported.</string>
+    <string name="backup_imported">Configuration restored.</string>
+    <string name="backup_error">Could not save the complete backup. Try another file location.</string>
+    <string name="backup_invalid">Invalid, incompatible or unreadable backup. Your configuration was not replaced.</string>
+    <string name="backup_working">Working…</string>
+    <string name="backup_confirm">Replace your current launcher preferences? Favourites in this backup: %1$d. Font and layout will be restored; Android permissions stay unchanged.</string>
+</resources>

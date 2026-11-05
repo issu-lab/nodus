@@ -408,3 +408,48 @@ In entrambi i layout, con modalità aereo attiva e widget segnale abilitato,
 l’aeroplano sostituisce le barre cellulari. Il Wi-Fi mantiene lo stato indipendente:
 compare se effettivamente connesso, anche quando riattivato in modalità aereo.
 Lo stato è riletto all’apertura della home e quando cambia la modalità aereo.
+
+## Terminale e configurazione (0.1.30)
+
+La pagina a sinistra si apre con swipe verso destra iniziato all’interno della
+home, esclusi 24 dp sui bordi. Segue il trascinamento e si assesta con la stessa
+fisica del cassetto app. Gli swipe dei widget hanno precedenza. Le animazioni
+Android disattivate sono rispettate dalle animazioni Compose; il cursore resta fisso.
+A pagina aperta il campo ottiene focus e mostra la tastiera. Indietro chiude
+prima la tastiera, poi la pagina; il pulsante ‹ torna subito alla home. La richiesta
+Home del sistema chiude sia terminale sia cassetto.
+
+Il prompt mostra utente@dispositivo e un cursore a blocco. Impostazioni → Terminale
+permette di disabilitare la pagina e scegliere i nomi; utente predefinito issu,
+dispositivo predefinito dal modello Android. Nessun testo “Cerca” nel campo.
+I risultati compaiono solo digitando: app, pagine impostazioni noduS, contatti
+opzionali (permesso esplicito, almeno due caratteri) e ricerca web nel browser.
+Toccare un contatto apre la sua scheda; nessuna chiamata automatica. Nessuna
+query è inviata in rete prima di scegliere il risultato web. Nessuna cronologia
+è salvata dal terminale. La ricerca web usa Google nel browser esterno.
+
+Comandi locali italiani/inglesi: apri/open + nome app, apri la fotocamera/open camera,
+spegni/accendi Wi-Fi, Bluetooth, modalità aereo, impostazioni, cerca sul web/web +
+query. Il testo è trattato come dati, mai eseguito in una shell. Digitare propone
+risultati; tocco o Invio eseguono il primo risultato. Nomi app ambigui restano
+selezionabili nell’elenco. Wi-Fi può essere cambiato direttamente su Android 8–9;
+su Android 10+ si apre il pannello Wi-Fi, senza dichiarare completata l’operazione.
+Bluetooth e modalità aereo aprono il controllo di sistema. SSH e AI sono differiti.
+
+Impostazioni → Configurazione salva e legge ZIP tramite il selettore Android.
+Il backup contiene preferenze ammesse, ordine preferiti e font importato (max 8 MB).
+Comprende i profili standard e super compatto, il prompt e le dimensioni dei menu.
+Sono esclusi autorizzazioni, notifiche, contatti, meteo in cache, stato benvenuto e
+versione già vista. Il file può contenere nomi personali e il font: condividerlo
+richiede attenzione al contenuto. Non viene sincronizzato automaticamente.
+
+Prima di importare vengono validati formato/versione, tipi, intervalli, enum,
+preferiti e dimensioni dei dati decompressi. Non si estraggono percorsi dall’archivio.
+Il font è validato prima della modifica delle preferenze. Il ripristino richiede
+conferma e sostituisce solo le preferenze di configurazione in una transazione
+DataStore; input non valido lascia intatta la configurazione. Le app assenti vengono
+rimosse dai preferiti dalla riconciliazione normale. I calendari potrebbero dover
+essere riselezionati su un altro dispositivo; i permessi vanno autorizzati lì.
+
+Gli switch hanno grafica a capsula 44×26 dp, cursore bianco e accento magenta.
+La riga mantiene almeno 48 dp di area toccabile, semantica Switch e scala del testo.

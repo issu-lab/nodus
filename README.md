@@ -1,6 +1,6 @@
 ![noduS launcher — minimal Android launcher with a notification hub](assets/nodus-banner.png)
 
-![Version 0.1.29](https://img.shields.io/badge/version-0.1.29-151923)
+![Version 0.1.30](https://img.shields.io/badge/version-0.1.30-151923)
 ![Android 8 or newer](https://img.shields.io/badge/Android-8%2B-3DDC84)
 ![Experimental](https://img.shields.io/badge/status-experimental-F800FF)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -16,12 +16,12 @@ inspired by simple launchers and the BlackBerry communications hub.
 | Field | Current state |
 |---|---|
 | Maturity | Experimental |
-| Used on a phone | Initial trials; 0.1.29 device checks pending |
+| Used on a phone | Initial trials; 0.1.30 device checks pending |
 | Recommended for everyday use | Not yet |
 | Setup difficulty | APK installation and manual permissions |
 | Documentation | In progress |
-| Current source version | 0.1.29 — experimental GitHub beta |
-| Local checks | 91 Kotlin checks; debug build and Android Lint pass |
+| Current source version | 0.1.30 — experimental GitHub beta |
+| Local checks | 111 Kotlin checks; 294 English/Italian resource pairs; debug build and Lint pass |
 
 > [!WARNING]
 > This project is experimental and intended for development and testing.
@@ -36,6 +36,15 @@ Android remains the source of truth: a dismissed notification does not become
 an item in a separate noduS inbox.
 
 ## Features
+
+- Terminal page: swipe right from home for a configurable `user@device` prompt,
+  block cursor and automatic keyboard. Search apps, optional contacts, noduS
+  settings and the web. Local commands include `open Instagram`, `open camera`
+  and `turn off Wi-Fi`; system restrictions can require a control panel.
+- Export/import configuration ZIPs via Android’s file picker: favourites, sizes,
+  both header profiles and imported font. Restore requires confirmation; Android
+  permissions, contacts, notifications and histories are excluded.
+- Compact switches with a 44×26 dp visual track and at least 48 dp row touch height.
 
 - Airplane mode uses an airplane icon instead of unavailable signal bars.
 - Smaller adaptive launcher symbol; with app icons selected, the home hub uses
@@ -122,7 +131,7 @@ captures. Tap an image to view it at full size.
 
 ## Beta testing and downloads
 
-[Download noduS 0.1.29 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.29-beta.1/nodus-0.1.29-beta.zip)
+[Download noduS 0.1.30 beta](https://github.com/issu-lab/nodus/releases/download/v0.1.30-beta.1/nodus-0.1.30-beta.zip)
 
 Extract the ZIP and open the included APK on your phone. The package includes
 installation notes and full font license copies. It updates existing test
@@ -167,7 +176,7 @@ only if it exceeds the available height. All apps and the hub remain scrollable.
 System Back or the Home button inside the app list returns to home. Android
 navigation gestures remain enabled.
 Settings are grouped into Home, Clock and indicators, Notifications and hub,
-Widgets, Appearance and About (since 0.1.25). Each control has one location;
+Widgets, Appearance, Terminal, Configuration and About (Terminal and Configuration added in 0.1.30). Each control has one location;
 existing preferences are preserved. Font licenses and notices are bundled in the
 APK and accessible under About → Licenses.
 Settings, home and hub controls follow Italian or English according to Android since 0.1.23. App names, messages and calendar content remain as supplied by their apps.
@@ -178,6 +187,7 @@ Settings, home and hub controls follow Italian or English according to Android s
 | Usage access, optional | Fill remaining slots by app openings; alphabetical fallback without access |
 | Notification access | Show the hub and use notification actions and media sessions |
 | Music and calendar destinations | Home, hub, both or hidden, independently for each category |
+| Optional contacts permission | Search contact names locally in the terminal and open their contact card |
 | Calendar permission | Read selected calendars for widgets on home or hub; reminders remain Android notifications |
 | Approximate location, optional | Weather beside the clock, as a monochrome icon and temperature or text |
 | Appearance | Dots/app icons, dot size/color, shared font and separate home/hub text sizes |
@@ -211,7 +221,7 @@ Imported fonts are copied into private app storage; the original file is unchang
 ## Limitations
 
 - Initial phone trials provided appearance and interaction feedback.
-  The 0.1.29 changes and full gesture/permission/app integration checks remain
+  The 0.1.30 changes and full gesture/permission/app integration checks remain
   to be tested on the phone.
 - Reply and conversation opening depend on actions supplied by the originating app.
 - The hub filters group summaries and ongoing notifications outside configured

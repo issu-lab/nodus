@@ -23,7 +23,7 @@ class SettingsActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.Black
                 ) {
-                    CompositionLocalProvider(LocalMenuLeadingSpace provides true) { SettingsScreen() }
+                    CompositionLocalProvider(LocalMenuLeadingSpace provides true) { SettingsScreen(intent.getStringExtra("page") ?: "menu") }
                 }
             }
         }
